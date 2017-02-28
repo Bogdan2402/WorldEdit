@@ -142,11 +142,11 @@ public abstract class CommandsManager<T> {
                 return registerMethods(cls, parent, obj);
             }
         } catch (InvocationTargetException e) {
-            logger.log(Level.SEVERE, "Failed to register commands", e);
+            logger.log(Level.SEVERE, "Не удалось зарегистрировать команды", e);
         } catch (IllegalAccessException e) {
-            logger.log(Level.SEVERE, "Failed to register commands", e);
+            logger.log(Level.SEVERE, "Не удалось зарегистрировать команды", e);
         } catch (InstantiationException e) {
-            logger.log(Level.SEVERE, "Failed to register commands", e);
+            logger.log(Level.SEVERE, "Не удалось зарегистрировать команды", e);
         }
         return null;
     }

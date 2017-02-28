@@ -79,13 +79,13 @@ public class RegionCommands {
 
     @Command(
             aliases = { "/line" },
-            usage = "<block> [thickness]",
-            desc = "Draws a line segment between cuboid selection corners",
+            usage = "<блок> [толщина]",
+            desc = "Построить линию между углами выделенного кубоида",
             help =
-                "Draws a line segment between cuboid selection corners.\n" +
-                "Can only be used with cuboid selections.\n" +
-                "Flags:\n" +
-                "  -h generates only a shell",
+                "Строит линию между углами выделенного кубоида.\n" +
+                "Может быть использовано только с кубоидным выделением.\n" +
+                "Флаги:\n" +
+                "  -h генерировть только поверхность",
             flags = "h",
             min = 1,
             max = 2
@@ -99,7 +99,7 @@ public class RegionCommands {
                      @Switch('h') boolean shell) throws WorldEditException {
 
         if (!(region instanceof CuboidRegion)) {
-            player.printError("//line only works with cuboid selections");
+            player.printError("//line работает только с кубоидным выделением");
             return;
         }
 
@@ -108,18 +108,18 @@ public class RegionCommands {
         Vector pos2 = cuboidregion.getPos2();
         int blocksChanged = editSession.drawLine(Patterns.wrap(pattern), pos1, pos2, thickness, !shell);
 
-        player.print(blocksChanged + " block(s) have been changed.");
+        player.print(blocksChanged + " блок(ов) было изменено.");
     }
 
     @Command(
             aliases = { "/curve" },
-            usage = "<block> [thickness]",
-            desc = "Draws a spline through selected points",
+            usage = "<блок> [толщина]",
+            desc = "Построить кривую через выделенные точки",
             help =
-                "Draws a spline through selected points.\n" +
-                "Can only be used with convex polyhedral selections.\n" +
-                "Flags:\n" +
-                "  -h generates only a shell",
+                "Строит кривую через выделенные точки.\n" +
+                "Может быть использована только с многоугольным выделением.\n" +
+                "Флаги:\n" +
+                "  -h построить только стены",
             flags = "h",
             min = 1,
             max = 2
@@ -132,7 +132,7 @@ public class RegionCommands {
                       @Optional("0") @Range(min = 0) int thickness,
                       @Switch('h') boolean shell) throws WorldEditException {
         if (!(region instanceof ConvexPolyhedralRegion)) {
-            player.printError("//curve only works with convex polyhedral selections");
+            player.printError("//curve работает только с выпуклыми многогранными выделениями");
             return;
         }
 
@@ -141,13 +141,13 @@ public class RegionCommands {
 
         int blocksChanged = editSession.drawSpline(Patterns.wrap(pattern), vectors, 0, 0, 0, 10, thickness, !shell);
 
-        player.print(blocksChanged + " block(s) have been changed.");
+        player.print(blocksChanged + " блок(ов) было изменено.");
     }
 
     @Command(
         aliases = { "/replace", "/re", "/rep" },
-        usage = "[from-block] <to-block>",
-        desc = "Replace all blocks in the selection with another",
+        usage = "[из-блока] <в-блок>",
+        desc = "Заменить определенные блоки на другие",
         flags = "f",
         min = 1,
         max = 2
@@ -159,13 +159,13 @@ public class RegionCommands {
             from = new ExistingBlockMask(editSession);
         }
         int affected = editSession.replaceBlocks(region, from, Patterns.wrap(to));
-        player.print(affected + " block(s) have been replaced.");
+        player.print(affected + " блок(ов) было заменено.");
     }
 
     @Command(
         aliases = { "/overlay" },
-        usage = "<block>",
-        desc = "Set a block on top of blocks in the region",
+        usage = "<блок>",
+        desc = "Наложить блоки поверх выделенной территории",
         min = 1,
         max = 1
     )
@@ -173,13 +173,13 @@ public class RegionCommands {
     @Logging(REGION)
     public void overlay(Player player, EditSession editSession, @Selection Region region, Pattern pattern) throws WorldEditException {
         int affected = editSession.overlayCuboidBlocks(region, Patterns.wrap(pattern));
-        player.print(affected + " block(s) have been overlaid.");
+        player.print(affected + " блок(ов) было наложено.");
     }
 
     @Command(
         aliases = { "/center", "/middle" },
-        usage = "<block>",
-        desc = "Set the center block(s)",
+        usage = "<блок>",
+        desc = "Задать центральный(е) блок(и)",
         min = 1,
         max = 1
     )
@@ -187,13 +187,13 @@ public class RegionCommands {
     @CommandPermissions("worldedit.region.center")
     public void center(Player player, EditSession editSession, @Selection Region region, Pattern pattern) throws WorldEditException {
         int affected = editSession.center(region, Patterns.wrap(pattern));
-        player.print("Center set ("+ affected + " blocks changed)");
+        player.print("Центральный(е) блок(и) ("+ affected + " изменены)");
     }
 
     @Command(
         aliases = { "/naturalize" },
         usage = "",
-        desc = "3 layers of dirt on top then rock below",
+        desc = "Создать 3 слоя грязи сверху и камень под ней",
         min = 0,
         max = 0
     )
@@ -201,13 +201,13 @@ public class RegionCommands {
     @Logging(REGION)
     public void naturalize(Player player, EditSession editSession, @Selection Region region) throws WorldEditException {
         int affected = editSession.naturalizeCuboidBlocks(region);
-        player.print(affected + " block(s) have been made to look more natural.");
+        player.print(affected + " блок(ов) было изменено.");
     }
 
     @Command(
         aliases = { "/walls" },
-        usage = "<block>",
-        desc = "Build the four sides of the selection",
+        usage = "<блок>",
+        desc = "Создать стены ыделенной терртории",
         min = 1,
         max = 1
     )
@@ -215,13 +215,13 @@ public class RegionCommands {
     @Logging(REGION)
     public void walls(Player player, EditSession editSession, @Selection Region region, Pattern pattern) throws WorldEditException {
         int affected = editSession.makeCuboidWalls(region, Patterns.wrap(pattern));
-        player.print(affected + " block(s) have been changed.");
+        player.print(affected + " блок(ов) было изменено.");
     }
 
     @Command(
         aliases = { "/faces", "/outline" },
-        usage = "<block>",
-        desc = "Build the walls, ceiling, and floor of a selection",
+        usage = "<блок>",
+        desc = "Построить стены, пол и потолок вокруг выделенной территории",
         min = 1,
         max = 1
     )
@@ -229,17 +229,17 @@ public class RegionCommands {
     @Logging(REGION)
     public void faces(Player player, EditSession editSession, @Selection Region region, Pattern pattern) throws WorldEditException {
         int affected = editSession.makeCuboidFaces(region, Patterns.wrap(pattern));
-        player.print(affected + " block(s) have been changed.");
+        player.print(affected + " блок(ов) было изменено.");
     }
 
     @Command(
         aliases = { "/smooth" },
-        usage = "[iterations]",
+        usage = "[повторения]",
         flags = "n",
-        desc = "Smooth the elevation in the selection",
+        desc = "Сгладить (сделать реалистичнее) выбранную территорию",
         help =
-            "Smooths the elevation in the selection.\n" +
-            "The -n flag makes it only consider naturally occuring blocks.",
+            "Сгладить (сделать реалистичнее) выбранную территорию.\n" +
+            "-n сглаживать только натуральные (природные) структуры.",
         min = 0,
         max = 1
     )
@@ -249,19 +249,19 @@ public class RegionCommands {
         HeightMap heightMap = new HeightMap(editSession, region, affectNatural);
         HeightMapFilter filter = new HeightMapFilter(new GaussianKernel(5, 1.0));
         int affected = heightMap.applyFilter(filter, iterations);
-        player.print("Terrain's height map smoothed. " + affected + " block(s) changed.");
+        player.print("Ландшафт изменен. " + affected + " блок(ов) изменено.");
 
     }
 
     @Command(
         aliases = { "/move" },
-        usage = "[count] [direction] [leave-id]",
+        usage = "[количество] [направление] [leave-id]",
         flags = "s",
-        desc = "Move the contents of the selection",
+        desc = "Перемещение содержимого выделенной территории",
         help =
-            "Moves the contents of the selection.\n" +
-            "The -s flag shifts the selection to the target location.\n" +
-            "Optionally fills the old location with <leave-id>.",
+            "Сдвинуть блоки в выделенном регионе.\n" +
+            "-s cдвигает выделение к целевому местоположению.\n" +
+            "По желанию заполняет старое местоположение <выходной-id>.",
         min = 0,
         max = 3
     )
@@ -287,19 +287,19 @@ public class RegionCommands {
             }
         }
 
-        player.print(affected + " blocks moved.");
+        player.print(affected + " блок(ов) было сдвинуто.");
     }
 
     @Command(
         aliases = { "/stack" },
-        usage = "[count] [direction]",
+        usage = "[количество] [направление]",
         flags = "sa",
-        desc = "Repeat the contents of the selection",
+        desc = "Повторить содержимое выделенного региона",
         help =
-            "Repeats the contents of the selection.\n" +
-            "Flags:\n" +
-            "  -s shifts the selection to the last stacked copy\n" +
-            "  -a skips air blocks",
+            "Повторить содержимое выделенного региона.\n" +
+            "Флаги:\n" +
+            "  -s смещает выбор на последней сложенной копии\n" +
+            "  -a пропустить блоки воздуха",
         min = 0,
         max = 2
     )
@@ -327,17 +327,17 @@ public class RegionCommands {
             }
         }
 
-        player.print(affected + " blocks changed. Undo with //undo");
+        player.print(affected + " блок(ов) было изменено. Отменить //undo");
     }
 
     @Command(
         aliases = { "/regen" },
         usage = "",
-        desc = "Regenerates the contents of the selection",
+        desc = "Регенерация содержимого выделенной территории",
         help =
-            "Regenerates the contents of the current selection.\n" +
-            "This command might affect things outside the selection,\n" +
-            "if they are within the same chunk.",
+            "Регенерация содержимого выделенной территории.\n" +
+            "Эта команда может повлиять на вещи вне выделения,\n" +
+            "если они находятся в одном чанке.",
         min = 0,
         max = 0
     )
@@ -351,18 +351,18 @@ public class RegionCommands {
         } finally {
             session.setMask(mask);
         }
-        player.print("Region regenerated.");
+        player.print("Регион регенерирован.");
     }
 
     @Command(
             aliases = { "/deform" },
-            usage = "<expression>",
-            desc = "Deforms a selected region with an expression",
+            usage = "<выражение>",
+            desc = "Деформировать выделенную территорию",
             help =
-                "Deforms a selected region with an expression\n" +
-                "The expression is executed for each block and is expected\n" +
-                "to modify the variables x, y and z to point to a new block\n" +
-                "to fetch. See also tinyurl.com/wesyntax.",
+                "Деформировать выделенную территорию\n" +
+                "Выполняется для каждого блока\n" +
+                "изменить переменные х, у и г, чтобы указать на новый блок\n" +
+                "для выборки. Смотрите также tinyurl.com/wesyntax.",
             flags = "ro",
             min = 1,
             max = -1
@@ -398,7 +398,7 @@ public class RegionCommands {
         try {
             final int affected = editSession.deformRegion(region, zero, unit, expression);
             player.findFreePosition();
-            player.print(affected + " block(s) have been deformed.");
+            player.print(affected + " блок(ов) было деформировано.");
         } catch (ExpressionException e) {
             player.printError(e.getMessage());
         }
@@ -406,12 +406,12 @@ public class RegionCommands {
 
     @Command(
         aliases = { "/hollow" },
-        usage = "[<thickness>[ <block>]]",
-        desc = "Hollows out the object contained in this selection",
+        usage = "[<толщина>[ <блок>]]",
+        desc = "Создать впадинч из обьектов, содержащихся в этой территории",
         help =
-            "Hollows out the object contained in this selection.\n" +
-            "Optionally fills the hollowed out part with the given block.\n" +
-            "Thickness is measured in manhattan distance.",
+            "Создать впадины из обьектов, содержащихся в этой территории.\n" +
+            "Может заполнять впадины определенным блоком.\n" +
+            "Толщина измеряется в manhattan расстоянии.",
         min = 0,
         max = 2
     )
@@ -423,13 +423,13 @@ public class RegionCommands {
                        @Optional("air") Pattern pattern) throws WorldEditException {
 
         int affected = editSession.hollowOutRegion(region, thickness, Patterns.wrap(pattern));
-        player.print(affected + " block(s) have been changed.");
+        player.print(affected + " блок(ов) было изменено.");
     }
 
     @Command(
             aliases = { "/forest" },
-            usage = "[type] [density]",
-            desc = "Make a forest within the region",
+            usage = "[тип] [плотность]",
+            desc = "Создать лес в регионе",
             min = 0,
             max = 2
     )
@@ -444,13 +444,13 @@ public class RegionCommands {
         visitor.setMask(new NoiseFilter2D(new RandomNoise(), density));
         Operations.completeLegacy(visitor);
 
-        player.print(ground.getAffected() + " trees created.");
+        player.print(ground.getAffected() + " деревьев сгенерировано.");
     }
 
     @Command(
             aliases = { "/flora" },
-            usage = "[density]",
-            desc = "Make flora within the region",
+            usage = "[плотность]",
+            desc = "Создать флору в регионе",
             min = 0,
             max = 1
     )
@@ -464,7 +464,7 @@ public class RegionCommands {
         visitor.setMask(new NoiseFilter2D(new RandomNoise(), density));
         Operations.completeLegacy(visitor);
 
-        player.print(ground.getAffected() + " flora created.");
+        player.print(ground.getAffected() + " флора создана.");
     }
 
 }

@@ -61,7 +61,7 @@ public class BukkitPainting extends BukkitEntity {
                     try {
                         spawn.spawn();
                     } catch (Throwable t) {
-                        log.log(Level.WARNING, "Failed to spawn painting", t);
+                        log.log(Level.WARNING, "Не удалось создать картину", t);
                         continue;
                     }
                 }

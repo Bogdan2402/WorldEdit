@@ -44,7 +44,7 @@ public class ReplaceParser extends SimpleCommand<Contextual<? extends RegionFunc
 
     @Override
     public String getDescription() {
-        return "Replaces blocks";
+        return "Заменить блоки";
     }
 
     @Override

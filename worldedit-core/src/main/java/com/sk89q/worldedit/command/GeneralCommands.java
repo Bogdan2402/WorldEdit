@@ -50,8 +50,8 @@ public class GeneralCommands {
 
     @Command(
         aliases = { "/limit" },
-        usage = "<limit>",
-        desc = "Modify block change limit",
+        usage = "<лимит>",
+        desc = "Изменить лимит изменения регионов",
         min = 1,
         max = 1
     )
@@ -64,7 +64,7 @@ public class GeneralCommands {
         int limit = Math.max(-1, args.getInteger(0));
         if (!mayDisable && config.maxChangeLimit > -1) {
             if (limit > config.maxChangeLimit) {
-                player.printError("Your maximum allowable limit is " + config.maxChangeLimit + ".");
+                player.printError("Ваш максимальный лимит блоков " + config.maxChangeLimit + ".");
                 return;
             }
         }
@@ -72,16 +72,16 @@ public class GeneralCommands {
         session.setBlockChangeLimit(limit);
 
         if (limit != -1) {
-            player.print("Block change limit set to " + limit + ". (Use //limit -1 to go back to the default.)");
+            player.print("Лимит блоков изменен на " + limit + ". (Используйте //limit -1 чтобы вернуть значению по умолчанию.)");
         } else {
-            player.print("Block change limit set to " + limit + ".");
+            player.print("Лимит блоков изменен на " + limit + ".");
         }
     }
 
     @Command(
         aliases = { "/fast" },
         usage = "[on|off]",
-        desc = "Toggle fast mode",
+        desc = "Переключить скоростной режим",
         min = 0,
         max = 1
     )
@@ -91,27 +91,27 @@ public class GeneralCommands {
         String newState = args.getString(0, null);
         if (session.hasFastMode()) {
             if ("on".equals(newState)) {
-                player.printError("Fast mode already enabled.");
+                player.printError("Скоростной режим уже включен.");
                 return;
             }
 
             session.setFastMode(false);
-            player.print("Fast mode disabled.");
+            player.print("Скоротной режим отключен.");
         } else {
             if ("off".equals(newState)) {
-                player.printError("Fast mode already disabled.");
+                player.printError("Скоростной режим уже отключен.");
                 return;
             }
 
             session.setFastMode(true);
-            player.print("Fast mode enabled. Lighting in the affected chunks may be wrong and/or you may need to rejoin to see changes.");
+            player.print("Скоростной режим включен. Освещение в чанках может быть неправильным и Вам придется перезайти на сервер, чтобы увидть изменения.");
         }
     }
 
     @Command(
         aliases = { "/gmask", "gmask" },
-        usage = "[mask]",
-        desc = "Set the global mask",
+        usage = "[маска]",
+        desc = "Задать глобальную маску",
         min = 0,
         max = -1
     )
@@ -119,39 +119,39 @@ public class GeneralCommands {
     public void gmask(Player player, LocalSession session, EditSession editSession, @Optional Mask mask) throws WorldEditException {
         if (mask == null) {
             session.setMask((Mask) null);
-            player.print("Global mask disabled.");
+            player.print("Глобальная маска выключена.");
         } else {
             session.setMask(mask);
-            player.print("Global mask set.");
+            player.print("Глобальная маска включена.");
         }
     }
 
     @Command(
         aliases = { "/toggleplace", "toggleplace" },
         usage = "",
-        desc = "Switch between your position and pos1 for placement",
+        desc = "Переключить первую выделенную позицию и ваше текущее положение, как будто вы находитесь на первой позиции",
         min = 0,
         max = 0
     )
     public void togglePlace(Player player, LocalSession session, EditSession editSession, CommandContext args) throws WorldEditException {
 
         if (session.togglePlacementPosition()) {
-            player.print("Now placing at pos #1.");
+            player.print("Теперь вы в позиции #1.");
         } else {
-            player.print("Now placing at the block you stand in.");
+            player.print("Теперь вы в позиции, где вы стоите.");
         }
     }
 
     @Command(
         aliases = { "/searchitem", "/l", "/search", "searchitem" },
-        usage = "<query>",
+        usage = "<запрос>",
         flags = "bi",
-        desc = "Search for an item",
+        desc = "Найти предмет или блок",
         help =
-            "Searches for an item.\n" +
-            "Flags:\n" +
-            "  -b only search for blocks\n" +
-            "  -i only search for items",
+            "Найти предмет или блок.\n" +
+            "Флаги:\n" +
+            "  -b искать только среди блоков\n" +
+            "  -i искать только среди предметов",
         min = 1,
         max = 1
     )
@@ -169,7 +169,7 @@ public class GeneralCommands {
             if (type != null) {
                 actor.print("#" + type.getID() + " (" + type.getName() + ")");
             } else {
-                actor.printError("No item found by ID " + id);
+                actor.printError("Предмет не найден с таким ID " + id);
             }
 
             return;
@@ -177,26 +177,26 @@ public class GeneralCommands {
         }
 
         if (query.length() <= 2) {
-            actor.printError("Enter a longer search string (len > 2).");
+            actor.printError("В запросе слишком мало символов (должно быть больше двух).");
             return;
         }
 
         if (!blocksOnly && !itemsOnly) {
-            actor.print("Searching for: " + query);
+            actor.print("Результат для: " + query);
         } else if (blocksOnly && itemsOnly) {
-            actor.printError("You cannot use both the 'b' and 'i' flags simultaneously.");
+            actor.printError("Вы не можете одновременно использовать флаги 'b' и 'i'.");
             return;
         } else if (blocksOnly) {
-            actor.print("Searching for blocks: " + query);
+            actor.print("Результат для блоков: " + query);
         } else {
-            actor.print("Searching for items: " + query);
+            actor.print("Результат для предметов: " + query);
         }
 
         int found = 0;
 
         for (ItemType type : ItemType.values()) {
             if (found >= 15) {
-                actor.print("Too many results!");
+                actor.print("Слишком много было найдено!");
                 break;
             }
 
@@ -218,7 +218,7 @@ public class GeneralCommands {
         }
 
         if (found == 0) {
-            actor.printError("No items found.");
+            actor.printError("Предмет не найден.");
         }
     }
 

@@ -47,10 +47,10 @@ public class RegionFactoryParser implements CommandExecutor<RegionFactory> {
             } else if (type.equals("cyl") || type.equals("cylinder")) {
                 return new CylinderRegionFactory(1); // TODO: Adjustable height
             } else {
-                throw new CommandException("Unknown shape type: " + type + " (try one of " + getUsage() + ")");
+                throw new CommandException("Неизвестный тип формы: " + type + " (попробуйте один из " + getUsage() + ")");
             }
         } catch (MissingArgumentException e) {
-            throw new CommandException("Missing shape type (try one of " + getUsage() + ")");
+            throw new CommandException("Не указан тип формы (попробуйте один из " + getUsage() + ")");
 
         }
     }
@@ -67,7 +67,7 @@ public class RegionFactoryParser implements CommandExecutor<RegionFactory> {
 
     @Override
     public String getDescription() {
-        return "Defines a region";
+        return "Определить область";
     }
 
     @Override

@@ -200,7 +200,7 @@ public final class StringUtil {
      */
     public static int getLevenshteinDistance(String s, String t) {
         if (s == null || t == null) {
-            throw new IllegalArgumentException("Strings must not be null");
+            throw new IllegalArgumentException("Строки не должны быть пустыми");
         }
 
         /*

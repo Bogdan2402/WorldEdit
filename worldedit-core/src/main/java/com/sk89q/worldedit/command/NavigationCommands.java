@@ -56,20 +56,20 @@ public class NavigationCommands {
     @Command(
         aliases = { "unstuck", "!" },
         usage = "",
-        desc = "Escape from being stuck inside a block",
+        desc = "Освободиться при застревании в блоке",
         min = 0,
         max = 0
     )
     @CommandPermissions("worldedit.navigation.unstuck")
     public void unstuck(Player player) throws WorldEditException {
-        player.print("There you go!");
+        player.print("Свободен!");
         player.findFreePosition();
     }
 
     @Command(
         aliases = { "ascend", "asc" },
-        usage = "[# of levels]",
-        desc = "Go up a floor",
+        usage = "[# уровней]",
+        desc = "Подняться на уровень вверх",
         min = 0,
         max = 1
     )
@@ -80,16 +80,16 @@ public class NavigationCommands {
             ++ascentLevels;
         }
         if (ascentLevels == 0) {
-            player.printError("No free spot above you found.");
+            player.printError("Свободного места над вами не найдено.");
         } else {
-            player.print((ascentLevels != 1) ? "Ascended " + Integer.toString(ascentLevels) + " levels." : "Ascended a level.");
+            player.print((ascentLevels != 1) ? "Вы поднялись на " + Integer.toString(ascentLevels) + " уровень(ней)." : "Подняться на уровень.");
         }
     }
 
     @Command(
         aliases = { "descend", "desc" },
-        usage = "[# of floors]",
-        desc = "Go down a floor",
+        usage = "[# этажей]",
+        desc = "Спуститься на уровень вниз",
         min = 0,
         max = 1
     )
@@ -100,16 +100,16 @@ public class NavigationCommands {
             ++descentLevels;
         }
         if (descentLevels == 0) {
-            player.printError("No free spot above you found.");
+            player.printError("Свободного места под вами не найдено.");
         } else {
-            player.print((descentLevels != 1) ? "Descended " + Integer.toString(descentLevels) + " levels." : "Descended a level.");
+            player.print((descentLevels != 1) ? "Вы спустились на " + Integer.toString(descentLevels) + " уровень(ней)." : "Спуститься на уровень.");
         }
     }
 
     @Command(
         aliases = { "ceil" },
-        usage = "[clearance]",
-        desc = "Go to the celing",
+        usage = "[зазор]",
+        desc = "Подняться на поверхность",
         flags = "fg",
         min = 0,
         max = 1
@@ -123,32 +123,32 @@ public class NavigationCommands {
 
         final boolean alwaysGlass = getAlwaysGlass(args);
         if (player.ascendToCeiling(clearance, alwaysGlass)) {
-            player.print("Whoosh!");
+            player.print("Уииии!");
         } else {
-            player.printError("No free spot above you found.");
+            player.printError("Свободного места над вами не найдено.");
         }
     }
 
     @Command(
         aliases = { "thru" },
         usage = "",
-        desc = "Passthrough walls",
+        desc = "Пройти сквозь стены",
         min = 0,
         max = 0
     )
     @CommandPermissions("worldedit.navigation.thru.command")
     public void thru(Player player, LocalSession session, EditSession editSession, CommandContext args) throws WorldEditException {
         if (player.passThroughForwardWall(6)) {
-            player.print("Whoosh!");
+            player.print("Уиииии!");
         } else {
-            player.printError("No free spot ahead of you found.");
+            player.printError("Свободного места перед вами не найдено.");
         }
     }
 
     @Command(
         aliases = { "jumpto", "j" },
         usage = "",
-        desc = "Teleport to a location",
+        desc = "Телепортироваться на позицию, куда вы смотрите",
         min = 0,
         max = 0
     )
@@ -158,16 +158,16 @@ public class NavigationCommands {
         WorldVector pos = player.getSolidBlockTrace(300);
         if (pos != null) {
             player.findFreePosition(pos);
-            player.print("Poof!");
+            player.print("Бум!");
         } else {
-            player.printError("No block in sight!");
+            player.printError("Нет блоков в поле зрения!");
         }
     }
 
     @Command(
         aliases = { "up" },
-        usage = "<block>",
-        desc = "Go upwards some distance",
+        usage = "<блок>",
+        desc = "Подняться вверх на расстояние",
         flags = "fg",
         min = 1,
         max = 1
@@ -179,9 +179,9 @@ public class NavigationCommands {
 
         final boolean alwaysGlass = getAlwaysGlass(args);
         if (player.ascendUpwards(distance, alwaysGlass)) {
-            player.print("Whoosh!");
+            player.print("Бум!");
         } else {
-            player.printError("You would hit something above you.");
+            player.printError("Вас ударило что-то выше Вас.");
         }
     }
 

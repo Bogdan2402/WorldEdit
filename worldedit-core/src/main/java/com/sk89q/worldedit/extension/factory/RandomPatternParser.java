@@ -49,7 +49,7 @@ class RandomPatternParser extends InputParser<Pattern> {
                 String[] p = token.split("%");
 
                 if (p.length < 2) {
-                    throw new InputParseException("Missing the type after the % symbol for '" + input + "'");
+                    throw new InputParseException("Отсутствует тип после символа % для '" + input + "'");
                 } else {
                     chance = Double.parseDouble(p[0]);
                     block = blockRegistry.parseFromInput(p[1], context);

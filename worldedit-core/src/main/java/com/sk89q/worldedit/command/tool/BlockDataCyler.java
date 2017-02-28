@@ -52,7 +52,7 @@ public class BlockDataCyler implements DoubleActionBlockTool {
         if (!config.allowedDataCycleBlocks.isEmpty()
                 && !player.hasPermission("worldedit.override.data-cycler")
                 && !config.allowedDataCycleBlocks.contains(type)) {
-            player.printError("You are not permitted to cycle the data value of that block.");
+            player.printError("У вас не достаточно прав для размешения цикла значений даных этого блока.");
             return true;
         }
 
@@ -61,12 +61,12 @@ public class BlockDataCyler implements DoubleActionBlockTool {
         EditSession editSession = session.createEditSession(player);
 
         if (block.getData() < 0) {
-            player.printError("That block's data cannot be cycled!");
+            player.printError("Данные блока не могут быть циклическими!");
         } else {
             try {
                 editSession.setBlock(clicked.toVector(), block);
             } catch (MaxChangedBlocksException e) {
-                player.printError("Max blocks change limit reached.");
+                player.printError("Максимальное значение лимита изменения блоков достигнут.");
             } finally {
                 session.remember(editSession);
             }

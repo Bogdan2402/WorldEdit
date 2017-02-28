@@ -76,8 +76,8 @@ public class SelectionCommands {
 
     @Command(
         aliases = { "/pos1" },
-        usage = "[coordinates]",
-        desc = "Set position 1",
+        usage = "[координаты]",
+        desc = "Установить первую позицию",
         min = 0,
         max = 1
     )
@@ -92,7 +92,7 @@ public class SelectionCommands {
                 String[] coords = args.getString(0).split(",");
                 pos = new Vector(Integer.parseInt(coords[0]), Integer.parseInt(coords[1]), Integer.parseInt(coords[2]));
             } else {
-                player.printError("Invalid coordinates " + args.getString(0));
+                player.printError("Неверные координаты " + args.getString(0));
                 return;
             }
         } else {
@@ -100,7 +100,7 @@ public class SelectionCommands {
         }
 
         if (!session.getRegionSelector(player.getWorld()).selectPrimary(pos, ActorSelectorLimits.forActor(player))) {
-            player.printError("Position already set.");
+            player.printError("Позиция 1 уже установлена.");
             return;
         }
 
@@ -110,8 +110,8 @@ public class SelectionCommands {
 
     @Command(
         aliases = { "/pos2" },
-        usage = "[coordinates]",
-        desc = "Set position 2",
+        usage = "[координаты]",
+        desc = "Установить вторую позицию",
         min = 0,
         max = 1
     )
@@ -127,7 +127,7 @@ public class SelectionCommands {
                         Integer.parseInt(coords[1]),
                         Integer.parseInt(coords[2]));
             } else {
-                player.printError("Invalid coordinates " + args.getString(0));
+                player.printError("Неверные координаты " + args.getString(0));
                 return;
             }
         } else {
@@ -135,7 +135,7 @@ public class SelectionCommands {
         }
 
         if (!session.getRegionSelector(player.getWorld()).selectSecondary(pos, ActorSelectorLimits.forActor(player))) {
-            player.printError("Position already set.");
+            player.printError("Позиция 2 уже установлена.");
             return;
         }
 
@@ -146,7 +146,7 @@ public class SelectionCommands {
     @Command(
         aliases = { "/hpos1" },
         usage = "",
-        desc = "Set position 1 to targeted block",
+        desc = "Установить первую позицию на блок, на который смотрите",
         min = 0,
         max = 0
     )
@@ -157,21 +157,21 @@ public class SelectionCommands {
 
         if (pos != null) {
             if (!session.getRegionSelector(player.getWorld()).selectPrimary(pos, ActorSelectorLimits.forActor(player))) {
-                player.printError("Position already set.");
+                player.printError("Позиция 1 уже установлена.");
                 return;
             }
 
             session.getRegionSelector(player.getWorld())
                     .explainPrimarySelection(player, session, pos);
         } else {
-            player.printError("No block in sight!");
+            player.printError("Нет блока в поле зрения!");
         }
     }
 
     @Command(
         aliases = { "/hpos2" },
         usage = "",
-        desc = "Set position 2 to targeted block",
+        desc = "Установить первую позицию на блок, на который смотрите",
         min = 0,
         max = 0
     )
@@ -182,26 +182,26 @@ public class SelectionCommands {
 
         if (pos != null) {
             if (!session.getRegionSelector(player.getWorld()).selectSecondary(pos, ActorSelectorLimits.forActor(player))) {
-                player.printError("Position already set.");
+                player.printError("Позиция 2 уже установлена.");
                 return;
             }
 
             session.getRegionSelector(player.getWorld())
                     .explainSecondarySelection(player, session, pos);
         } else {
-            player.printError("No block in sight!");
+            player.printError("Нет блока в поле зрения!");
         }
     }
 
     @Command(
         aliases = { "/chunk" },
-        usage = "[x,z coordinates]",
+        usage = "[координаты x,z]",
         flags = "sc",
-        desc = "Set the selection to your current chunk.",
+        desc = "Выделить чанк, где вы находитесь.",
         help =
-            "Set the selection to the chunk you are currently in.\n" +
-            "With the -s flag, your current selection is expanded\n" +
-            "to encompass all chunks that are part of it.\n\n" +
+            "Выделить чанк, где вы находитесь.\n" +
+            "С флагом -s flag, ваше выделение расширяется, чтобы\n" +
+            "все чанки, чьи части захватывает ваше выделение.\n\n" +
             "Specifying coordinates will use those instead of your\n"+
             "current position. Use -c to specify chunk coordinates,\n" +
             "otherwise full coordinates will be implied.\n" +
@@ -233,7 +233,7 @@ public class SelectionCommands {
                 // coords specified
                 String[] coords = args.getString(0).split(",");
                 if (coords.length != 2) {
-                    throw new InsufficientArgumentsException("Invalid coordinates specified.");
+                    throw new InsufficientArgumentsException("Неправильно указаны коардинаты чанка.");
                 }
                 int x = Integer.parseInt(coords[0]);
                 int z = Integer.parseInt(coords[1]);
@@ -247,7 +247,7 @@ public class SelectionCommands {
             min = new Vector(min2D.getBlockX() * 16, 0, min2D.getBlockZ() * 16);
             max = min.add(15, world.getMaxY(), 15);
 
-            player.print("Chunk selected: "
+            player.print("Выделенный чанк: "
                     + min2D.getBlockX() + ", " + min2D.getBlockZ());
         }
 
@@ -268,7 +268,7 @@ public class SelectionCommands {
     @Command(
         aliases = { "/wand" },
         usage = "",
-        desc = "Get the wand object",
+        desc = "Получить предмет для выделения",
         min = 0,
         max = 0
     )
@@ -276,13 +276,13 @@ public class SelectionCommands {
     public void wand(Player player, LocalSession session, EditSession editSession, CommandContext args) throws WorldEditException {
 
         player.giveItem(we.getConfiguration().wandItem, 1);
-        player.print("Left click: select pos #1; Right click: select pos #2");
+        player.print("ЛКМ - выделить точку #1; ПКМ - выделить точку #2");
     }
 
     @Command(
         aliases = { "toggleeditwand" },
         usage = "",
-        desc = "Toggle functionality of the edit wand",
+        desc = "Переключить функциональность предмета для выделения позиции",
         min = 0,
         max = 0
     )
@@ -292,16 +292,16 @@ public class SelectionCommands {
         session.setToolControl(!session.isToolControlEnabled());
 
         if (session.isToolControlEnabled()) {
-            player.print("Edit wand enabled.");
+            player.print("Предмет выделения включен.");
         } else {
-            player.print("Edit wand disabled.");
+            player.print("Предмет выделения выключен.");
         }
     }
 
     @Command(
         aliases = { "/expand" },
-        usage = "<amount> [reverse-amount] <direction>",
-        desc = "Expand the selection area",
+        usage = "<количество> [reverse-amount] <направление>",
+        desc = "Расширить выделенную область",
         min = 1,
         max = 3
     )
@@ -322,8 +322,8 @@ public class SelectionCommands {
                 session.getRegionSelector(player.getWorld()).learnChanges();
                 int newSize = region.getArea();
                 session.getRegionSelector(player.getWorld()).explainRegionAdjust(player, session);
-                player.print("Region expanded " + (newSize - oldSize)
-                        + " blocks [top-to-bottom].");
+                player.print("Регион увеличен на " + (newSize - oldSize)
+                        + " блоков [сверху до низу].");
             } catch (RegionOperationException e) {
                 player.printError(e.getMessage());
             }
@@ -390,13 +390,13 @@ public class SelectionCommands {
         
         session.getRegionSelector(player.getWorld()).explainRegionAdjust(player, session);
 
-        player.print("Region expanded " + (newSize - oldSize) + " blocks.");
+        player.print("Регион увеличен на " + (newSize - oldSize) + " блоков.");
     }
 
     @Command(
         aliases = { "/contract" },
-        usage = "<amount> [reverse-amount] [direction]",
-        desc = "Contract the selection area",
+        usage = "<количество> [reverse-amount] [направление]",
+        desc = "Уменьшить выбранный регион",
         min = 1,
         max = 3
     )
@@ -462,7 +462,7 @@ public class SelectionCommands {
             session.getRegionSelector(player.getWorld()).explainRegionAdjust(player, session);
 
 
-            player.print("Region contracted " + (oldSize - newSize) + " blocks.");
+            player.print("Регион уменьшен на " + (oldSize - newSize) + " блоков.");
         } catch (RegionOperationException e) {
             player.printError(e.getMessage());
         }
@@ -470,8 +470,8 @@ public class SelectionCommands {
 
     @Command(
         aliases = { "/shift" },
-        usage = "<amount> [direction]",
-        desc = "Shift the selection area",
+        usage = "<количество> [направление]",
+        desc = "Переместить выделенную область",
         min = 1,
         max = 2
     )
@@ -504,7 +504,7 @@ public class SelectionCommands {
 
             session.getRegionSelector(player.getWorld()).explainRegionAdjust(player, session);
 
-            player.print("Region shifted.");
+            player.print("Регион перемещен.");
         } catch (RegionOperationException e) {
             player.printError(e.getMessage());
         }
@@ -512,13 +512,13 @@ public class SelectionCommands {
 
     @Command(
         aliases = { "/outset" },
-        usage = "<amount>",
-        desc = "Outset the selection area",
+        usage = "<количество>",
+        desc = "Расширить выделенную область",
         help =
-            "Expands the selection by the given amount in all directions.\n" +
-            "Flags:\n" +
-            "  -h only expand horizontally\n" +
-            "  -v only expand vertically\n",
+            "Расширяет выделение во всех направлениях.\n" +
+            "Флаги:\n" +
+            "  -h раширить только по горизонтале\n" +
+            "  -v расширить только по вертикали\n",
         flags = "hv",
         min = 1,
         max = 1
@@ -530,18 +530,18 @@ public class SelectionCommands {
         region.expand(getChangesForEachDir(args));
         session.getRegionSelector(player.getWorld()).learnChanges();
         session.getRegionSelector(player.getWorld()).explainRegionAdjust(player, session);
-        player.print("Region outset.");
+        player.print("Регион расширен во всех направлениях.");
     }
 
     @Command(
         aliases = { "/inset" },
-        usage = "<amount>",
-        desc = "Inset the selection area",
+        usage = "<количество>",
+        desc = "Сузить выбранный регион",
         help =
-            "Contracts the selection by the given amount in all directions.\n" +
-            "Flags:\n" +
-            "  -h only contract horizontally\n" +
-            "  -v only contract vertically\n",
+            "Сужает выделение во всех направлениях.\n" +
+            "Флаги:\n" +
+            "  -h сузить только по горизонтали\n" +
+            "  -v сузить только по вертикали\n",
         flags = "hv",
         min = 1,
         max = 1
@@ -553,7 +553,7 @@ public class SelectionCommands {
         region.contract(getChangesForEachDir(args));
         session.getRegionSelector(player.getWorld()).learnChanges();
         session.getRegionSelector(player.getWorld()).explainRegionAdjust(player, session);
-        player.print("Region inset.");
+        player.print("Регион сужен.");
     }
 
     private Vector[] getChangesForEachDir(CommandContext args) {
@@ -579,7 +579,7 @@ public class SelectionCommands {
         aliases = { "/size" },
         flags = "c",
         usage = "",
-        desc = "Get information about the selection",
+        desc = "Получить информацию о размере выделении",
         min = 0,
         max = 0
     )
@@ -593,10 +593,10 @@ public class SelectionCommands {
             Vector size = region.getMaximumPoint().subtract(region.getMinimumPoint());
             Vector origin = clipboard.getOrigin();
 
-            player.print("Cuboid dimensions (max - min): " + size);
-            player.print("Offset: " + origin);
-            player.print("Cuboid distance: " + size.distance(Vector.ONE));
-            player.print("# of blocks: " + (int) (size.getX() * size.getY() * size.getZ()));
+            player.print("Размер: " + size);
+            player.print("Смещение: " + origin);
+            player.print("Расстояние кубов: " + size.distance(Vector.ONE));
+            player.print("Количество блоков: " + (int) (size.getX() * size.getY() * size.getZ()));
             return;
         }
         
@@ -605,7 +605,7 @@ public class SelectionCommands {
                 .subtract(region.getMinimumPoint())
                 .add(1, 1, 1);
         
-        player.print("Type: " + session.getRegionSelector(player.getWorld())
+        player.print("Тип: " + session.getRegionSelector(player.getWorld())
                 .getTypeName());
         
         for (String line : session.getRegionSelector(player.getWorld())
@@ -613,16 +613,16 @@ public class SelectionCommands {
             player.print(line);
         }
         
-        player.print("Size: " + size);
-        player.print("Cuboid distance: " + region.getMaximumPoint().distance(region.getMinimumPoint()));
-        player.print("# of blocks: " + region.getArea());
+        player.print("Размер: " + size);
+        player.print("Расстояние кубов: " + region.getMaximumPoint().distance(region.getMinimumPoint()));
+        player.print("Количество блоков: " + region.getArea());
     }
 
 
     @Command(
         aliases = { "/count" },
-        usage = "<block>",
-        desc = "Counts the number of a certain type of block",
+        usage = "<блок>",
+        desc = "Показать количество определенных блоков",
         flags = "d",
         min = 1,
         max = 1
@@ -637,22 +637,22 @@ public class SelectionCommands {
         if (useData) {
             Set<BaseBlock> searchBlocks = we.getBlocks(player, args.getString(0), true);
             int count = editSession.countBlocks(session.getSelection(player.getWorld()), searchBlocks);
-            player.print("Counted: " + count);
+            player.print("Определенных блоков: " + count);
         } else {
             Set<Integer> searchIDs = we.getBlockIDs(player, args.getString(0), true);
             int count = editSession.countBlock(session.getSelection(player.getWorld()), searchIDs);
-            player.print("Counted: " + count);
+            player.print("Определенных блоков: " + count);
         }
     }
 
     @Command(
         aliases = { "/distr" },
         usage = "",
-        desc = "Get the distribution of blocks in the selection",
+        desc = "Показать количество блоков в выделении",
         help =
-            "Gets the distribution of blocks in the selection.\n" +
-            "The -c flag gets the distribution of your clipboard.\n" +
-            "The -d flag separates blocks by data",
+            "Показать распределение блоков в выделении.\n" +
+            "-c показать распределение блоков в буфере обмена.\n" +
+            "-d разделяет одинаковые типы блоков с разными данными (типы древесины, цвета шерсти и т.д",
         flags = "cd",
         min = 0,
         max = 0
@@ -667,7 +667,7 @@ public class SelectionCommands {
 
         if (args.hasFlag('c')) {
             // TODO: Update for new clipboard
-            throw new CommandException("Needs to be re-written again");
+            throw new CommandException("Должно быть переписано еще раз");
         } else {
             if (useData) {
                 distributionData = editSession.getBlockDistributionWithData(session.getSelection(player.getWorld()));
@@ -679,11 +679,11 @@ public class SelectionCommands {
 
         if ((useData && distributionData.size() <= 0)
                 || (!useData && distribution.size() <= 0)) {  // *Should* always be false
-            player.printError("No blocks counted.");
+            player.printError("Не найдено таких блоков.");
             return;
         }
 
-        player.print("# total blocks: " + size);
+        player.print("# всего блоков: " + size);
 
         if (useData) {
             for (Countable<BaseBlock> c : distributionData) {
@@ -691,7 +691,7 @@ public class SelectionCommands {
                 String str = String.format("%-7s (%.3f%%) %s #%d:%d",
                         String.valueOf(c.getAmount()),
                         c.getAmount() / (double) size * 100,
-                        name == null ? "Unknown" : name,
+                        name == null ? "Неизвестно" : name,
                         c.getID().getType(), c.getID().getData());
                 player.print(str);
             }
@@ -701,7 +701,7 @@ public class SelectionCommands {
                 String str = String.format("%-7s (%.3f%%) %s #%d",
                         String.valueOf(c.getAmount()),
                         c.getAmount() / (double) size * 100,
-                        block == null ? "Unknown" : block.getName(), c.getID());
+                        block == null ? "Неизвестно" : block.getName(), c.getID());
                 player.print(str);
             }
         }
@@ -711,7 +711,7 @@ public class SelectionCommands {
         aliases = { "/sel", ";", "/desel", "/deselect" },
         flags = "d",
         usage = "[cuboid|extend|poly|ellipsoid|sphere|cyl|convex]",
-        desc = "Choose a region selector",
+        desc = "Выбрать тип выделения (кубоид, сфера и т.д.)",
         min = 0,
         max = 1
     )
@@ -720,7 +720,7 @@ public class SelectionCommands {
         if (args.argsLength() == 0) {
             session.getRegionSelector(world).clear();
             session.dispatchCUISelection(player);
-            player.print("Selection cleared.");
+            player.print("Выделение очищено.");
             return;
         }
 
@@ -730,46 +730,46 @@ public class SelectionCommands {
         final RegionSelector selector;
         if (typeName.equalsIgnoreCase("cuboid")) {
             selector = new CuboidRegionSelector(oldSelector);
-            player.print("Cuboid: left click for point 1, right click for point 2");
+            player.print("Кубоид: ЛКМ для точки 1, ПКМ для точки 2");
         } else if (typeName.equalsIgnoreCase("extend")) {
             selector = new ExtendingCuboidRegionSelector(oldSelector);
-            player.print("Cuboid: left click for a starting point, right click to extend");
+            player.print("Кубоид: ЛКМ для начальной точки, ПКМ, чтобы расширить");
         } else if (typeName.equalsIgnoreCase("poly")) {
             selector = new Polygonal2DRegionSelector(oldSelector);
-            player.print("2D polygon selector: Left/right click to add a point.");
+            player.print("2D полигон: ЛКМ/ПКМ чтобы добавить точку.");
             Optional<Integer> limit = ActorSelectorLimits.forActor(player).getPolygonVertexLimit();
             if (limit.isPresent()) {
-                player.print(limit.get() + " points maximum.");
+                player.print(limit.get() + " точек максимум.");
             }
         } else if (typeName.equalsIgnoreCase("ellipsoid")) {
             selector = new EllipsoidRegionSelector(oldSelector);
-            player.print("Ellipsoid selector: left click=center, right click to extend");
+            player.print("Элипсоид: ЛКМ=центр, ПКМ, чтобы расширить");
         } else if (typeName.equalsIgnoreCase("sphere")) {
             selector = new SphereRegionSelector(oldSelector);
-            player.print("Sphere selector: left click=center, right click to set radius");
+            player.print("Сфера: ЛКМ=центр, ПКМ, чтобы установить радиус");
         } else if (typeName.equalsIgnoreCase("cyl")) {
             selector = new CylinderRegionSelector(oldSelector);
-            player.print("Cylindrical selector: Left click=center, right click to extend.");
+            player.print("Цилиндр: ЛКМ=центр, ПКМ, чтобы расширить.");
         } else if (typeName.equalsIgnoreCase("convex") || typeName.equalsIgnoreCase("hull") || typeName.equalsIgnoreCase("polyhedron")) {
             selector = new ConvexPolyhedralRegionSelector(oldSelector);
-            player.print("Convex polyhedral selector: Left click=First vertex, right click to add more.");
+            player.print("Выпуклый полиэдральное выделение: ЛКМ=Первая вершина, ПКМ, чтобы расширить.");
             Optional<Integer> limit = ActorSelectorLimits.forActor(player).getPolyhedronVertexLimit();
             if (limit.isPresent()) {
-                player.print(limit.get() + " points maximum.");
+                player.print(limit.get() + " максимальное количество очков.");
             }
         } else {
-            CommandListBox box = new CommandListBox("Selection modes");
+            CommandListBox box = new CommandListBox("Режимы выбора");
             StyledFragment contents = box.getContents();
             StyledFragment tip = contents.createFragment(Style.RED);
-            tip.append("Select one of the modes below:").newLine();
+            tip.append("Выберите один из перечисленных ниже режимов:").newLine();
 
-            box.appendCommand("cuboid", "Select two corners of a cuboid");
-            box.appendCommand("extend", "Fast cuboid selection mode");
-            box.appendCommand("poly", "Select a 2D polygon with height");
-            box.appendCommand("ellipsoid", "Select an ellipsoid");
-            box.appendCommand("sphere", "Select a sphere");
-            box.appendCommand("cyl", "Select a cylinder");
-            box.appendCommand("convex", "Select a convex polyhedral");
+            box.appendCommand("cuboid", "Выберите два угла прямоугольного кубоид");
+            box.appendCommand("extend", "Режим быстрого выбора кубоида");
+            box.appendCommand("poly", "Выберите 2D многоугольник с высоты");
+            box.appendCommand("ellipsoid", "Выбрать эллипсоид");
+            box.appendCommand("sphere", "Выбрать сферу");
+            box.appendCommand("cyl", "Выбрать цилиндр");
+            box.appendCommand("convex", "Выберите выпуклый многогранник");
 
             player.printRaw(ColorCodeBuilder.asColorCodes(box));
             return;
@@ -786,9 +786,9 @@ public class SelectionCommands {
 
             if (found != null) {
                 session.setDefaultRegionSelector(found);
-                player.print("Your default region selector is now " + found.name() + ".");
+                player.print("Ваш регион выбран по умолчанию " + found.name() + ".");
             } else {
-                throw new RuntimeException("Something unexpected happened. Please report this.");
+                throw new RuntimeException("Что-то пошло не так. Пожалуйста, сообщите об этом.");
             }
         }
 

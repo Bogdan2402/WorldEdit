@@ -134,13 +134,13 @@ public class EntityRemover {
         if (type != null) {
             this.type = type;
         } else {
-            throw new CommandException("Acceptable types: projectiles, items, paintings, itemframes, boats, minecarts, tnt, xp, or all");
+            throw new CommandException("Допустимые типы: projectiles, items, paintings, itemframes, boats, minecarts, tnt, xp, или all");
         }
     }
 
     public EntityFunction createFunction(final EntityRegistry entityRegistry) {
         final Type type = this.type;
-        checkNotNull("type can't be null", type);
+        checkNotNull("тип не может быть пустым", type);
         return new EntityFunction() {
             @Override
             public boolean apply(Entity entity) throws WorldEditException {

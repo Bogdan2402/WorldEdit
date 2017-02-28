@@ -72,7 +72,7 @@ public class BlockReplacer implements DoubleActionBlockTool {
         BlockType type = BlockType.fromID(targetBlock.getType());
 
         if (type != null) {
-            player.print("Replacer tool switched to: " + type.getName());
+            player.print("Инстумент замены включен для: " + type.getName());
         }
 
         return true;

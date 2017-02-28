@@ -69,7 +69,7 @@ public class BukkitPlayerBlockBag extends BlockBag {
         boolean usesDamageValue = ItemType.usesDamageValue(id);
 
         if (id == BlockID.AIR) {
-            throw new IllegalArgumentException("Can't fetch air block");
+            throw new IllegalArgumentException("Не удалось получить блок воздуха");
         }
 
         loadInventory();
@@ -124,7 +124,7 @@ public class BukkitPlayerBlockBag extends BlockBag {
         boolean usesDamageValue = ItemType.usesDamageValue(id);
 
         if (id == BlockID.AIR) {
-            throw new IllegalArgumentException("Can't store air block");
+            throw new IllegalArgumentException("Нельзя хранить блок воздуха");
         }
 
         loadInventory();

@@ -30,6 +30,6 @@ class WorldUnloadedException extends WorldEditException {
      * Create a new instance.
      */
     WorldUnloadedException() {
-        super("The world was unloaded already");
+        super("Мир уже выгружен");
     }
 }

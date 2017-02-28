@@ -76,13 +76,13 @@ public class SchematicWriter implements ClipboardWriter {
         int length = region.getLength();
 
         if (width > MAX_SIZE) {
-            throw new IllegalArgumentException("Width of region too large for a .schematic");
+            throw new IllegalArgumentException("Ширина области слишком большая для .schematic");
         }
         if (height > MAX_SIZE) {
-            throw new IllegalArgumentException("Height of region too large for a .schematic");
+            throw new IllegalArgumentException("Высота области слишком большая для .schematic");
         }
         if (length > MAX_SIZE) {
-            throw new IllegalArgumentException("Length of region too large for a .schematic");
+            throw new IllegalArgumentException("Длина области слишком большая для .schematic");
         }
 
         // ====================================================================

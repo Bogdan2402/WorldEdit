@@ -50,9 +50,9 @@ public final class DocumentationPrinter {
 
         List<Class<?>> commandClasses = getCommandClasses(commandsDir);
 
-        System.out.println("Writing permissions wiki table...");
+        System.out.println("Запись таблицы разрешений wiki...");
         writePermissionsWikiTable(commandClasses);
-        System.out.println("Writing Bukkit plugin.yml...");
+        System.out.println("Написание Bukkit plugin.yml...");
         writeBukkitYAML();
 
         System.out.println("Done!");
@@ -200,8 +200,7 @@ public final class DocumentationPrinter {
 
         stream.println();
         stream.println();
-        stream.println("# Permissions aren't here. Read http://wiki.sk89q.com/wiki/WEPIF/DinnerPerms");
-        stream.println("# for how WorldEdit permissions actually work.");
+        stream.println("# Разрешения находятся не тут. Читайте http://wiki.sk89q.com/wiki/WEPIF/DinnerPerms");
     }
 
 }

@@ -55,7 +55,7 @@ public class SinglePickaxe implements BlockTool {
         try {
             editSession.setBlock(clicked.toVector(), new BaseBlock(BlockID.AIR));
         } catch (MaxChangedBlocksException e) {
-            player.printError("Max blocks change limit reached.");
+            player.printError("Максимальное значение лимита изменения блоков достигнут.");
         } finally {
             editSession.flushQueue();
         }

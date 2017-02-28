@@ -32,7 +32,7 @@ public class ActorAuthorizer implements Authorizer {
     public boolean testPermission(CommandLocals locals, String permission) {
         Actor sender = locals.get(Actor.class);
         if (sender == null) {
-            throw new RuntimeException("Uh oh! No 'Actor' specified so that we can check permissions");
+            throw new RuntimeException("Ой-ой! Не указан 'Актер', так что мы не можем проверить разрешения");
         } else {
             return sender.hasPermission(permission);
         }

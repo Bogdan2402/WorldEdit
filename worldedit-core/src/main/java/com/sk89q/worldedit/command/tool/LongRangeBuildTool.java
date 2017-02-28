@@ -87,7 +87,7 @@ public class LongRangeBuildTool extends BrushTool implements DoubleActionTraceTo
         target = player.getBlockTraceFace(getRange(), true);
 
         if (target == null) {
-            player.printError("No block in sight!");
+            player.printError("Нет блоков в поле зрения!");
             return null;
         }
 

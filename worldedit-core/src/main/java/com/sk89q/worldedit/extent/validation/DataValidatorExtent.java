@@ -61,7 +61,7 @@ public class DataValidatorExtent extends AbstractDelegateExtent {
         }
 
         if (block.getData() < 0) {
-            throw new SevereValidationException("Cannot set a data value that is less than 0");
+            throw new SevereValidationException("Не удается задать значение данных, которое меньше 0");
         }
 
         return super.setBlock(location, block);

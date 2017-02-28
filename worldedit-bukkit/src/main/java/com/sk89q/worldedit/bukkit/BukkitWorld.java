@@ -128,7 +128,7 @@ public class BukkitWorld extends LocalWorld {
      * @return the world
      */
     public World getWorld() {
-        return checkNotNull(worldRef.get(), "The world was unloaded and the reference is unavailable");
+        return checkNotNull(worldRef.get(), "Мир был выгружен и ссылка недоступна");
     }
 
     /**
@@ -175,7 +175,7 @@ public class BukkitWorld extends LocalWorld {
             try {
                 getWorld().regenerateChunk(chunk.getBlockX(), chunk.getBlockZ());
             } catch (Throwable t) {
-                logger.log(Level.WARNING, "Chunk generation via Bukkit raised an error", t);
+                logger.log(Level.WARNING, "Генерация чанка через Bukkit вызвала ошибку", t);
             }
 
             // Then restore

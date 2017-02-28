@@ -47,32 +47,19 @@ public class WorldEditCommands {
     @Command(
         aliases = { "version", "ver" },
         usage = "",
-        desc = "Get WorldEdit version",
+        desc = "Показать версию WorldGuard",
         min = 0,
         max = 0
     )
     public void version(Actor actor) throws WorldEditException {
-        actor.print("WorldEdit version " + WorldEdit.getVersion());
-        actor.print("https://github.com/sk89q/worldedit/");
-
-        PlatformManager pm = we.getPlatformManager();
-
-        actor.printDebug("----------- Platforms -----------");
-        for (Platform platform : pm.getPlatforms()) {
-            actor.printDebug(String.format("* %s (%s)", platform.getPlatformName(), platform.getPlatformVersion()));
-        }
-
-        actor.printDebug("----------- Capabilities -----------");
-        for (Capability capability : Capability.values()) {
-            Platform platform = pm.queryCapability(capability);
-            actor.printDebug(String.format("%s: %s", capability.name(), platform != null ? platform.getPlatformName() : "NONE"));
-        }
+        actor.print("§eВерсия WorldEdit 6.1.7-SNAPSHOT;");
+        actor.print("§ahttp://vk.com/b_o_d_ik §7§l| §7Перевел §eMrBogdan2402");
     }
 
     @Command(
         aliases = { "reload" },
         usage = "",
-        desc = "Reload configuration",
+        desc = "Перезагрузить WorldEdit",
         min = 0,
         max = 0
     )
@@ -80,13 +67,13 @@ public class WorldEditCommands {
     public void reload(Actor actor) throws WorldEditException {
         we.getServer().reload();
         we.getEventBus().post(new ConfigurationLoadEvent(we.getPlatformManager().queryCapability(Capability.CONFIGURATION).getConfiguration()));
-        actor.print("Configuration reloaded!");
+        actor.print("Конфигурация перезагружена!");
     }
 
     @Command(
         aliases = { "cui" },
         usage = "",
-        desc = "Complete CUI handshake (internal usage)",
+        desc = "Связаться с модом WorldEditCUI",
         min = 0,
         max = 0
     )
@@ -97,23 +84,23 @@ public class WorldEditCommands {
 
     @Command(
         aliases = { "tz" },
-        usage = "[timezone]",
-        desc = "Set your timezone for snapshots",
+        usage = "[часовой пояс]",
+        desc = "Установить вашу временную(Часовой пояс) зону",
         min = 1,
         max = 1
     )
     public void tz(Player player, LocalSession session, EditSession editSession, CommandContext args) throws WorldEditException {
         TimeZone tz = TimeZone.getTimeZone(args.getString(0));
         session.setTimezone(tz);
-        player.print("Timezone set for this session to: " + tz.getDisplayName());
-        player.print("The current time in that timezone is: "
+        player.print("Временная зона установлена для этой сессии на: " + tz.getDisplayName());
+        player.print("Время в вашей временной зоне: "
                 + dateFormat.format(Calendar.getInstance(tz).getTime()));
     }
 
     @Command(
         aliases = { "help" },
-        usage = "[<command>]",
-            desc = "Displays help for WorldEdit commands",
+        usage = "[<команда>]",
+            desc = "Показать помощь по определенной команде или вывести список всех команд",
         min = 0,
         max = -1
     )

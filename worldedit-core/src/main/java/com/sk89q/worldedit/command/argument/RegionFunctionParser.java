@@ -34,7 +34,7 @@ public class RegionFunctionParser extends BranchingCommand<Contextual<? extends 
 
     @Override
     public String getDescription() {
-        return "Choose a block function";
+        return "Выбрать функцию блока";
     }
 
 }

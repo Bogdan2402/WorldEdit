@@ -52,7 +52,7 @@ public class SnapshotUtilCommands {
     @Command(
             aliases = { "restore", "/restore" },
             usage = "[snapshot]",
-            desc = "Restore the selection from a snapshot",
+            desc = "Восстановить выделенную территорию из резервной копии",
             min = 0,
             max = 1
     )
@@ -63,7 +63,7 @@ public class SnapshotUtilCommands {
         LocalConfiguration config = we.getConfiguration();
 
         if (config.snapshotRepo == null) {
-            player.printError("Snapshot/backup restore is not configured.");
+            player.printError("Востановление резервной копии не настроено.");
             return;
         }
 
@@ -74,7 +74,7 @@ public class SnapshotUtilCommands {
             try {
                 snapshot = config.snapshotRepo.getSnapshot(args.getString(0));
             } catch (InvalidSnapshotException e) {
-                player.printError("That snapshot does not exist or is not available.");
+                player.printError("Эта резервная копия не доступна или не найдена.");
                 return;
             }
         } else {
@@ -87,24 +87,24 @@ public class SnapshotUtilCommands {
                 snapshot = config.snapshotRepo.getDefaultSnapshot(player.getWorld().getName());
 
                 if (snapshot == null) {
-                    player.printError("No snapshots were found. See console for details.");
+                    player.printError("Резервных копий не найдено. Смотрите консоль для деталей.");
 
                     // Okay, let's toss some debugging information!
                     File dir = config.snapshotRepo.getDirectory();
 
                     try {
-                        logger.info("WorldEdit found no snapshots: looked in: "
+                        logger.info("WorldEdit не нашел резервных копий: смотрел в: "
                                 + dir.getCanonicalPath());
                     } catch (IOException e) {
-                        logger.info("WorldEdit found no snapshots: looked in "
-                                + "(NON-RESOLVABLE PATH - does it exist?): "
+                        logger.info("WorldEdit не нашел резервных копий: смотрел в "
+                                + "(NON-RESOLVABLE PATH - существует ли она?): "
                                 + dir.getPath());
                     }
 
                     return;
                 }
             } catch (MissingWorldException ex) {
-                player.printError("No snapshots were found for this world.");
+                player.printError("Резервных копий в этом мире нет.");
                 return;
             }
         }
@@ -114,12 +114,12 @@ public class SnapshotUtilCommands {
         // Load chunk store
         try {
             chunkStore = snapshot.getChunkStore();
-            player.print("Snapshot '" + snapshot.getName() + "' loaded; now restoring...");
+            player.print("Резервная копия '" + snapshot.getName() + "' загружена; восстанавление...");
         } catch (DataException e) {
-            player.printError("Failed to load snapshot: " + e.getMessage());
+            player.printError("Ошибка при загрузке резервной копии: " + e.getMessage());
             return;
         } catch (IOException e) {
-            player.printError("Failed to load snapshot: " + e.getMessage());
+            player.printError("Ошибка при загрузке резервной копии: " + e.getMessage());
             return;
         }
 
@@ -133,14 +133,14 @@ public class SnapshotUtilCommands {
             if (restore.hadTotalFailure()) {
                 String error = restore.getLastErrorMessage();
                 if (error != null) {
-                    player.printError("Errors prevented any blocks from being restored.");
-                    player.printError("Last error: " + error);
+                    player.printError("Ошибка восстановления блоков.");
+                    player.printError("Последняя ошибка: " + error);
                 } else {
-                    player.printError("No chunks could be loaded. (Bad archive?)");
+                    player.printError("Нет чанков для загрузки. (Плохой архив??)");
                 }
             } else {
-                player.print(String.format("Restored; %d "
-                        + "missing chunks and %d other errors.",
+                player.print(String.format("Восстановлено; %d "
+                        + "пропущено чанков %d и других ошибок.",
                         restore.getMissingChunks().size(),
                         restore.getErrorChunks().size()));
             }

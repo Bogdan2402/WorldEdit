@@ -57,10 +57,10 @@ public class TreeGeneratorParser implements CommandExecutor<Contextual<ForestGen
             if (type != null) {
                 return new GeneratorFactory(type);
             } else {
-                throw new CommandException("Unknown value for <" + name + "> (try one of " + getOptionsList() + ").");
+                throw new CommandException("Неизвестное значение для <" + name + "> (попробуйте один из " + getOptionsList() + ").");
             }
         } catch (MissingArgumentException e) {
-            throw new CommandException("Missing value for <" + name + "> (try one of " + getOptionsList() + ").");
+            throw new CommandException("Неизвестное значение для <" + name + "> (попробуйте один из " + getOptionsList() + ").");
         }
     }
 
@@ -77,7 +77,7 @@ public class TreeGeneratorParser implements CommandExecutor<Contextual<ForestGen
 
     @Override
     public String getDescription() {
-        return "Choose a tree generator";
+        return "Выбрать генератор дерева";
     }
 
     @Override
@@ -99,7 +99,7 @@ public class TreeGeneratorParser implements CommandExecutor<Contextual<ForestGen
 
         @Override
         public String toString() {
-            return "tree of type " + type;
+            return "тип дерева " + type;
         }
     }
 

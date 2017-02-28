@@ -187,7 +187,7 @@ public class CommandContext {
 
                     if (valueFlags.contains(flagName)) {
                         if (this.valueFlags.containsKey(flagName)) {
-                            throw new CommandException("Value flag '" + flagName + "' already given");
+                            throw new CommandException("Значение флага '" + flagName + "' уже установлено");
                         }
 
                         if (nextArg >= argList.size()) {
@@ -195,7 +195,7 @@ public class CommandContext {
                                 suggestionContext = SuggestionContext.flag(flagName);
                                 break;
                             } else {
-                                throw new CommandException("No value specified for the '-" + flagName + "' flag.");
+                                throw new CommandException("Данного значения для флага '-" + flagName + "' не существует.");
                             }
                         }
 

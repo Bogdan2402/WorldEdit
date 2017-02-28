@@ -53,8 +53,8 @@ public class ScriptingCommands {
 
     @Command(
         aliases = { "cs" },
-        usage = "<filename> [args...]",
-        desc = "Execute a CraftScript",
+        usage = "<имя_файла> [аргументы...]",
+        desc = "Выполнить CraftScript",
         min = 1,
         max = -1
     )
@@ -66,7 +66,7 @@ public class ScriptingCommands {
         String name = args.getString(0);
 
         if (!player.hasPermission("worldedit.scripting.execute." + name)) {
-            player.printError("You don't have permission to use that script.");
+            player.printError("У вас нет разрешения использовать этот скрипт.");
             return;
         }
 
@@ -81,7 +81,7 @@ public class ScriptingCommands {
     @Command(
         aliases = { ".s" },
         usage = "[args...]",
-        desc = "Execute last CraftScript",
+        desc = "Выполнить последний CraftScript",
         min = 0,
         max = -1
     )
@@ -92,12 +92,12 @@ public class ScriptingCommands {
         String lastScript = session.getLastScript();
 
         if (!player.hasPermission("worldedit.scripting.execute." + lastScript)) {
-            player.printError("You don't have permission to use that script.");
+            player.printError("У вас нет разрешения использовать этот скрипт.");
             return;
         }
 
         if (lastScript == null) {
-            player.printError("Use /cs with a script name first.");
+            player.printError("Используйте /cs с именем первого скрипта.");
             return;
         }
 

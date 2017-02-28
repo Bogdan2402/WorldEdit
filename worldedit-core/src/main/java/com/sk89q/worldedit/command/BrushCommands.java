@@ -70,12 +70,12 @@ public class BrushCommands {
 
     @Command(
         aliases = { "sphere", "s" },
-        usage = "<pattern> [radius]",
+        usage = "<шаблон> [радиус]",
         flags = "h",
-        desc = "Choose the sphere brush",
+        desc = "Выбрать сферичную кисть с радиусом",
         help =
-            "Chooses the sphere brush.\n" +
-            "The -h flag creates hollow spheres instead.",
+            "Выбрать сферичную кисть с радиусом.\n" +
+            "Флаг -h создает полые сферы.",
         min = 1,
         max = 2
     )
@@ -94,17 +94,17 @@ public class BrushCommands {
             tool.setBrush(new SphereBrush(), "worldedit.brush.sphere");
         }
 
-        player.print(String.format("Sphere brush shape equipped (%.0f).", radius));
+        player.print(String.format("Форма сферичной кисти сформирована (%.0f).", radius));
     }
 
     @Command(
         aliases = { "cylinder", "cyl", "c" },
-        usage = "<block> [radius] [height]",
+        usage = "<блок> [радиус] [высота]",
         flags = "h",
-        desc = "Choose the cylinder brush",
+        desc = "Выбрать цилиндрическую кисть",
         help =
-            "Chooses the cylinder brush.\n" +
-            "The -h flag creates hollow cylinders instead.",
+            "Выбрать цилиндрическую кисть.\n" +
+            "Флаг -h создает полые цилиндра.",
         min = 1,
         max = 3
     )
@@ -124,19 +124,19 @@ public class BrushCommands {
             tool.setBrush(new CylinderBrush(height), "worldedit.brush.cylinder");
         }
 
-        player.print(String.format("Cylinder brush shape equipped (%.0f by %d).", radius, height));
+        player.print(String.format("Форма цилиндрической кисти сформирована (%.0f к %d).", radius, height));
     }
 
     @Command(
         aliases = { "clipboard", "copy" },
         usage = "",
-        desc = "Choose the clipboard brush",
+        desc = "Выбрать кисть из буфера обмена",
         help =
-            "Chooses the clipboard brush.\n" +
-            "The -a flag makes it not paste air.\n" +
-            "Without the -p flag, the paste will appear centered at the target location. " +
-            "With the flag, then the paste will appear relative to where you had " +
-            "stood relative to the copied area when you copied it."
+            "Выбрать кисть из буфера обмена.\n" +
+            "-a чтобы пропустить блоки воздуха.\n" +
+            "Без флага -p ,вставка будет отображаться по центру в целевом месте. " +
+            "С флагом, вставка будет появляться относительно того, где вы были " +
+            "по отношению к скопированной области при копировании его."
     )
     @CommandPermissions("worldedit.brush.clipboard")
     public void clipboardBrush(Player player, LocalSession session, EditSession editSession, @Switch('a') boolean ignoreAir, @Switch('p') boolean usingOrigin) throws WorldEditException {
@@ -152,17 +152,17 @@ public class BrushCommands {
         BrushTool tool = session.getBrushTool(player.getItemInHand());
         tool.setBrush(new ClipboardBrush(holder, ignoreAir, usingOrigin), "worldedit.brush.clipboard");
 
-        player.print("Clipboard brush shape equipped.");
+        player.print("Форма кисти сформирвана.");
     }
 
     @Command(
         aliases = { "smooth" },
-        usage = "[size] [iterations]",
+        usage = "[размер] [повторение]",
         flags = "n",
-        desc = "Choose the terrain softener brush",
+        desc = "Выбрать кисть сглаживания поверхности",
         help =
-            "Chooses the terrain softener brush.\n" +
-            "The -n flag makes it only consider naturally occurring blocks.",
+            "Выбрать кисть сглаживания поверхности.\n" +
+            "-n чтобы сглаживать только натуральные (природные) структуры.",
         min = 0,
         max = 2
     )
@@ -177,14 +177,14 @@ public class BrushCommands {
         tool.setSize(radius);
         tool.setBrush(new SmoothBrush(iterations, naturalBlocksOnly), "worldedit.brush.smooth");
 
-        player.print(String.format("Smooth brush equipped (%.0f x %dx, using " + (naturalBlocksOnly ? "natural blocks only" : "any block") + ").",
+        player.print(String.format("Сглаживательная кисть сформирована (%.0f x %dx, используя " + (naturalBlocksOnly ? "только натуральные блоки" : "любой блок") + ").",
                 radius, iterations));
     }
 
     @Command(
         aliases = { "ex", "extinguish" },
-        usage = "[radius]",
-        desc = "Shortcut fire extinguisher brush",
+        usage = "[радиус]",
+        desc = "Выбрать огнетушительую кисть",
         min = 0,
         max = 1
     )
@@ -199,18 +199,18 @@ public class BrushCommands {
         tool.setMask(new BlockMask(editSession, new BaseBlock(BlockID.FIRE)));
         tool.setBrush(new SphereBrush(), "worldedit.brush.ex");
 
-        player.print(String.format("Extinguisher equipped (%.0f).", radius));
+        player.print(String.format("форма огнетушительной кисти сформирована (%.0f).", radius));
     }
 
     @Command(
             aliases = { "gravity", "grav" },
-            usage = "[radius]",
+            usage = "[радиус]",
             flags = "h",
-            desc = "Gravity brush",
+            desc = "Выбрать кисть симуляции гравитации",
             help =
-                "This brush simulates the affect of gravity.\n" +
-                "The -h flag makes it affect blocks starting at the world's max y, " +
-                    "instead of the clicked block's y + radius.",
+                "Выбрать кисть симуляции гравитации (заставляет блоки падать).\n" +
+                "Флаг -h влияет на блоки , начиная с мира max y, " +
+                    "вместо нажатия блока y + радиус.",
             min = 0,
             max = 1
     )
@@ -222,26 +222,26 @@ public class BrushCommands {
         tool.setSize(radius);
         tool.setBrush(new GravityBrush(fromMaxY), "worldedit.brush.gravity");
 
-        player.print(String.format("Gravity brush equipped (%.0f).",
+        player.print(String.format("Форма гравитационной кисти сформиована (%.0f).",
                 radius));
     }
     
     @Command(
             aliases = { "butcher", "kill" },
-            usage = "[radius]",
+            usage = "[радиус]",
             flags = "plangbtfr",
-            desc = "Butcher brush",
-            help = "Kills nearby mobs within the specified radius.\n" +
-                    "Flags:\n" +
-                    "  -p also kills pets.\n" +
-                    "  -n also kills NPCs.\n" +
-                    "  -g also kills Golems.\n" +
-                    "  -a also kills animals.\n" +
-                    "  -b also kills ambient mobs.\n" +
-                    "  -t also kills mobs with name tags.\n" +
-                    "  -f compounds all previous flags.\n" +
-                    "  -r also destroys armor stands.\n" +
-                    "  -l currently does nothing.",
+            desc = "Выбрат кисть уничтожения мобов",
+            help = "Уничтожение мобов с определенным радиусом.\n" +
+                    "Флаги:\n" +
+                    "  -p убить питомцев.\n" +
+                    "  -n убить NPC.\n" +
+                    "  -g убить Големов.\n" +
+                    "  -a убить животных.\n" +
+                    "  -b убить окружающих мобов.\n" +
+                    "  -t убить мобов с именами.\n" +
+                    "  -f соединить все предыдущие флаги.\n" +
+                    "  -r разружить Стойки для брони.\n" +
+                    "  -l в настоящее время ничего не делает.",
             min = 0,
             max = 1
     )
@@ -258,7 +258,7 @@ public class BrushCommands {
             maxRadius = Math.max(config.maxBrushRadius, config.butcherMaxRadius);
         }
         if (radius > maxRadius) {
-            player.printError("Maximum allowed brush radius: " + maxRadius);
+            player.printError("Максимально допустимый радиус кисти: " + maxRadius);
             return;
         }
 
@@ -269,6 +269,6 @@ public class BrushCommands {
         tool.setSize(radius);
         tool.setBrush(new ButcherBrush(flags), "worldedit.brush.butcher");
 
-        player.print(String.format("Butcher brush equipped (%.0f).", radius));
+        player.print(String.format("Форма уничтожительной кисти сформирована (%.0f).", radius));
     }
 }

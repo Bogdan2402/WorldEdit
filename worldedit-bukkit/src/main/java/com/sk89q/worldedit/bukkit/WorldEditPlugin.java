@@ -140,25 +140,25 @@ public class WorldEditPlugin extends JavaPlugin implements TabCompleter {
         try {
             adapterLoader.addFromPath(getClass().getClassLoader());
         } catch (IOException e) {
-            log.log(Level.WARNING, "Failed to search path for Bukkit adapters");
+            log.log(Level.WARNING, "Не удалось найти путь для Bukkit адаптеров");
         }
 
         try {
             adapterLoader.addFromJar(getFile());
         } catch (IOException e) {
-            log.log(Level.WARNING, "Failed to search " + getFile() + " for Bukkit adapters", e);
+            log.log(Level.WARNING, "Не удалось найти " + getFile() + " для Bukkit адаптеров", e);
         }
         try {
             bukkitAdapter = adapterLoader.loadAdapter();
-            log.log(Level.INFO, "Using " + bukkitAdapter.getClass().getCanonicalName() + " as the Bukkit adapter");
+            log.log(Level.INFO, "Использую " + bukkitAdapter.getClass().getCanonicalName() + " для Bukkit адаптеров");
         } catch (AdapterLoadException e) {
             Platform platform = worldEdit.getPlatformManager().queryCapability(Capability.WORLD_EDITING);
             if (platform instanceof BukkitServerInterface) {
                 log.log(Level.WARNING, e.getMessage());
             } else {
-                log.log(Level.INFO, "WorldEdit could not find a Bukkit adapter for this MC version, " +
-                        "but it seems that you have another implementation of WorldEdit installed (" + platform.getPlatformName() + ") " +
-                        "that handles the world editing.");
+                log.log(Level.INFO, "WorldEdit не смог найти Bukkit адаптер для этой версии MC, " +
+                        "но кажется, что у вас установлена еще одна версия WorldEdit (" + platform.getPlatformName() + ") " +
+                        "которая обрабатывает мир редактирования.");
             }
         }
     }
@@ -204,7 +204,7 @@ public class WorldEditPlugin extends JavaPlugin implements TabCompleter {
                 if (copy == null) throw new FileNotFoundException();
                 input = file.getInputStream(copy);
             } catch (IOException e) {
-                getLogger().severe("Unable to read default configuration: " + name);
+                getLogger().severe("Не удается прочитать конфигурацию по умолчанию: " + name);
             }
             if (input != null) {
                 FileOutputStream output = null;
@@ -217,9 +217,9 @@ public class WorldEditPlugin extends JavaPlugin implements TabCompleter {
                         output.write(buf, 0, length);
                     }
 
-                    getLogger().info("Default configuration file written: " + name);
+                    getLogger().info("Конфигурация записана по умолчанию: " + name);
                 } catch (IOException e) {
-                    getLogger().log(Level.WARNING, "Failed to write default config file", e);
+                    getLogger().log(Level.WARNING, "Не удалось записать конфигурационный файл по умолчанию", e);
                 } finally {
                     try {
                         input.close();
@@ -404,10 +404,10 @@ public class WorldEditPlugin extends JavaPlugin implements TabCompleter {
      */
     public Selection getSelection(Player player) {
         if (player == null) {
-            throw new IllegalArgumentException("Null player not allowed");
+            throw new IllegalArgumentException("Отсутствие игрока не допускается");
         }
         if (!player.isOnline()) {
-            throw new IllegalArgumentException("Offline player not allowed");
+            throw new IllegalArgumentException("Оффлайн игрок не допускается");
         }
 
         LocalSession session = WorldEdit.getInstance().getSession(wrapPlayer(player));
@@ -439,13 +439,13 @@ public class WorldEditPlugin extends JavaPlugin implements TabCompleter {
      */
     public void setSelection(Player player, Selection selection) {
         if (player == null) {
-            throw new IllegalArgumentException("Null player not allowed");
+            throw new IllegalArgumentException("Отсутствие игрока не допускается");
         }
         if (!player.isOnline()) {
-            throw new IllegalArgumentException("Offline player not allowed");
+            throw new IllegalArgumentException("Оффлайн игрок не допускается");
         }
         if (selection == null) {
-            throw new IllegalArgumentException("Null selection not allowed");
+            throw new IllegalArgumentException("Отсутствие выделения не допускается");
         }
 
         LocalSession session = WorldEdit.getInstance().getSession(wrapPlayer(player));

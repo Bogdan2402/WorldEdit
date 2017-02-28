@@ -50,7 +50,7 @@ public class StringParser implements CommandExecutor<String> {
         try {
             return args.next();
         } catch (MissingArgumentException e) {
-            throw new CommandException("Missing value for <" + name + ">.");
+            throw new CommandException("Недостающее значение <" + name + ">.");
         }
     }
 

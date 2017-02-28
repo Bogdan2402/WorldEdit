@@ -58,9 +58,9 @@ public enum RegionSelectorType {
         try {
             return getSelectorClass().newInstance();
         } catch (InstantiationException e) {
-            throw new RuntimeException("Could not create selector", e);
+            throw new RuntimeException("Не удалось создать выделение", e);
         } catch (IllegalAccessException e) {
-            throw new RuntimeException("Could not create selector", e);
+            throw new RuntimeException("Не удалось создать выделение", e);
         }
     }
 

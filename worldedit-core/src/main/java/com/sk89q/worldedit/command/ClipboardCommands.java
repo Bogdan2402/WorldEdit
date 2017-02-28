@@ -67,12 +67,12 @@ public class ClipboardCommands {
     @Command(
         aliases = { "/copy" },
         flags = "em",
-        desc = "Copy the selection to the clipboard",
-        help = "Copy the selection to the clipboard\n" +
-                "Flags:\n" +
-                "  -e controls whether entities are copied\n" +
-                "  -m sets a source mask so that excluded blocks become air\n" +
-                "WARNING: Pasting entities cannot yet be undone!",
+        desc = "Cкопировать выделенную область в буфер обмена",
+        help = "Cкопировать выделеную область в буфер обмена\n" +
+                "Флаги:\n" +
+                "  -e для копирования сущностей в нем\n" +
+                "  -m задает маску исходного, чтобы исключить блоки воздуха\n" +
+                "ВНИМАНИЕ: Вставка сущностей не может быть отменена!",
         min = 0,
         max = 0
     )
@@ -90,19 +90,19 @@ public class ClipboardCommands {
         Operations.completeLegacy(copy);
         session.setClipboard(new ClipboardHolder(clipboard, editSession.getWorld().getWorldData()));
 
-        player.print(region.getArea() + " block(s) were copied.");
+        player.print(region.getArea() + " блок(ов) скопировано.");
     }
 
     @Command(
         aliases = { "/cut" },
         flags = "em",
-        usage = "[leave-id]",
-        desc = "Cut the selection to the clipboard",
-        help = "Copy the selection to the clipboard\n" +
-                "Flags:\n" +
-                "  -e controls whether entities are copied\n" +
-                "  -m sets a source mask so that excluded blocks become air\n" +
-                "WARNING: Cutting and pasting entities cannot yet be undone!",
+        usage = "[выходной-id]",
+        desc = "Вырезать выделенную область в буфер обмена",
+        help = "Вырезать выделенную область в буфер обмена\n" +
+                "Флаги:\n" +
+                "  -e для вырезания также сущностей в нем\n" +
+                "  -m задает маску исходного, чтобы исключить блоки воздуха\n" +
+                "ВНИМАНИЕ: Вырезание и вставка сущностей не может быть отменена!",
         min = 0,
         max = 1
     )
@@ -122,20 +122,20 @@ public class ClipboardCommands {
         Operations.completeLegacy(copy);
         session.setClipboard(new ClipboardHolder(clipboard, editSession.getWorld().getWorldData()));
 
-        player.print(region.getArea() + " block(s) were copied.");
+        player.print(region.getArea() + " блок(ов) скопировано.");
     }
 
     @Command(
         aliases = { "/paste" },
         usage = "",
         flags = "sao",
-        desc = "Paste the clipboard's contents",
+        desc = "Вставить содержимое буфера обмена",
         help =
-            "Pastes the clipboard's contents.\n" +
-            "Flags:\n" +
-            "  -a skips air blocks\n" +
-            "  -o pastes at the original position\n" +
-            "  -s selects the region after pasting",
+            "Вставить содержимое буфера обмена.\n" +
+            "Флаги:\n" +
+            "  -a пропустить блоки воздуха\n" +
+            "  -o вставить в изначальной позиции\n" +
+            "  -s выбрать региона после вставки",
         min = 0,
         max = 0
     )
@@ -167,23 +167,23 @@ public class ClipboardCommands {
             selector.explainRegionAdjust(player, session);
         }
 
-        player.print("The clipboard has been pasted at " + to);
+        player.print("Буфер обмена был вставлен в " + to);
     }
 
     @Command(
         aliases = { "/rotate" },
-        usage = "<y-axis> [<x-axis>] [<z-axis>]",
-        desc = "Rotate the contents of the clipboard",
-        help = "Non-destructively rotate the contents of the clipboard.\n" +
-               "Angles are provided in degrees and a positive angle will result in a clockwise rotation. " +
-               "Multiple rotations can be stacked. Interpolation is not performed so angles should be a multiple of 90 degrees.\n"
+        usage = "<ось-y> [<ось-x>] [<ось-z>]",
+        desc = "Повернуть содержимое буфера обмена",
+        help = "Непагубно вращать содержимое буфера обмена.\n" +
+               "Углы в градусах и положительный угол приведет к вращению по часовой стрелке. " +
+               "Несколько оборотов могут быть уложены. Углы должны делиться на 90 градусов.\n"
     )
     @CommandPermissions("worldedit.clipboard.rotate")
     public void rotate(Player player, LocalSession session, Double yRotate, @Optional Double xRotate, @Optional Double zRotate) throws WorldEditException {
         if ((yRotate != null && Math.abs(yRotate % 90) > 0.001) ||
                 xRotate != null && Math.abs(xRotate % 90) > 0.001 ||
                 zRotate != null && Math.abs(zRotate % 90) > 0.001) {
-            player.printDebug("Note: Interpolation is not yet supported, so angles that are multiples of 90 is recommended.");
+            player.printDebug("Примечание: Интерполяция не поддерживается, поэтому углы рекомендуется кратные 90.");
         }
 
         ClipboardHolder holder = session.getClipboard();
@@ -192,15 +192,15 @@ public class ClipboardCommands {
         transform = transform.rotateX(-(xRotate != null ? xRotate : 0));
         transform = transform.rotateZ(-(zRotate != null ? zRotate : 0));
         holder.setTransform(holder.getTransform().combine(transform));
-        player.print("The clipboard copy has been rotated.");
+        player.print("Буфер обмена был повернут.");
     }
 
     @Command(
         aliases = { "/flip" },
-        usage = "[<direction>]",
-        desc = "Flip the contents of the clipboard",
+        usage = "[<направление>]",
+        desc = "Перевернуть содержимое буфера обмена",
         help =
-            "Flips the contents of the clipboard across the point from which the copy was made.\n",
+            "Перевернуть содержимое буфера обмена.\n",
         min = 0,
         max = 1
     )
@@ -212,45 +212,45 @@ public class ClipboardCommands {
         AffineTransform transform = new AffineTransform();
         transform = transform.scale(direction.positive().multiply(-2).add(1, 1, 1));
         holder.setTransform(holder.getTransform().combine(transform));
-        player.print("The clipboard copy has been flipped.");
+        player.print("Содержимое буфера обмена было перевернуто.");
     }
 
     @Command(
         aliases = { "/load" },
-        usage = "<filename>",
-        desc = "Load a schematic into your clipboard",
+        usage = "<имя_файла>",
+        desc = "Загрузить схематический файл в буфер обмена",
         min = 0,
         max = 1
     )
     @Deprecated
     @CommandPermissions("worldedit.clipboard.load")
     public void load(Actor actor) {
-        actor.printError("This command is no longer used. See //schematic load.");
+        actor.printError("Эта команда больше не используется. Используйте //schematic load.");
     }
 
     @Command(
         aliases = { "/save" },
-        usage = "<filename>",
-        desc = "Save a schematic into your clipboard",
+        usage = "<имя_файла>",
+        desc = "Сохранить буфер обмена в схематический файл",
         min = 0,
         max = 1
     )
     @Deprecated
     @CommandPermissions("worldedit.clipboard.save")
     public void save(Actor actor) {
-        actor.printError("This command is no longer used. See //schematic save.");
+        actor.printError("Эта команда больше не используется. Используйте //schematic save.");
     }
 
     @Command(
         aliases = { "clearclipboard" },
         usage = "",
-        desc = "Clear your clipboard",
+        desc = "Очистить буфер обмена",
         min = 0,
         max = 0
     )
     @CommandPermissions("worldedit.clipboard.clear")
     public void clearClipboard(Player player, LocalSession session, EditSession editSession) throws WorldEditException {
         session.setClipboard(null);
-        player.print("Clipboard cleared.");
+        player.print("Буфер обмена очищен.");
     }
 }

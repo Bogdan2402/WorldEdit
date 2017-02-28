@@ -73,7 +73,7 @@ public class DeformCommand extends SimpleCommand<Contextual<? extends Operation>
 
     @Override
     public String getDescription() {
-        return "Apply math expression to area";
+        return "Применить математическое выражение в области";
     }
 
     @Override

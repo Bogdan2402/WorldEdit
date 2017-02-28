@@ -84,7 +84,7 @@ public class NijiPermissionsResolver implements PermissionsResolver {
                 return api.Security.permission(player, permission);
             }
         } catch (Throwable t) {
-            log.log(Level.WARNING, "Failed to check permissions", t);
+            log.log(Level.WARNING, "Не удалось проверить разрешения", t);
             return false;
         }
     }
@@ -98,7 +98,7 @@ public class NijiPermissionsResolver implements PermissionsResolver {
                 return api.getHandler().has(server.getPlayerExact(name), permission);
             }
         } catch (Throwable t) {
-            log.log(Level.WARNING, "Failed to check permissions", t);
+            log.log(Level.WARNING, "Не удалось проверить разрешения", t);
             return false;
         }
     }
@@ -115,7 +115,7 @@ public class NijiPermissionsResolver implements PermissionsResolver {
                 return api.Security.inGroup(name, group);
             }
         } catch (Throwable t) {
-            log.log(Level.WARNING, "Failed to check groups", t);
+            log.log(Level.WARNING, "Не удалось проверить группы", t);
             return false;
         }
     }
@@ -139,7 +139,7 @@ public class NijiPermissionsResolver implements PermissionsResolver {
                 return groups;
             }
         } catch (Throwable t) {
-            log.log(Level.WARNING, "Failed to get groups", t);
+            log.log(Level.WARNING, "Не удалось получить группы", t);
             return new String[0];
         }
     }
@@ -172,7 +172,7 @@ public class NijiPermissionsResolver implements PermissionsResolver {
 
     @Override
     public String getDetectionMessage() {
-        return "Permissions plugin detected! Using Permissions plugin for permissions.";
+        return "Permissions обнаружен! Использую плагин Permissions для разрешений.";
     }
 
 }

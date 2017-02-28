@@ -46,7 +46,7 @@ public class BukkitCommandSender implements Actor {
     public BukkitCommandSender(WorldEditPlugin plugin, CommandSender sender) {
         checkNotNull(plugin);
         checkNotNull(sender);
-        checkArgument(!(sender instanceof Player), "Cannot wrap a player");
+        checkArgument(!(sender instanceof Player), "Не удается обернуть игрока");
 
         this.plugin = plugin;
         this.sender = sender;

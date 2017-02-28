@@ -39,7 +39,7 @@ public class PatternParser extends SimpleCommand<Pattern> {
     private final StringParser stringParser;
 
     public PatternParser(String name) {
-        stringParser = addParameter(new StringParser(name, "The pattern"));
+        stringParser = addParameter(new StringParser(name, "Шаблон"));
     }
 
     @Override
@@ -70,7 +70,7 @@ public class PatternParser extends SimpleCommand<Pattern> {
 
     @Override
     public String getDescription() {
-        return "Choose a pattern";
+        return "Выберите шаблон";
     }
 
     @Override

@@ -41,26 +41,25 @@ import java.util.logging.Logger;
 public class PermissionsResolverManager implements PermissionsResolver {
 
     private static final String CONFIG_HEADER = "#\r\n" +
-            "# WEPIF Configuration File\r\n" +
+            "# Конфигурационный файл WEPIF\r\n" +
             "#\r\n" +
-            "# This file handles permissions configuration for every plugin using WEPIF\r\n" +
+            "# Этот файл обрабатывает конфигурацию разрешений для каждого плагина, используя WEPIF\r\n" +
             "#\r\n" +
-            "# About editing this file:\r\n" +
-            "# - DO NOT USE TABS. You MUST use spaces or Bukkit will complain. If\r\n" +
-            "#   you use an editor like Notepad++ (recommended for Windows users), you\r\n" +
-            "#   must configure it to \"replace tabs with spaces.\" In Notepad++, this can\r\n" +
-            "#   be changed in Settings > Preferences > Language Menu.\r\n" +
-            "# - Don't get rid of the indents. They are indented so some entries are\r\n" +
-            "#   in categories (like \"enforce-single-session\" is in the \"protection\"\r\n" +
-            "#   category.\r\n" +
-            "# - If you want to check the format of this file before putting it\r\n" +
-            "#   into WEPIF, paste it into http://yaml-online-parser.appspot.com/\r\n" +
-            "#   and see if it gives \"ERROR:\".\r\n" +
-            "# - Lines starting with # are comments and so they are ignored.\r\n" +
+            "# О редактировании этого файла:\r\n" +
+            "# - НЕ ИСПОЛЬЗОВАТЬ TAB. Вы должны использовать пробелы иначе Bukkit будет жаловаться. Если\r\n" +
+            "#   вы используете редактор, такой как Notepad++ (рекомендуется для пользователей Windows), вы\r\n" +
+            "#   должны настроить его на \"заменить TAB на пробелы.\" В Notepad++, это можно\r\n" +
+            "#   изменить в Опции > Настройки > Настройки табуляци.\r\n" +
+            "# - Не избавиляйтесь от отступов. Они смещены, поэтому некоторые записи\r\n" +
+            "#   в категориях (как \"enforce-single-session\" находится в категории \"protection\")\r\n" +
+            "# - Если вы хотите проверить формат этого файла, прежде чем положить его\r\n" +
+            "#   в WEPIF, вставьте его в http://yaml-online-parser.appspot.com/\r\n" +
+            "#   и посмотрите полученные \"ОШИБКА:\".\r\n" +
+            "# - Строки, начинающие с # называются комментариями, поэтому они игнорируются.\r\n" +
             "#\r\n" +
-            "# About Configuration Permissions\r\n" +
-            "# - See http://wiki.sk89q.com/wiki/WorldEdit/Permissions/Bukkit\r\n" +
-            "# - Now with multiworld support (see example)\r\n" +
+            "# О разрешениях конфигурации\r\n" +
+            "# - Смотрите http://wiki.sk89q.com/wiki/WorldEdit/Permissions/Bukkit\r\n" +
+            "# - Теперь с поддержкой мультимиров (смотрите пример)\r\n" +
             "\r\n";
 
     private static PermissionsResolverManager instance;
@@ -77,7 +76,7 @@ public class PermissionsResolverManager implements PermissionsResolver {
 
     public static PermissionsResolverManager getInstance() {
         if (!isInitialized()) {
-            throw new WEPIFRuntimeException("WEPIF has not yet been initialized!");
+            throw new WEPIFRuntimeException("WEPIF еще не был инициализирован!");
         }
         return instance;
     }
@@ -118,7 +117,7 @@ public class PermissionsResolverManager implements PermissionsResolver {
                     break;
                 }
             } catch (Throwable e) {
-                logger.log(Level.WARNING, "Error in factory method for " + resolverClass.getSimpleName(), e);
+                logger.log(Level.WARNING, "Ошибка в фабричном методе для " + resolverClass.getSimpleName(), e);
                 continue;
             }
         }
@@ -185,7 +184,7 @@ public class PermissionsResolverManager implements PermissionsResolver {
 
     @Override
     public String getDetectionMessage() {
-        return "Using WEPIF for permissions";
+        return "Использую WEPIF для разрешений";
     }
 
     private boolean loadConfig(File file) {
@@ -194,14 +193,14 @@ public class PermissionsResolverManager implements PermissionsResolver {
             try {
                 file.createNewFile();
             } catch (IOException e) {
-                logger.log(Level.WARNING, "Failed to create new configuration file", e);
+                logger.log(Level.WARNING, "Не удалось создать новый файл конфигурации", e);
             }
         }
         config = new YAMLProcessor(file, false, YAMLFormat.EXTENDED);
         try {
             config.load();
         } catch (IOException e) {
-            logger.log(Level.WARNING, "Error loading WEPIF configuration", e);
+            logger.log(Level.WARNING, "Ошибка загрузки конфигурации WEPIF", e);
         }
         List<String> keys = config.getKeys(null);
         config.setHeader(CONFIG_HEADER);
@@ -231,8 +230,8 @@ public class PermissionsResolverManager implements PermissionsResolver {
                 } catch (ClassNotFoundException e) {}
 
                 if (next == null || !PermissionsResolver.class.isAssignableFrom(next)) {
-                    logger.warning("WEPIF: Invalid or unknown class found in enabled resolvers: "
-                            + nextName + ". Moving to disabled resolvers list.");
+                    logger.warning("WEPIF: Недопустимый или неизвестный класс включен в распознаватели: "
+                            + nextName + ". Перемещение в отключенный список решающих устройств.");
                     i.remove();
                     disabledResolvers.add(nextName);
                     isUpdated = true;
@@ -245,9 +244,9 @@ public class PermissionsResolverManager implements PermissionsResolver {
                 if (!stagedEnabled.contains(clazz.getSimpleName()) &&
                         !disabledResolvers.contains(clazz.getSimpleName())) {
                     disabledResolvers.add(clazz.getSimpleName());
-                    logger.info("New permissions resolver: "
-                            + clazz.getSimpleName() + " detected. " +
-                            "Added to disabled resolvers list.");
+                    logger.info("Новые разрешения разрешены: "
+                            + clazz.getSimpleName() + " обнаружено. " +
+                            "Добавление в отключенный список решающих устройств.");
                     isUpdated = true;
                 }
             }
@@ -266,7 +265,7 @@ public class PermissionsResolverManager implements PermissionsResolver {
             isUpdated = true;
         }
         if (isUpdated) {
-            logger.info("WEPIF: Updated config file");
+            logger.info("WEPIF: Обновление конфигурационного файла");
             config.save();
         }
         return isUpdated;

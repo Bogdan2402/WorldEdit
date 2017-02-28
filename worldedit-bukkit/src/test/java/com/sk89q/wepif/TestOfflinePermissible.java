@@ -71,32 +71,32 @@ public class TestOfflinePermissible implements OfflinePlayer, Permissible {
 
     @Override
     public PermissionAttachment addAttachment(Plugin plugin, String s, boolean b) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException("Пока не поддерживается.");
     }
 
     @Override
     public PermissionAttachment addAttachment(Plugin plugin) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException("Пока не поддерживается.");
     }
 
     @Override
     public PermissionAttachment addAttachment(Plugin plugin, String s, boolean b, int i) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException("Пока не поддерживается.");
     }
 
     @Override
     public PermissionAttachment addAttachment(Plugin plugin, int i) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException("Пока не поддерживается.");
     }
 
     @Override
     public void removeAttachment(PermissionAttachment permissionAttachment) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException("Пока не поддерживается.");
     }
 
     @Override
     public void recalculatePermissions() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException("Пока не поддерживается.");
     }
 
     @Override
@@ -138,51 +138,51 @@ public class TestOfflinePermissible implements OfflinePlayer, Permissible {
 
     @Override
     public boolean isBanned() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException("Пока не поддерживается.");
     }
 
     @Override
     public void setBanned(boolean b) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException("Пока не поддерживается.");
     }
 
     @Override
     public boolean isWhitelisted() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException("Пока не поддерживается.");
     }
 
     @Override
     public void setWhitelisted(boolean b) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException("Пока не поддерживается.");
     }
 
     @Override
     public Player getPlayer() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException("Пока не поддерживается.");
     }
 
     @Override
     public long getFirstPlayed() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException("Пока не поддерживается.");
     }
 
     @Override
     public long getLastPlayed() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException("Пока не поддерживается.");
     }
 
     @Override
     public boolean hasPlayedBefore() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException("Пока не поддерживается.");
     }
 
     @Override
     public Location getBedSpawnLocation() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException("Пока не поддерживается.");
     }
 
     @Override
     public Map<String, Object> serialize() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException("Пока не поддерживается.");
     }
 }

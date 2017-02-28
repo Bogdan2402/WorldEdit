@@ -132,7 +132,7 @@ public class WorldEditBinding extends BindingHelper {
     public Actor getActor(ArgumentStack context) throws ParameterException {
         Actor sender = context.getContext().getLocals().get(Actor.class);
         if (sender == null) {
-            throw new ParameterException("Missing 'Actor'");
+            throw new ParameterException("Отсутствует 'Actor'");
         } else {
             return sender;
         }
@@ -150,11 +150,11 @@ public class WorldEditBinding extends BindingHelper {
     public Player getPlayer(ArgumentStack context) throws ParameterException {
         Actor sender = context.getContext().getLocals().get(Actor.class);
         if (sender == null) {
-            throw new ParameterException("No player to get a session for");
+            throw new ParameterException("Ни один игрок не получил сессию");
         } else if (sender instanceof Player) {
             return (Player) sender;
         } else {
-            throw new ParameterException("Caller is not a player");
+            throw new ParameterException("Вызывающий объект не является игроком");
         }
     }
 
@@ -283,7 +283,7 @@ public class WorldEditBinding extends BindingHelper {
                 return type;
             } else {
                 throw new ParameterException(
-                        String.format("Can't recognize tree type '%s' -- choose from: %s", input, Arrays.toString(TreeType.values())));
+                        String.format("Не удается распознать тип дерева '%s' -- выберите из: %s", input, Arrays.toString(TreeType.values())));
             }
         } else {
             return TreeType.TREE;
@@ -311,10 +311,10 @@ public class WorldEditBinding extends BindingHelper {
                 if (extent instanceof World) {
                     world = (World) extent;
                 } else {
-                    throw new ParameterException("A world is required.");
+                    throw new ParameterException("Требуется ремонт.");
                 }
             } else {
-                throw new ParameterException("An entity is required.");
+                throw new ParameterException("Требуется энтити.");
             }
 
             BiomeRegistry biomeRegistry = world.getWorldData().getBiomeRegistry();
@@ -324,12 +324,12 @@ public class WorldEditBinding extends BindingHelper {
                 return biome;
             } else {
                 throw new ParameterException(
-                        String.format("Can't recognize biome type '%s' -- use /biomelist to list available types", input));
+                        String.format("Невозможно распознать тип биома '%s' -- используйте /biomelist, чтобы посмотреть список доступных типов", input));
             }
         } else {
             throw new ParameterException(
-                    "This command takes a 'default' biome if one is not set, except there is no particular " +
-                            "biome that should be 'default', so the command should not be taking a default biome");
+                    "Эта команда принимает 'default' биом, если он не установлен, за исключением того, что нет каких-либо особых " +
+                            "биомов, что должно быть 'default', поэтому команда не должна принимать биом по умолчанию");
         }
     }
 

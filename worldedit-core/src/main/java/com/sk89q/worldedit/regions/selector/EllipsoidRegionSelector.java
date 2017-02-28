@@ -141,9 +141,9 @@ public class EllipsoidRegionSelector extends com.sk89q.worldedit.regions.Ellipso
     @Override
     public void explainPrimarySelection(Actor player, LocalSession session, Vector pos) {
         if (isDefined()) {
-            player.print("Center position set to " + region.getCenter() + " (" + region.getArea() + ").");
+            player.print("Центральная позиция установлена на " + region.getCenter() + " (" + region.getArea() + ").");
         } else {
-            player.print("Center position set to " + region.getCenter() + ".");
+            player.print("Центральная позиция установлена на " + region.getCenter() + ".");
         }
 
         session.describeCUI(player);
@@ -152,9 +152,9 @@ public class EllipsoidRegionSelector extends com.sk89q.worldedit.regions.Ellipso
     @Override
     public void explainSecondarySelection(Actor player, LocalSession session, Vector pos) {
         if (isDefined()) {
-            player.print("Radius set to " + region.getRadius() + " (" + region.getArea() + ").");
+            player.print("Радиус установлен на " + region.getRadius() + " (" + region.getArea() + ").");
         } else {
-            player.print("Radius set to " + region.getRadius() + ".");
+            player.print("Радиус установлен на " + region.getRadius() + ".");
         }
 
         session.describeCUI(player);

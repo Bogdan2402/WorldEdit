@@ -40,7 +40,7 @@ class HashTagPatternParser extends InputParser<Pattern> {
     public Pattern parseFromInput(String input, ParserContext context) throws InputParseException {
         if (input.charAt(0) == '#') {
             if (!input.equals("#clipboard") && !input.equals("#copy")) {
-                throw new InputParseException("#clipboard or #copy is acceptable for patterns starting with #");
+                throw new InputParseException("#clipboard или #copy приемлемо для шаблонов, начиная с #");
             }
 
             LocalSession session = context.requireSession();
@@ -51,10 +51,10 @@ class HashTagPatternParser extends InputParser<Pattern> {
                     Clipboard clipboard = holder.getClipboard();
                     return new ClipboardPattern(clipboard);
                 } catch (EmptyClipboardException e) {
-                    throw new InputParseException("To use #clipboard, please first copy something to your clipboard");
+                    throw new InputParseException("Для использования #clipboard, пожалуйста, сначала скопируйте что-нибудь в буфер обмена");
                 }
             } else {
-                throw new InputParseException("No session is available, so no clipboard is available");
+                throw new InputParseException("Нет доступных сессий, поэтому буфер обмена не доступен");
             }
         } else {
             return null;

@@ -72,7 +72,7 @@ public class CommandRegistration {
                 commandMap = fallbackCommands;
             } else {
                 Bukkit.getServer().getLogger().severe(plugin.getDescription().getName() +
-                        ": Could not retrieve server CommandMap, using fallback instead!");
+                        ": Не удалось получить CommandMap сервера, использую запасной вариант!");
                 fallbackCommands = commandMap = new SimpleCommandMap(Bukkit.getServer());
                 Bukkit.getServer().getPluginManager().registerEvents(new FallbackRegistrationListener(fallbackCommands), plugin);
             }

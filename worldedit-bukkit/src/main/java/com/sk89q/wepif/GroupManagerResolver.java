@@ -126,6 +126,6 @@ public class GroupManagerResolver extends DinnerPermsResolver {
 
     @Override
     public String getDetectionMessage() {
-        return "GroupManager detected! Using GroupManager for permissions.";
+        return "GroupManager обнаружен! Использую GroupManager для разрешений.";
     }
 }

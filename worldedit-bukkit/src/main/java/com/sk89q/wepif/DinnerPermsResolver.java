@@ -160,6 +160,6 @@ public class DinnerPermsResolver implements PermissionsResolver {
 
     @Override
     public String getDetectionMessage() {
-        return "Using the Bukkit Permissions API.";
+        return "Использование Bukkit Permissions API.";
     }
 }

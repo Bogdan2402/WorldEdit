@@ -103,7 +103,7 @@ public class FlatFilePermissionsResolver implements PermissionsResolver {
                 }
             }
         } catch (IOException e) {
-            log.log(Level.WARNING, "Failed to load permissions", e);
+            log.log(Level.WARNING, "Не удалось загрузить разрешения", e);
         } finally {
             try {
                 if (buff != null) {
@@ -169,7 +169,7 @@ public class FlatFilePermissionsResolver implements PermissionsResolver {
                 }
             }
         } catch (IOException e) {
-            log.log(Level.WARNING, "Failed to load permissions", e);
+            log.log(Level.WARNING, "Не удалось загрузить разрешения", e);
         } finally {
             try {
                 if (buff != null) {
@@ -242,7 +242,7 @@ public class FlatFilePermissionsResolver implements PermissionsResolver {
 
     @Override
     public String getDetectionMessage() {
-        return "perms_groups.txt and perms_users.txt detected! Using flat file permissions.";
+        return "perms_groups.txt и perms_users.txt обнаружены! Использую эти файлы разрешений.";
     }
 
 }

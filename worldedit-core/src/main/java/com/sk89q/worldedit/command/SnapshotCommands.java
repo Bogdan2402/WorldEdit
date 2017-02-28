@@ -55,7 +55,7 @@ public class SnapshotCommands {
     @Command(
             aliases = { "list" },
             usage = "[num]",
-            desc = "List snapshots",
+            desc = "Список резервных копий",
             min = 0,
             max = 1
     )
@@ -65,7 +65,7 @@ public class SnapshotCommands {
         LocalConfiguration config = we.getConfiguration();
 
         if (config.snapshotRepo == null) {
-            player.printError("Snapshot/backup restore is not configured.");
+            player.printError("Резервная копия не настроена.");
             return;
         }
 
@@ -76,36 +76,36 @@ public class SnapshotCommands {
 
                 int num = args.argsLength() > 0 ? Math.min(40, Math.max(5, args.getInteger(0))) : 5;
 
-                player.print("Snapshots for world: '" + player.getWorld().getName() + "'");
+                player.print("Резервные копии для мира: '" + player.getWorld().getName() + "'");
                 for (byte i = 0; i < Math.min(num, snapshots.size()); i++) {
                     player.print((i + 1) + ". " + snapshots.get(i).getName());
                 }
 
-                player.print("Use /snap use [snapshot] or /snap use latest.");
+                player.print("Используйте /snap use [snapshot] или /snap.");
             } else {
-                player.printError("No snapshots are available. See console for details.");
+                player.printError("Резервных копий не найдено. Смотрите консоль для деталей.");
 
                 // Okay, let's toss some debugging information!
                 File dir = config.snapshotRepo.getDirectory();
 
                 try {
-                    logger.info("WorldEdit found no snapshots: looked in: "
+                    logger.info("WorldEdit не нашел резервных копий: смотрел в: "
                             + dir.getCanonicalPath());
                 } catch (IOException e) {
-                    logger.info("WorldEdit found no snapshots: looked in "
-                            + "(NON-RESOLVABLE PATH - does it exist?): "
+                    logger.info("WorldEdit не нашел резервных копий: смотрел в "
+                            + "(NON-RESOLVABLE PATH - существует ли она?): "
                             + dir.getPath());
                 }
             }
         } catch (MissingWorldException ex) {
-            player.printError("No snapshots were found for this world.");
+            player.printError("Резервных копий для этого мира нет.");
         }
     }
 
     @Command(
             aliases = { "use" },
             usage = "<snapshot>",
-            desc = "Choose a snapshot to use",
+            desc = "Выбрать резервную копию для использования",
             min = 1,
             max = 1
     )
@@ -115,7 +115,7 @@ public class SnapshotCommands {
         LocalConfiguration config = we.getConfiguration();
 
         if (config.snapshotRepo == null) {
-            player.printError("Snapshot/backup restore is not configured.");
+            player.printError("Резервная копия не настроена.");
             return;
         }
 
@@ -128,19 +128,19 @@ public class SnapshotCommands {
 
                 if (snapshot != null) {
                     session.setSnapshot(null);
-                    player.print("Now using newest snapshot.");
+                    player.print("Используется новейшая резервная копия.");
                 } else {
-                    player.printError("No snapshots were found.");
+                    player.printError("Резервная копия не найдена.");
                 }
             } catch (MissingWorldException ex) {
-                player.printError("No snapshots were found for this world.");
+                player.printError("Резервных копий для этого мира нет.");
             }
         } else {
             try {
                 session.setSnapshot(config.snapshotRepo.getSnapshot(name));
-                player.print("Snapshot set to: " + name);
+                player.print("Резервная копия загружена под именем: " + name);
             } catch (InvalidSnapshotException e) {
-                player.printError("That snapshot does not exist or is not available.");
+                player.printError("Эта резервная копия не найдена или повреждена.");
             }
         }
     }
@@ -148,7 +148,7 @@ public class SnapshotCommands {
     @Command(
             aliases = { "sel" },
             usage = "<index>",
-            desc = "Choose the snapshot based on the list id",
+            desc = "Выбрать резервную копию из списка",
             min = 1,
             max = 1
     )
@@ -157,7 +157,7 @@ public class SnapshotCommands {
         LocalConfiguration config = we.getConfiguration();
 
         if (config.snapshotRepo == null) {
-            player.printError("Snapshot/backup restore is not configured.");
+            player.printError("Резервная копия не настроена.");
             return;
         }
 
@@ -165,37 +165,37 @@ public class SnapshotCommands {
         try {
             index = Integer.parseInt(args.getString(0));
         } catch (NumberFormatException e) {
-            player.printError("Invalid index, " + args.getString(0) + " is not a valid integer.");
+            player.printError("Неверный индекс, " + args.getString(0) + " не является целым числом.");
             return;
         }
 
         if (index < 1) {
-            player.printError("Invalid index, must be equal or higher then 1.");
+            player.printError("Индекс должен быть равен или выше одного.");
             return;
         }
 
         try {
             List<Snapshot> snapshots = config.snapshotRepo.getSnapshots(true, player.getWorld().getName());
             if (snapshots.size() < index) {
-                player.printError("Invalid index, must be between 1 and " + snapshots.size() + ".");
+                player.printError("Неверный индекс, должен быть между 1 и " + snapshots.size() + ".");
                 return;
             }
             Snapshot snapshot = snapshots.get(index - 1);
             if (snapshot == null) {
-                player.printError("That snapshot does not exist or is not available.");
+                player.printError("Эта резервная копия не найдена или повреждена.");
                 return;
             }
             session.setSnapshot(snapshot);
-            player.print("Snapshot set to: " + snapshot.getName());
+            player.print("Резервная копия загружена под именем: " + snapshot.getName());
         } catch (MissingWorldException e) {
-            player.printError("No snapshots were found for this world.");
+            player.printError("Резервных копий для этого мира нет.");
         }
     }
 
     @Command(
             aliases = { "before" },
-            usage = "<date>",
-            desc = "Choose the nearest snapshot before a date",
+            usage = "<дата>",
+            desc = "Выбрать ближайшую резервную копию до даты",
             min = 1,
             max = -1
     )
@@ -205,36 +205,36 @@ public class SnapshotCommands {
         LocalConfiguration config = we.getConfiguration();
 
         if (config.snapshotRepo == null) {
-            player.printError("Snapshot/backup restore is not configured.");
+            player.printError("Резервная копия не настроена.");
             return;
         }
 
         Calendar date = session.detectDate(args.getJoinedStrings(0));
 
         if (date == null) {
-            player.printError("Could not detect the date inputted.");
+            player.printError("Не удалось найти введенную дату.");
         } else {
             try {
                 Snapshot snapshot = config.snapshotRepo.getSnapshotBefore(date, player.getWorld().getName());
 
                 if (snapshot == null) {
                     dateFormat.setTimeZone(session.getTimeZone());
-                    player.printError("Couldn't find a snapshot before "
+                    player.printError("Не удалось найти резервную копию до "
                             + dateFormat.format(date.getTime()) + ".");
                 } else {
                     session.setSnapshot(snapshot);
-                    player.print("Snapshot set to: " + snapshot.getName());
+                    player.print("Резервная копия загружена под именем: " + snapshot.getName());
                 }
             } catch (MissingWorldException ex) {
-                player.printError("No snapshots were found for this world.");
+                player.printError("Резервных копий для этого мира нет.");
             }
         }
     }
 
     @Command(
             aliases = { "after" },
-            usage = "<date>",
-            desc = "Choose the nearest snapshot after a date",
+            usage = "<дата>",
+            desc = "Выбрать ближайшую резервную копию после даты",
             min = 1,
             max = -1
     )
@@ -244,27 +244,27 @@ public class SnapshotCommands {
         LocalConfiguration config = we.getConfiguration();
 
         if (config.snapshotRepo == null) {
-            player.printError("Snapshot/backup restore is not configured.");
+            player.printError("Резервная копия не настроена.");
             return;
         }
 
         Calendar date = session.detectDate(args.getJoinedStrings(0));
 
         if (date == null) {
-            player.printError("Could not detect the date inputted.");
+            player.printError("Не удалось найти введенную дату.");
         } else {
             try {
                 Snapshot snapshot = config.snapshotRepo.getSnapshotAfter(date, player.getWorld().getName());
                 if (snapshot == null) {
                     dateFormat.setTimeZone(session.getTimeZone());
-                    player.printError("Couldn't find a snapshot after "
+                    player.printError("Не удалось найти резервную копию до "
                             + dateFormat.format(date.getTime()) + ".");
                 } else {
                     session.setSnapshot(snapshot);
-                    player.print("Snapshot set to: " + snapshot.getName());
+                    player.print("Резервная копия загружена под именем: " + snapshot.getName());
                 }
             } catch (MissingWorldException ex) {
-                player.printError("No snapshots were found for this world.");
+                player.printError("Резервных копий для этого мира нет.");
             }
         }
     }

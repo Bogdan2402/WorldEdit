@@ -60,26 +60,26 @@ public class QueryTool implements BlockTool {
 
         player.print("\u00A79@" + clicked.toVector() + ": " + "\u00A7e"
                 + "#" + block.getType() + "\u00A77" + " ("
-                + (type == null ? "Unknown" : type.getName()) + ") "
+                + (type == null ? "Неизвестно" : type.getName()) + ") "
                 + "\u00A7f"
                 + "[" + block.getData() + "]" + " (" + world.getBlockLightLevel(clicked.toVector()) + "/" + world.getBlockLightLevel(clicked.toVector().add(0, 1, 0)) + ")");
 
         if (block instanceof MobSpawnerBlock) {
-            player.printRaw("\u00A7e" + "Mob Type: "
+            player.printRaw("\u00A7e" + "Тип моба: "
                     + ((MobSpawnerBlock) block).getMobType());
         } else if (block instanceof NoteBlock) {
-            player.printRaw("\u00A7e" + "Note block: "
+            player.printRaw("\u00A7e" + "Нотный блок: "
                     + ((NoteBlock) block).getNote());
         } else if (block.getType() == BlockID.CLOTH) {
             // Should never be null
-            player.printRaw("\u00A7e" + "Color: "
+            player.printRaw("\u00A7e" + "Цвет: "
                     + ClothColor.fromID(block.getData()).getName());
         }
 
         Map<String, ? extends State> states = BundledBlockData.getInstance().getStatesById(block.getId());
         if (states == null || states.isEmpty()) return true;
         StringBuilder builder = new StringBuilder();
-        builder.append("States: ");
+        builder.append("Состояние: ");
         boolean first = true;
         boolean hasVisibleStates = false;
         for (Entry<String, ? extends State> e : states.entrySet()) {

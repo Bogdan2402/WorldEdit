@@ -400,7 +400,7 @@ public class WorldEdit {
             }
 
             if (f == null) {
-                throw new FileSelectionAbortedException("No file selected");
+                throw new FileSelectionAbortedException("Нету выбранных файлов");
             }
         } else {
             if (defaultExt != null && filename.lastIndexOf('.') == -1) {
@@ -408,7 +408,7 @@ public class WorldEdit {
             }
 
             if (!filename.matches("^[A-Za-z0-9_\\- \\./\\\\'\\$@~!%\\^\\*\\(\\)\\[\\]\\+\\{\\},\\?]+\\.[A-Za-z0-9]+$")) {
-                throw new InvalidFilenameException(filename, "Invalid characters or extension missing");
+                throw new InvalidFilenameException(filename, "Недопустимые символы или отсутствует расширение");
             }
 
             f = new File(dir, filename);
@@ -420,13 +420,13 @@ public class WorldEdit {
 
             if (!filePath.substring(0, dirPath.length()).equals(dirPath) && !getConfiguration().allowSymlinks) {
                 throw new FilenameResolutionException(filename,
-                        "Path is outside allowable root");
+                        "Путь находится вне допустимого корня");
             }
 
             return f;
         } catch (IOException e) {
             throw new FilenameResolutionException(filename,
-                    "Failed to resolve path");
+                    "Не удалось разрешить путь");
         }
     }
 
@@ -630,7 +630,7 @@ public class WorldEdit {
 
         if (!missingBlocks.isEmpty()) {
             StringBuilder str = new StringBuilder();
-            str.append("Missing these blocks: ");
+            str.append("Отсутствие этих блоков: ");
             int size = missingBlocks.size();
             int i = 0;
 
@@ -720,7 +720,7 @@ public class WorldEdit {
         String ext = filename.substring(index + 1, filename.length());
 
         if (!ext.equalsIgnoreCase("js")) {
-            player.printError("Only .js scripts are currently supported");
+            player.printError("В настоящее время поддерживаются только .js скрипты");
             return;
         }
 
@@ -733,7 +733,7 @@ public class WorldEdit {
                 file = WorldEdit.class.getResourceAsStream("craftscripts/" + filename);
 
                 if (file == null) {
-                    player.printError("Script does not exist: " + filename);
+                    player.printError("Скрипт не существует: " + filename);
                     return;
                 }
             } else {
@@ -746,7 +746,7 @@ public class WorldEdit {
             in.close();
             script = new String(data, 0, data.length, "utf-8");
         } catch (IOException e) {
-            player.printError("Script read error: " + e.getMessage());
+            player.printError("Ошибка чтения скрипта: " + e.getMessage());
             return;
         }
 
@@ -758,7 +758,7 @@ public class WorldEdit {
         try {
             engine = new RhinoCraftScriptEngine();
         } catch (NoClassDefFoundError e) {
-            player.printError("Failed to find an installed script engine.");
+            player.printError("Не удается найти установленный обработчик скриптов.");
             player.printError("Please see http://wiki.sk89q.com/wiki/WorldEdit/Installation");
             return;
         }
@@ -773,17 +773,17 @@ public class WorldEdit {
         try {
             engine.evaluate(script, filename, vars);
         } catch (ScriptException e) {
-            player.printError("Failed to execute:");
+            player.printError("Не удалось выполнить:");
             player.printRaw(e.getMessage());
-            logger.log(Level.WARNING, "Failed to execute script", e);
+            logger.log(Level.WARNING, "Не удалось выполнить скрипт", e);
         } catch (NumberFormatException e) {
             throw e;
         } catch (WorldEditException e) {
             throw e;
         } catch (Throwable e) {
-            player.printError("Failed to execute (see console):");
+            player.printError("Не удалось выполнить (см. консоль):");
             player.printRaw(e.getClass().getCanonicalName());
-            logger.log(Level.WARNING, "Failed to execute script", e);
+            logger.log(Level.WARNING, "Не удалось выполнить скрипт", e);
         } finally {
             for (EditSession editSession : scriptContext.getEditSessions()) {
                 editSession.flushQueue();

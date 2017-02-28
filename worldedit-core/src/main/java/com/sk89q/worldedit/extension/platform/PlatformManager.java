@@ -97,7 +97,7 @@ public class PlatformManager {
     public synchronized void register(Platform platform) {
         checkNotNull(platform);
 
-        logger.log(Level.FINE, "Got request to register " + platform.getClass() + " with WorldEdit [" + super.toString() + "]");
+        logger.log(Level.FINE, "Есть запрос на регистрацию " + platform.getClass() + " с WorldEdit [" + super.toString() + "]");
 
         // Just add the platform to the list of platforms: we'll pick favorites
         // once all the platforms have been loaded
@@ -106,8 +106,8 @@ public class PlatformManager {
         // Make sure that versions are in sync
         if (firstSeenVersion != null) {
             if (!firstSeenVersion.equals(platform.getVersion())) {
-                logger.log(Level.WARNING, "Multiple ports of WorldEdit are installed but they report different versions ({0} and {1}). " +
-                                "If these two versions are truly different, then you may run into unexpected crashes and errors.",
+                logger.log(Level.WARNING, "Несколько портов WorldEdit установлены, но они сообщают разные версии ({0} и {1}). " +
+                                "Если эти две версии действительно различны, то вы можете столкнуться с неожиданными сбоями и ошибками.",
                         new Object[]{ firstSeenVersion, platform.getVersion() });
             }
         } else {
@@ -129,7 +129,7 @@ public class PlatformManager {
         boolean removed = platforms.remove(platform);
 
         if (removed) {
-            logger.log(Level.FINE, "Unregistering " + platform.getClass().getCanonicalName() + " from WorldEdit");
+            logger.log(Level.FINE, "Отмена регистрации " + platform.getClass().getCanonicalName() + " из WorldEdit");
 
             boolean choosePreferred = false;
 
@@ -166,7 +166,7 @@ public class PlatformManager {
         if (platform != null) {
             return platform;
         } else {
-            throw new NoCapablePlatformException("No platform was found supporting " + capability.name());
+            throw new NoCapablePlatformException("Ни одна платформа не была найдена " + capability.name());
         }
     }
 
@@ -407,7 +407,7 @@ public class PlatformManager {
                     if (pos != null) {
                         player.findFreePosition(pos);
                     } else {
-                        player.printError("No block in sight (or too far)!");
+                        player.printError("Нет блоков в поле зрения (или слишком далеко)!");
                     }
 
                     event.setCancelled(true);
@@ -439,7 +439,7 @@ public class PlatformManager {
                     }
 
                     if (!player.passThroughForwardWall(40)) {
-                        player.printError("Nothing to pass through!");
+                        player.printError("Ничего нет, чтобы пройти через него!");
                     }
 
                     event.setCancelled(true);

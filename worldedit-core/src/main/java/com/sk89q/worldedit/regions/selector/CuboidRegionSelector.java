@@ -150,9 +150,9 @@ public class CuboidRegionSelector extends com.sk89q.worldedit.regions.CuboidRegi
         checkNotNull(pos);
 
         if (position1 != null && position2 != null) {
-            player.print("First position set to " + position1 + " (" + region.getArea() + ").");
+            player.print("Первая точка установлена на " + position1 + " (" + region.getArea() + ").");
         } else {
-            player.print("First position set to " + position1 + ".");
+            player.print("Первая точка установлена на " + position1 + ".");
         }
 
         session.dispatchCUIEvent(player, new SelectionPointEvent(0, pos, getArea()));
@@ -165,9 +165,9 @@ public class CuboidRegionSelector extends com.sk89q.worldedit.regions.CuboidRegi
         checkNotNull(pos);
 
         if (position1 != null && position2 != null) {
-            player.print("Second position set to " + position2 + " (" + region.getArea() + ").");
+            player.print("Вторая точка установлена на " + position2 + " (" + region.getArea() + ").");
         } else {
-            player.print("Second position set to " + position2 + ".");
+            player.print("Вторая точка установлена на " + position2 + ".");
         }
 
         session.dispatchCUIEvent(player, new SelectionPointEvent(1, pos, getArea()));
@@ -237,11 +237,11 @@ public class CuboidRegionSelector extends com.sk89q.worldedit.regions.CuboidRegi
         final List<String> lines = new ArrayList<String>();
 
         if (position1 != null) {
-            lines.add("Position 1: " + position1);
+            lines.add("Точка 1: " + position1);
         }
 
         if (position2 != null) {
-            lines.add("Position 2: " + position2);
+            lines.add("Точка 2: " + position2);
         }
 
         return lines;

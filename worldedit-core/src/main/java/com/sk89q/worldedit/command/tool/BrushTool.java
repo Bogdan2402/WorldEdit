@@ -166,7 +166,7 @@ public class BrushTool implements TraceTool {
         target = player.getBlockTrace(getRange(), true);
 
         if (target == null) {
-            player.printError("No block in sight!");
+            player.printError("Нет блока в поле зрения!");
             return true;
         }
 
@@ -191,7 +191,7 @@ public class BrushTool implements TraceTool {
         try {
             brush.build(editSession, target, material, size);
         } catch (MaxChangedBlocksException e) {
-            player.printError("Max blocks change limit reached.");
+            player.printError("Максимальное значение лимита изменения блоков достигнут.");
         } finally {
             if (bag != null) {
                 bag.flushChanges();

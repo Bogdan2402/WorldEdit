@@ -87,9 +87,9 @@ public class SphereRegionSelector extends EllipsoidRegionSelector {
     @Override
     public void explainSecondarySelection(Actor player, LocalSession session, Vector pos) {
         if (isDefined()) {
-            player.print("Radius set to " + region.getRadius().getX() + " (" + region.getArea() + ").");
+            player.print("Радиус установлен " + region.getRadius().getX() + " (" + region.getArea() + ").");
         } else {
-            player.print("Radius set to " + region.getRadius().getX() + ".");
+            player.print("Радиус установлен " + region.getRadius().getX() + ".");
         }
 
         session.describeCUI(player);

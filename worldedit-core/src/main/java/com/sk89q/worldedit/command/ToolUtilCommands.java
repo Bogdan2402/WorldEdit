@@ -41,7 +41,7 @@ public class ToolUtilCommands {
     @Command(
         aliases = { "/", "," },
         usage = "[on|off]",
-        desc = "Toggle the super pickaxe function",
+        desc = "Переключить состояние суперкирки",
         min = 0,
         max = 1
     )
@@ -51,27 +51,27 @@ public class ToolUtilCommands {
         String newState = args.getString(0, null);
         if (session.hasSuperPickAxe()) {
             if ("on".equals(newState)) {
-                player.printError("Super pick axe already enabled.");
+                player.printError("Супер кирка уже включена.");
                 return;
             }
 
             session.disableSuperPickAxe();
-            player.print("Super pick axe disabled.");
+            player.print("Супер кирка отключена.");
         } else {
             if ("off".equals(newState)) {
-                player.printError("Super pick axe already disabled.");
+                player.printError("Супер кирка уже отключена.");
                 return;
             }
             session.enableSuperPickAxe();
-            player.print("Super pick axe enabled.");
+            player.print("Супер кирка включена.");
         }
 
     }
 
     @Command(
         aliases = { "mask" },
-        usage = "[mask]",
-        desc = "Set the brush mask",
+        usage = "[маска]",
+        desc = "Задать маску кисти",
         min = 0,
         max = -1
     )
@@ -79,30 +79,30 @@ public class ToolUtilCommands {
     public void mask(Player player, LocalSession session, EditSession editSession, @Optional Mask mask) throws WorldEditException {
         if (mask == null) {
             session.getBrushTool(player.getItemInHand()).setMask(null);
-            player.print("Brush mask disabled.");
+            player.print("Маска кисти отключена.");
         } else {
             session.getBrushTool(player.getItemInHand()).setMask(mask);
-            player.print("Brush mask set.");
+            player.print("Маска кисти установлена.");
         }
     }
 
     @Command(
         aliases = { "mat", "material" },
-        usage = "[pattern]",
-        desc = "Set the brush material",
+        usage = "[шаблон]",
+        desc = "Задать материал кисти",
         min = 1,
         max = 1
     )
     @CommandPermissions("worldedit.brush.options.material")
     public void material(Player player, LocalSession session, EditSession editSession, Pattern pattern) throws WorldEditException {
         session.getBrushTool(player.getItemInHand()).setFill(pattern);
-        player.print("Brush material set.");
+        player.print("Материал кисти установлен.");
     }
 
     @Command(
             aliases = { "range" },
-            usage = "[pattern]",
-            desc = "Set the brush range",
+            usage = "[шаблон]",
+            desc = "Задать диапазон кисти",
             min = 1,
             max = 1
         )
@@ -110,13 +110,13 @@ public class ToolUtilCommands {
     public void range(Player player, LocalSession session, EditSession editSession, CommandContext args) throws WorldEditException {
         int range = args.getInteger(0);
         session.getBrushTool(player.getItemInHand()).setRange(range);
-        player.print("Brush range set.");
+        player.print("Диапазон кисти установлен.");
     }
 
     @Command(
         aliases = { "size" },
-        usage = "[pattern]",
-        desc = "Set the brush size",
+        usage = "[шаблон]",
+        desc = "Задать размер кисти(Максимум 6)",
         min = 1,
         max = 1
     )
@@ -127,6 +127,6 @@ public class ToolUtilCommands {
         we.checkMaxBrushRadius(radius);
 
         session.getBrushTool(player.getItemInHand()).setSize(radius);
-        player.print("Brush size set.");
+        player.print("Размер кисти установлен.");
     }
 }

@@ -88,6 +88,6 @@ public class PermissionsExResolver extends DinnerPermsResolver {
 
     @Override
     public String getDetectionMessage() {
-        return "PermissionsEx detected! Using PermissionsEx for permissions.";
+        return "PermissionsEx обнаружен! Использую PermissionEx для разрешений.";
     }
 }

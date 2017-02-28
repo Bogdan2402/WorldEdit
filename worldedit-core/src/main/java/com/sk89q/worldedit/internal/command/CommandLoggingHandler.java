@@ -112,15 +112,15 @@ public class CommandLoggingHandler extends AbstractInvokeListener implements Inv
                 /* FALL-THROUGH */
 
             case POSITION:
-                builder.append(" - Position: ").append(position);
+                builder.append(" - Позиция: ").append(position);
                 break;
 
             case ALL:
-                builder.append(" - Position: ").append(position);
+                builder.append(" - Позиция: ").append(position);
                 /* FALL-THROUGH */
 
             case ORIENTATION_REGION:
-                builder.append(" - Orientation: ").append(player.getCardinalDirection().name());
+                builder.append(" - Ориентация: ").append(player.getCardinalDirection().name());
                 /* FALL-THROUGH */
 
             case REGION:

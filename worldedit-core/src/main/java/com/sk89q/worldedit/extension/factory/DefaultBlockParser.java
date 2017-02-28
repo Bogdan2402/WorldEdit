@@ -45,12 +45,12 @@ class DefaultBlockParser extends InputParser<BaseBlock> {
             try {
                 return ((Player) actor).getBlockInHand();
             } catch (NotABlockException e) {
-                throw new InputParseException("You're not holding a block!");
+                throw new InputParseException("Вы не держите блок!");
             } catch (WorldEditException e) {
-                throw new InputParseException("Unknown error occurred: " + e.getMessage(), e);
+                throw new InputParseException("Неизвестная ошибка: " + e.getMessage(), e);
             }
         } else {
-            throw new InputParseException("The user is not a player!");
+            throw new InputParseException("Этот пользователь не игрок!");
         }
     }
 
@@ -123,7 +123,7 @@ class DefaultBlockParser extends InputParser<BaseBlock> {
             try {
                 primaryPosition = context.requireSession().getRegionSelector(world).getPrimaryPosition();
             } catch (IncompleteRegionException e) {
-                throw new InputParseException("Your selection is not complete.");
+                throw new InputParseException("Ваше выделение не является полным.");
             }
             final BaseBlock blockInHand = world.getBlock(primaryPosition);
             if (blockInHand.getClass() != BaseBlock.class) {
@@ -162,7 +162,7 @@ class DefaultBlockParser extends InputParser<BaseBlock> {
                 // Maybe it's a cloth
                 ClothColor col = ClothColor.lookup(testId);
                 if (col == null) {
-                    throw new NoMatchException("Can't figure out what block '" + input + "' refers to");
+                    throw new NoMatchException("Не могу понять то, что блок '" + input + "' относится к");
                 }
 
                 blockType = BlockType.CLOTH;
@@ -178,7 +178,7 @@ class DefaultBlockParser extends InputParser<BaseBlock> {
             }
 
             if (!context.requireWorld().isValidBlockType(blockId)) {
-                throw new NoMatchException("Does not match a valid block type: '" + input + "'");
+                throw new NoMatchException("Правильный тип блока не соответствует: '" + input + "'");
             }
         }
 
@@ -195,7 +195,7 @@ class DefaultBlockParser extends InputParser<BaseBlock> {
                 }
 
                 if (data > 15) {
-                    throw new NoMatchException("Invalid data value '" + typeAndData[1] + "'");
+                    throw new NoMatchException("Неверное значение данных '" + typeAndData[1] + "'");
                 }
 
                 if (data < 0 && (context.isRestricted() || data != -1)) {
@@ -203,7 +203,7 @@ class DefaultBlockParser extends InputParser<BaseBlock> {
                 }
             } catch (NumberFormatException e) {
                 if (blockType == null) {
-                    throw new NoMatchException("Unknown data value '" + typeAndData[1] + "'");
+                    throw new NoMatchException("Неизвестное значение данных '" + typeAndData[1] + "'");
                 }
 
                 switch (blockType) {
@@ -212,7 +212,7 @@ class DefaultBlockParser extends InputParser<BaseBlock> {
                     case CARPET:
                         ClothColor col = ClothColor.lookup(typeAndData[1]);
                         if (col == null) {
-                            throw new NoMatchException("Unknown wool color '" + typeAndData[1] + "'");
+                            throw new NoMatchException("Неизвестный цвет шерсти '" + typeAndData[1] + "'");
                         }
 
                         data = col.getID();
@@ -223,7 +223,7 @@ class DefaultBlockParser extends InputParser<BaseBlock> {
                         BlockType dataType = BlockType.lookup(typeAndData[1]);
 
                         if (dataType == null) {
-                            throw new NoMatchException("Unknown step type '" + typeAndData[1] + "'");
+                            throw new NoMatchException("Неизвестный ти полублока '" + typeAndData[1] + "'");
                         }
 
                         switch (dataType) {
@@ -253,12 +253,12 @@ class DefaultBlockParser extends InputParser<BaseBlock> {
                                 break;
 
                             default:
-                                throw new NoMatchException("Invalid step type '" + typeAndData[1] + "'");
+                                throw new NoMatchException("Неверный тип полублока '" + typeAndData[1] + "'");
                         }
                         break;
 
                     default:
-                        throw new NoMatchException("Unknown data value '" + typeAndData[1] + "'");
+                        throw new NoMatchException("Неизвестное значение данных '" + typeAndData[1] + "'");
                 }
             }
         }
@@ -267,7 +267,7 @@ class DefaultBlockParser extends InputParser<BaseBlock> {
         Actor actor = context.requireActor();
         if (context.isRestricted() && actor != null && !actor.hasPermission("worldedit.anyblock")
                 && worldEdit.getConfiguration().disallowedBlocks.contains(blockId)) {
-            throw new DisallowedUsageException("You are not allowed to use '" + input + "'");
+            throw new DisallowedUsageException("У вас нет прав для использования '" + input + "'");
         }
 
         if (blockType == null) {
@@ -296,7 +296,7 @@ class DefaultBlockParser extends InputParser<BaseBlock> {
                         }
                     }
                     if (!worldEdit.getServer().isValidMobType(mobName)) {
-                        throw new NoMatchException("Unknown mob type '" + mobName + "'");
+                        throw new NoMatchException("Неизвестный тип моба '" + mobName + "'");
                     }
                     return new MobSpawnerBlock(data, mobName);
                 } else {
@@ -311,7 +311,7 @@ class DefaultBlockParser extends InputParser<BaseBlock> {
 
                 byte note = Byte.parseByte(blockAndExtraData[1]);
                 if (note < 0 || note > 24) {
-                    throw new InputParseException("Out of range note value: '" + blockAndExtraData[1] + "'");
+                    throw new InputParseException("Значение ноты вне диапазоне: '" + blockAndExtraData[1] + "'");
                 }
 
                 return new NoteBlock(data, note);
@@ -332,7 +332,7 @@ class DefaultBlockParser extends InputParser<BaseBlock> {
                         try {
                             rot = Byte.parseByte(blockAndExtraData[2]);
                         } catch (NumberFormatException e2) {
-                            throw new InputParseException("Second part of skull metadata should be a number.");
+                            throw new InputParseException("Вторая часть метаданых головы должна быть номером.");
                         }
                     }
                 }

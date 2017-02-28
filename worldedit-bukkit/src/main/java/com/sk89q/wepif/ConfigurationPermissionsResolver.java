@@ -174,7 +174,7 @@ public class ConfigurationPermissionsResolver implements PermissionsResolver {
 
     @Override
     public String getDetectionMessage() {
-        return "No known permissions plugin detected. Using configuration file for permissions.";
+        return "Ни один из известных плагинов разрешений не найден. Использую стандартный файл разрешений.";
     }
 
 }

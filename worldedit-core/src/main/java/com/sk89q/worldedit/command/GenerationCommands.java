@@ -63,13 +63,13 @@ public class GenerationCommands {
 
     @Command(
         aliases = { "/hcyl" },
-        usage = "<pattern> <radius>[,<radius>] [height]",
-        desc = "Generates a hollow cylinder.",
+        usage = "<шаблон> <радиус>[,<радиус>] [высота]",
+        desc = "Сгенерировать полый цилиндр.",
         help =
-            "Generates a hollow cylinder.\n" +
-            "By specifying 2 radii, separated by a comma,\n" +
-            "you can generate elliptical cylinders.\n" +
-            "The 1st radius is north/south, the 2nd radius is east/west.",
+            "Сгенерировать полый цилиндр.\n" +
+            "при указании через запятую второго радиуса,\n" +
+            "создастся эллиптический цилиндр.\n" +
+            "Где первое число будет северным и южным радиусом, а второе - восточным и западным.",
         min = 2,
         max = 3
     )
@@ -81,14 +81,14 @@ public class GenerationCommands {
 
     @Command(
         aliases = { "/cyl" },
-        usage = "<block> <radius>[,<radius>] [height]",
+        usage = "<блок> <радиус>[,<радиус>] [высота]",
         flags = "h",
-        desc = "Generates a cylinder.",
+        desc = "Сгенерировать цилиндр.",
         help =
-            "Generates a cylinder.\n" +
-            "By specifying 2 radii, separated by a comma,\n" +
-            "you can generate elliptical cylinders.\n" +
-            "The 1st radius is north/south, the 2nd radius is east/west.",
+            "Сгенерировать цилиндр.\n" +
+            "при указании через запятую второго радиуса,\n" +
+            "создастся эллиптический цилиндр.\n" +
+            "Где первое число будет северным и южным радиусом, а второе - восточным и западным.",
         min = 2,
         max = 3
     )
@@ -108,7 +108,7 @@ public class GenerationCommands {
             break;
 
         default:
-            player.printError("You must either specify 1 or 2 radius values.");
+            player.printError("Вы должны указать одно или два значения радиуса.");
             return;
         }
 
@@ -118,18 +118,18 @@ public class GenerationCommands {
 
         Vector pos = session.getPlacementPosition(player);
         int affected = editSession.makeCylinder(pos, Patterns.wrap(pattern), radiusX, radiusZ, height, !hollow);
-        player.print(affected + " block(s) have been created.");
+        player.print(affected + " блок(ов) было создано.");
     }
 
     @Command(
         aliases = { "/hsphere" },
-        usage = "<block> <radius>[,<radius>,<radius>] [raised?]",
-        desc = "Generates a hollow sphere.",
+        usage = "<блок> <радиус>[,<радиус>,<радиус>] [raised?]",
+        desc = "Сгенерировать полую сферу.",
         help =
-            "Generates a hollow sphere.\n" +
-            "By specifying 3 radii, separated by commas,\n" +
-            "you can generate an ellipsoid. The order of the ellipsoid radii\n" +
-            "is north/south, up/down, east/west.",
+            "Сгенерировать полую сферу.\n" +
+            "При указании трех радиусов,\n" +
+            "создастся эллипсоид. где первое число будет северным и южным радиусом,\n" +
+            "второе - верхним и нижним, а третье - восточным и западным.",
         min = 2,
         max = 3
     )
@@ -141,14 +141,14 @@ public class GenerationCommands {
 
     @Command(
         aliases = { "/sphere" },
-        usage = "<block> <radius>[,<radius>,<radius>] [raised?]",
+        usage = "<блок> <радиус>[,<радиус>,<радиус>] [raised?]",
         flags = "h",
-        desc = "Generates a filled sphere.",
+        desc = "Сгенерировать сферу.",
         help =
-            "Generates a filled sphere.\n" +
-            "By specifying 3 radii, separated by commas,\n" +
-            "you can generate an ellipsoid. The order of the ellipsoid radii\n" +
-            "is north/south, up/down, east/west.",
+            "Сгенерировать сферу из блока.\n" +
+            "При указании трех радиусов,\n" +
+            "создастся эллипсоид. где первое число будет северным и южным радиусом\n" +
+            "второе - верхним и нижним, а третье - восточным и западным.",
         min = 2,
         max = 3
     )
@@ -169,7 +169,7 @@ public class GenerationCommands {
             break;
 
         default:
-            player.printError("You must either specify 1 or 3 radius values.");
+            player.printError("Вы должны указать одно или три значения радиуса.");
             return;
         }
 
@@ -184,13 +184,13 @@ public class GenerationCommands {
 
         int affected = editSession.makeSphere(pos, Patterns.wrap(pattern), radiusX, radiusY, radiusZ, !hollow);
         player.findFreePosition();
-        player.print(affected + " block(s) have been created.");
+        player.print(affected + " блок(ов) было создано.");
     }
 
     @Command(
         aliases = { "forestgen" },
-        usage = "[size] [type] [density]",
-        desc = "Generate a forest",
+        usage = "[размер] [тип] [плотность]",
+        desc = "Cоздать лес",
         min = 0,
         max = 3
     )
@@ -200,13 +200,13 @@ public class GenerationCommands {
     public void forestGen(Player player, LocalSession session, EditSession editSession, @Optional("10") int size, @Optional("tree") TreeType type, @Optional("5") double density) throws WorldEditException {
         density = density / 100;
         int affected = editSession.makeForest(session.getPlacementPosition(player), size, density, new TreeGenerator(type));
-        player.print(affected + " trees created.");
+        player.print(affected + " деревьев создано.");
     }
 
     @Command(
         aliases = { "pumpkins" },
-        usage = "[size]",
-        desc = "Generate pumpkin patches",
+        usage = "[размер]",
+        desc = "Сгенерировать тыквы",
         min = 0,
         max = 1
     )
@@ -214,13 +214,13 @@ public class GenerationCommands {
     @Logging(POSITION)
     public void pumpkins(Player player, LocalSession session, EditSession editSession, @Optional("10") int apothem) throws WorldEditException {
         int affected = editSession.makePumpkinPatches(session.getPlacementPosition(player), apothem);
-        player.print(affected + " pumpkin patches created.");
+        player.print(affected + " тыкв создано.");
     }
 
     @Command(
             aliases = { "/hpyramid" },
-            usage = "<block> <size>",
-            desc = "Generate a hollow pyramid",
+            usage = "<блок> <размер>",
+            desc = "Сгенерировать пирамиду",
             min = 2,
             max = 2
     )
@@ -232,9 +232,9 @@ public class GenerationCommands {
 
     @Command(
         aliases = { "/pyramid" },
-        usage = "<block> <size>",
+        usage = "<блок> <размер>",
         flags = "h",
-        desc = "Generate a filled pyramid",
+        desc = "Сгенерировать полую пирамиду",
         min = 2,
         max = 2
     )
@@ -245,24 +245,24 @@ public class GenerationCommands {
         worldEdit.checkMaxRadius(size);
         int affected = editSession.makePyramid(pos, Patterns.wrap(pattern), size, !hollow);
         player.findFreePosition();
-        player.print(affected + " block(s) have been created.");
+        player.print(affected + " блок(ов) было создано.");
     }
 
     @Command(
         aliases = { "/generate", "/gen", "/g" },
-        usage = "<block> <expression>",
-        desc = "Generates a shape according to a formula.",
+        usage = "<блок> <выражение>",
+        desc = "Сгенерировать форму в соотвествии с формулой.",
         help =
             "Generates a shape according to a formula that is expected to\n" +
             "return positive numbers (true) if the point is inside the shape\n" +
             "Optionally set type/data to the desired block.\n" +
-            "Flags:\n" +
-            "  -h to generate a hollow shape\n" +
-            "  -r to use raw minecraft coordinates\n" +
-            "  -o is like -r, except offset from placement.\n" +
-            "  -c is like -r, except offset selection center.\n" +
-            "If neither -r nor -o is given, the selection is mapped to -1..1\n" +
-            "See also tinyurl.com/wesyntax.",
+            "Флаги:\n" +
+            "  -h сгенерировать пустую форму\n" +
+            "  -r использовать комардинаты minecraft\n" +
+            "  -o как - r, за исключением смещения от размещения.\n" +
+            "  -c как - r, за исключением смещения выбранного центра.\n" +
+            "Если ни -r ни -о дается, выбор отображается -1..1\n" +
+            "Смотрите также tinyurl.com/wesyntax.",
         flags = "hroc",
         min = 2,
         max = -1
@@ -308,7 +308,7 @@ public class GenerationCommands {
         try {
             final int affected = editSession.makeShape(region, zero, unit, Patterns.wrap(pattern), expression, hollow);
             player.findFreePosition();
-            player.print(affected + " block(s) have been created.");
+            player.print(affected + " блок(ов) было создано.");
         } catch (ExpressionException e) {
             player.printError(e.getMessage());
         }
@@ -316,19 +316,19 @@ public class GenerationCommands {
 
     @Command(
         aliases = { "/generatebiome", "/genbiome", "/gb" },
-        usage = "<biome> <expression>",
-        desc = "Sets biome according to a formula.",
+        usage = "<биом> <выражение>",
+        desc = "Сгенерировать биом по формуле.",
         help =
-            "Generates a shape according to a formula that is expected to\n" +
-            "return positive numbers (true) if the point is inside the shape\n" +
-            "Sets the biome of blocks in that shape.\n" +
-            "Flags:\n" +
-            "  -h to generate a hollow shape\n" +
-            "  -r to use raw minecraft coordinates\n" +
-            "  -o is like -r, except offset from placement.\n" +
-            "  -c is like -r, except offset selection center.\n" +
-            "If neither -r nor -o is given, the selection is mapped to -1..1\n" +
-            "See also tinyurl.com/wesyntax.",
+            "Создает форму в соответствии с формулой, которая\n" +
+            "возвращает положительные числа (true), если точка находится внутри формы\n" +
+            "Устанавливает биом блоков в этой форме.\n" +
+            "Флаги:\n" +
+            "  -h для генерации формы полой\n" +
+            "  -r для использования координат Minecraft\n" +
+            "  -o как - r, за исключением смещения от размещения.\n" +
+            "  -c как - r, за исключением смещения выбранного центра.\n" +
+            "Если ни -r ни -о дается, выбор отображается -1..1\n" +
+            "Смотрите также tinyurl.com/wesyntax.",
         flags = "hroc",
         min = 2,
         max = -1
@@ -373,7 +373,7 @@ public class GenerationCommands {
         try {
             final int affected = editSession.makeBiomeShape(region, zero, unit, target, expression, hollow);
             player.findFreePosition();
-            player.print("" + affected + " columns affected.");
+            player.print("Биом изменен на " + affected + " блоков было изменено.");
         } catch (ExpressionException e) {
             player.printError(e.getMessage());
         }

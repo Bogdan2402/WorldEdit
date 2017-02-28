@@ -45,16 +45,16 @@ public class SimpleInjector implements Injector {
             ctr.setAccessible(true);
             return ctr.newInstance(args);
         } catch (NoSuchMethodException e) {
-            log.log(Level.SEVERE, "Error initializing commands class " + clazz, e);
+            log.log(Level.SEVERE, "Ошибка инициализации команды класса " + clazz, e);
             return null;
         } catch (InvocationTargetException e) {
-            log.log(Level.SEVERE, "Error initializing commands class " + clazz, e);
+            log.log(Level.SEVERE, "Ошибка инициализации команды класса " + clazz, e);
             return null;
         } catch (InstantiationException e) {
-            log.log(Level.SEVERE, "Error initializing commands class " + clazz, e);
+            log.log(Level.SEVERE, "Ошибка инициализации команды класса " + clazz, e);
             return null;
         } catch (IllegalAccessException e) {
-            log.log(Level.SEVERE, "Error initializing commands class " + clazz, e);
+            log.log(Level.SEVERE, "Ошибка инициализации команды класса " + clazz, e);
             return null;
         }
     }

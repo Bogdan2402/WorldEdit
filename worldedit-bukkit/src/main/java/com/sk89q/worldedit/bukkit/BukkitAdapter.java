@@ -50,7 +50,7 @@ final class BukkitAdapter {
         } else {
             BukkitWorld bukkitWorld = WorldEditPlugin.getInstance().getInternalPlatform().matchWorld(world);
             if (bukkitWorld == null) {
-                throw new RuntimeException("World '" + world.getName() + "' has no matching version in Bukkit");
+                throw new RuntimeException("Мир '" + world.getName() + "' не имеет соответствующую версию Bukkit");
             }
             return bukkitWorld;
         }
@@ -82,7 +82,7 @@ final class BukkitAdapter {
             if (match != null) {
                 return match;
             } else {
-                throw new IllegalArgumentException("Can't find a Bukkit world for " + world);
+                throw new IllegalArgumentException("Не удается найти мир Bukkit для " + world);
             }
         }
     }

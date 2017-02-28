@@ -48,13 +48,13 @@ public class BukkitImplLoader {
 
     private static final String LOAD_ERROR_MESSAGE =
             "\n**********************************************\n" +
-            "** This WorldEdit version does not fully support your version of Bukkit.\n" +
+            "** Эта версия WorldEdit не полностью поддерживает вашу версию Bukkit.\n" +
             "**\n" +
-            "** When working with blocks or undoing, chests will be empty, signs\n" +
-            "** will be blank, and so on. There will be no support for entity\n" +
-            "** and biome-related functions.\n" +
+            "** При работе с блоками или отмены, сундуки будут пустыми,\n" +
+            "** таблички будут пустыми и так далее. Не будет быть никакой поддержки с сущностями\n" +
+            "** и функциями, связанные с биом.\n" +
             "**\n" +
-            "** Please see http://wiki.sk89q.com/wiki/WorldEdit/Bukkit_adapters\n" +
+            "** Пожалуйста, смотрите http://wiki.sk89q.com/wiki/WorldEdit/Bukkit_adapters\n" +
             "**********************************************\n";
 
     /**
@@ -73,7 +73,7 @@ public class BukkitImplLoader {
         if (className != null) {
             customCandidate = className;
             adapterCandidates.add(className);
-            log.log(Level.INFO, "-Dworldedit.bukkit.adapter used to add " + className + " to the list of available Bukkit adapters");
+            log.log(Level.INFO, "-Dworldedit.bukkit.adapter используется для добавления " + className + " в список доступных адаптеров Bukkit");
         }
     }
 
@@ -156,18 +156,18 @@ public class BukkitImplLoader {
                 if (BukkitImplAdapter.class.isAssignableFrom(cls)) {
                     return (BukkitImplAdapter) cls.newInstance();
                 } else {
-                    log.log(Level.WARNING, "Failed to load the Bukkit adapter class '" + className +
-                            "' because it does not implement " + BukkitImplAdapter.class.getCanonicalName());
+                    log.log(Level.WARNING, "Не удалось загрузить класс Bukkit адаптера '" + className +
+                            "', поскольку он не реализует " + BukkitImplAdapter.class.getCanonicalName());
                 }
             } catch (ClassNotFoundException e) {
-                log.log(Level.WARNING, "Failed to load the Bukkit adapter class '" + className +
-                        "' that is not supposed to be missing", e);
+                log.log(Level.WARNING, "Не удалось загрузить класс Bukkit адаптера '" + className +
+                        "', который не должен отсутствовать", e);
             } catch (IllegalAccessException e) {
-                log.log(Level.WARNING, "Failed to load the Bukkit adapter class '" + className +
-                        "' that is not supposed to be raising this error", e);
+                log.log(Level.WARNING, "Не удалось загрузить класс Bukkit адаптера '" + className +
+                        "', это не должен поднимать эту ошибку", e);
             } catch (Throwable e) {
                 if (className.equals(customCandidate)) {
-                    log.log(Level.WARNING, "Failed to load the Bukkit adapter class '" + className + "'", e);
+                    log.log(Level.WARNING, "Не удалось загрузить класс Bukkit адаптера '" + className + "'", e);
                 }
             }
         }

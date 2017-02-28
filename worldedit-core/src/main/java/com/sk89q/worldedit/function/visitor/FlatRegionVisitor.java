@@ -79,7 +79,7 @@ public class FlatRegionVisitor implements Operation {
 
     @Override
     public void addStatusMessages(List<String> messages) {
-        messages.add(getAffected() + " columns affected");
+        messages.add(getAffected() + " колонн затронуто");
     }
 
 }

@@ -74,20 +74,20 @@ public class SchematicReader implements ClipboardReader {
         // Schematic tag
         NamedTag rootTag = inputStream.readNamedTag();
         if (!rootTag.getName().equals("Schematic")) {
-            throw new IOException("Tag 'Schematic' does not exist or is not first");
+            throw new IOException("Тег 'Schematic' не существует или не является первым");
         }
         CompoundTag schematicTag = (CompoundTag) rootTag.getTag();
 
         // Check
         Map<String, Tag> schematic = schematicTag.getValue();
         if (!schematic.containsKey("Blocks")) {
-            throw new IOException("Schematic file is missing a 'Blocks' tag");
+            throw new IOException("В схематическом файле отсутствует тег 'Blocks'");
         }
 
         // Check type of Schematic
         String materials = requireTag(schematic, "Materials", StringTag.class).getValue();
         if (!materials.equals("Alpha")) {
-            throw new IOException("Schematic file is not an Alpha schematic");
+            throw new IOException("Схематическое файл не является Альфа схемой");
         }
 
         // ====================================================================
@@ -207,10 +207,10 @@ public class SchematicReader implements ClipboardReader {
                     } catch (WorldEditException e) {
                         switch (failedBlockSets) {
                             case 0:
-                                log.log(Level.WARNING, "Failed to set block on a Clipboard", e);
+                                log.log(Level.WARNING, "Не удалось установить блок на буфере обмена", e);
                                 break;
                             case 1:
-                                log.log(Level.WARNING, "Failed to set block on a Clipboard (again) -- no more messages will be logged", e);
+                                log.log(Level.WARNING, "Не удалось установить блок на буфере обмена (еще раз) -- журнала сообщений больше нет", e);
                                 break;
                             default:
                         }
@@ -248,12 +248,12 @@ public class SchematicReader implements ClipboardReader {
 
     private static <T extends Tag> T requireTag(Map<String, Tag> items, String key, Class<T> expected) throws IOException {
         if (!items.containsKey(key)) {
-            throw new IOException("Schematic file is missing a \"" + key + "\" tag");
+            throw new IOException("В схематическом файле отсутствует тег \"" + key + "\"");
         }
 
         Tag tag = items.get(key);
         if (!expected.isInstance(tag)) {
-            throw new IOException(key + " tag is not of tag type " + expected.getName());
+            throw new IOException(key + " тег не является типом тега " + expected.getName());
         }
 
         return expected.cast(tag);

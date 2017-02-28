@@ -58,10 +58,10 @@ public class TreePlanter implements BlockTool {
             }
             
             if (!successful) {
-                player.printError("A tree can't go there.");
+                player.printError("Дерево не может быть там.");
             }
         } catch (MaxChangedBlocksException e) {
-            player.printError("Max. blocks changed reached.");
+            player.printError("Максимальное значение лимита изменения блоков достигнут.");
         } finally {
             session.remember(editSession);
         }

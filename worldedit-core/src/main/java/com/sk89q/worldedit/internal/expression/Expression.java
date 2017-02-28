@@ -94,7 +94,7 @@ public class Expression {
 
         for (String variableName : variableNames) {
             if (variables.containsKey(variableName)) {
-                throw new ExpressionException(-1, "Tried to overwrite identifier '" + variableName + "'");
+                throw new ExpressionException(-1, "Пытался перезаписать идентификатор '" + variableName + "'");
             }
             variables.put(variableName, new Variable(0));
         }
@@ -107,7 +107,7 @@ public class Expression {
             final String variableName = variableNames[i];
             final RValue invokable = variables.get(variableName);
             if (!(invokable instanceof Variable)) {
-                throw new EvaluationException(invokable.getPosition(), "Tried to assign constant " + variableName + ".");
+                throw new EvaluationException(invokable.getPosition(), "Пытался присвоить константу " + variableName + ".");
             }
 
             ((Variable) invokable).value = values[i];

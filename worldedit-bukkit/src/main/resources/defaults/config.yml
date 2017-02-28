@@ -1,18 +1,17 @@
 #
-# WorldEdit's configuration file
+# Конфигурационный файл WorldEdit.
 #
-# About editing this file:
-# - DO NOT USE TABS. You MUST use spaces or Bukkit will complain. If
-#   you use an editor like Notepad++ (recommended for Windows users), you
-#   must configure it to "replace tabs with spaces." In Notepad++, this can
-#   be changed in Settings > Preferences > Language Menu.
-# - Don't get rid of the indents. They are indented so some entries are
-#   in categories (like "max-blocks-changed" is in the "limits"
-#   category.
-# - If you want to check the format of this file before putting it
-#   into WorldEdit, paste it into http://yaml-online-parser.appspot.com/
-#   and see if it gives "ERROR:".
-# - Lines starting with # are commentsand so they are ignored.
+# О редактировании этого файла:
+# - НЕ ИСПОЛЬЗОВАТЬ TAB. Вы должны использовать пробелы иначе Bukkit будет жаловаться. Если
+#   вы используете редактор, такой как Notepad++ (рекомендуется для пользователей Windows), вы
+#   должны настроить его на "заменить TAB на пробелы." В Notepad++, это можно
+#   изменить в Опции > Настройки > Настройки табуляци.
+# - Не избавиляйтесь от отступов. Они смещены, поэтому некоторые записи
+#   в категориях (как "max-blocks-changed" находится в категории "limits")
+# - Если вы хотите проверить формат этого файла, прежде чем положить его
+#   в WorldEdit, вставьте его в http://yaml-online-parser.appspot.com/
+#   и посмотрите полученные "ОШИБКА:".
+# - Строки, начинающие с # называются комментариями, поэтому они игнорируются.
 #
 
 limits:

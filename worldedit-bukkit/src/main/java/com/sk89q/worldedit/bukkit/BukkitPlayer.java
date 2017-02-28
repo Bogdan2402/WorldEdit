@@ -182,7 +182,7 @@ public class BukkitPlayer extends LocalPlayer {
 
     @Override
     public BaseEntity getState() {
-        throw new UnsupportedOperationException("Cannot create a state from this object");
+        throw new UnsupportedOperationException("Невозможно создать форму этого объекта");
     }
 
     @Override

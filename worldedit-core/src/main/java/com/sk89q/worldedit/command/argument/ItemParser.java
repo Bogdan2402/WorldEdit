@@ -39,11 +39,11 @@ public class ItemParser extends SimpleCommand<BaseItem> {
     private final StringParser stringParser;
 
     public ItemParser(String name) {
-        stringParser = addParameter(new StringParser(name, "The item name", null));
+        stringParser = addParameter(new StringParser(name, "Имя предмета", null));
     }
 
     public ItemParser(String name, String defaultSuggestion) {
-        stringParser = addParameter(new StringParser(name, "The item name", defaultSuggestion));
+        stringParser = addParameter(new StringParser(name, "Имя предмета", defaultSuggestion));
     }
 
     @Override

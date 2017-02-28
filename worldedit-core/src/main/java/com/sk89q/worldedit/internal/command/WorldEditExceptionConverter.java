@@ -42,7 +42,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class WorldEditExceptionConverter extends ExceptionConverterHelper {
 
-    private static final Pattern numberFormat = Pattern.compile("^For input string: \"(.*)\"$");
+    private static final Pattern numberFormat = Pattern.compile("^Для входной строки: \"(.*)\"$");
     private final WorldEdit worldEdit;
 
     public WorldEditExceptionConverter(WorldEdit worldEdit) {
@@ -55,21 +55,21 @@ public class WorldEditExceptionConverter extends ExceptionConverterHelper {
         final Matcher matcher = numberFormat.matcher(e.getMessage());
 
         if (matcher.matches()) {
-            throw new CommandException("Number expected; string \"" + matcher.group(1)
-                    + "\" given.");
+            throw new CommandException("Ожидается число; строка \"" + matcher.group(1)
+                    + "\" получена.");
         } else {
-            throw new CommandException("Number expected; string given.");
+            throw new CommandException("Ожидается число; строка получена.");
         }
     }
 
     @ExceptionMatch
     public void convert(IncompleteRegionException e) throws CommandException {
-        throw new CommandException("Make a region selection first.");
+        throw new CommandException("Сначала выберите регион.");
     }
 
     @ExceptionMatch
     public void convert(UnknownItemException e) throws CommandException {
-        throw new CommandException("Block name '" + e.getID() + "' was not recognized.");
+        throw new CommandException("Имя блока '" + e.getID() + "' не распознано.");
     }
 
     @ExceptionMatch
@@ -79,29 +79,29 @@ public class WorldEditExceptionConverter extends ExceptionConverterHelper {
 
     @ExceptionMatch
     public void convert(DisallowedItemException e) throws CommandException {
-        throw new CommandException("Block '" + e.getID()
-                + "' not allowed (see WorldEdit configuration).");
+        throw new CommandException("Блок '" + e.getID()
+                + "' не разрешен (смотрите конфигурацию WorldEdit).");
     }
 
     @ExceptionMatch
     public void convert(MaxChangedBlocksException e) throws CommandException {
-        throw new CommandException("Max blocks changed in an operation reached ("
+        throw new CommandException("Максимальное количество блоков в операции достигло ("
                 + e.getBlockLimit() + ").");
     }
 
     @ExceptionMatch
     public void convert(MaxBrushRadiusException e) throws CommandException {
-        throw new CommandException("Maximum brush radius (in configuration): " + worldEdit.getConfiguration().maxBrushRadius);
+        throw new CommandException("Максимальный радиус кисти (в конфигурации): " + worldEdit.getConfiguration().maxBrushRadius);
     }
 
     @ExceptionMatch
     public void convert(MaxRadiusException e) throws CommandException {
-        throw new CommandException("Maximum radius (in configuration): " + worldEdit.getConfiguration().maxRadius);
+        throw new CommandException("Максимальный радиус (в конфигурации): " + worldEdit.getConfiguration().maxRadius);
     }
 
     @ExceptionMatch
     public void convert(UnknownDirectionException e) throws CommandException {
-        throw new CommandException("Unknown direction: " + e.getDirection());
+        throw new CommandException("Неизвестное направление: " + e.getDirection());
     }
 
     @ExceptionMatch
@@ -121,30 +121,30 @@ public class WorldEditExceptionConverter extends ExceptionConverterHelper {
 
     @ExceptionMatch
     public void convert(EmptyClipboardException e) throws CommandException {
-        throw new CommandException("Your clipboard is empty. Use //copy first.");
+        throw new CommandException("Ваш буфер обмена пуст. Используйте //copy.");
     }
 
     @ExceptionMatch
     public void convert(InvalidFilenameException e) throws CommandException {
-        throw new CommandException("Filename '" + e.getFilename() + "' invalid: "
+        throw new CommandException("Имя файла '" + e.getFilename() + "' недействительно: "
                 + e.getMessage());
     }
 
     @ExceptionMatch
     public void convert(FilenameResolutionException e) throws CommandException {
         throw new CommandException(
-                "File '" + e.getFilename() + "' resolution error: " + e.getMessage());
+                "Файл '" + e.getFilename() + "' ошибка разрешения: " + e.getMessage());
     }
 
     @ExceptionMatch
     public void convert(InvalidToolBindException e) throws CommandException {
-        throw new CommandException("Can't bind tool to "
+        throw new CommandException("Невозможно привязать инструмент к "
                 + ItemType.toHeldName(e.getItemId()) + ": " + e.getMessage());
     }
 
     @ExceptionMatch
     public void convert(FileSelectionAbortedException e) throws CommandException {
-        throw new CommandException("File selection aborted.");
+        throw new CommandException("Выбор файла прерван.");
     }
 
     @ExceptionMatch

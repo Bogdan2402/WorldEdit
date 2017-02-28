@@ -157,7 +157,7 @@ public class CylinderRegionSelector extends com.sk89q.worldedit.regions.Cylinder
 
     @Override
     public void explainPrimarySelection(Actor player, LocalSession session, Vector pos) {
-        player.print("Starting a new cylindrical selection at " + pos + ".");
+        player.print("Запуск нового цилиндрического выделения на " + pos + ".");
 
         session.describeCUI(player);
     }
@@ -167,9 +167,9 @@ public class CylinderRegionSelector extends com.sk89q.worldedit.regions.Cylinder
         Vector center = region.getCenter();
 
         if (!center.equals(Vector.ZERO)) {
-            player.print("Radius set to " + NUMBER_FORMAT.format(region.getRadius().getX()) + "/" + NUMBER_FORMAT.format(region.getRadius().getZ()) + " blocks. (" + region.getArea() + ").");
+            player.print("Радиус установлен " + NUMBER_FORMAT.format(region.getRadius().getX()) + "/" + NUMBER_FORMAT.format(region.getRadius().getZ()) + " blocks. (" + region.getArea() + ").");
         } else {
-            player.printError("You must select the center point before setting the radius.");
+            player.printError("Вы должны выбрать центральную точку перед установкой радиуса.");
             return;
         }
 
@@ -228,10 +228,10 @@ public class CylinderRegionSelector extends com.sk89q.worldedit.regions.Cylinder
         final List<String> lines = new ArrayList<String>();
 
         if (!region.getCenter().equals(Vector.ZERO)) {
-            lines.add("Center: " + region.getCenter());
+            lines.add("Центр: " + region.getCenter());
         }
         if (!region.getRadius().equals(Vector2D.ZERO)) {
-            lines.add("Radius: " + region.getRadius());
+            lines.add("Радиус: " + region.getRadius());
         }
 
         return lines;

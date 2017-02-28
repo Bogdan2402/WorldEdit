@@ -84,8 +84,8 @@ public class SchematicCommands {
 
     @Command(
             aliases = { "load" },
-            usage = "[<format>] <filename>",
-            desc = "Load a schematic into your clipboard",
+            usage = "[<формат>] <имя_файла>",
+            desc = "Загрузить схематический файл в буфер обмена",
             min = 1, max = 2
     )
     @Deprecated
@@ -97,13 +97,13 @@ public class SchematicCommands {
         File f = worldEdit.getSafeOpenFile(player, dir, filename, "schematic", "schematic");
 
         if (!f.exists()) {
-            player.printError("Schematic " + filename + " does not exist!");
+            player.printError("Схематический файл " + filename + " не найден!");
             return;
         }
 
         ClipboardFormat format = ClipboardFormat.findByAlias(formatName);
         if (format == null) {
-            player.printError("Unknown schematic format: " + formatName);
+            player.printError("Неизвестный формат схематического файла: " + formatName);
             return;
         }
 
@@ -117,11 +117,11 @@ public class SchematicCommands {
             Clipboard clipboard = reader.read(player.getWorld().getWorldData());
             session.setClipboard(new ClipboardHolder(clipboard, worldData));
 
-            log.info(player.getName() + " loaded " + f.getCanonicalPath());
-            player.print(filename + " loaded. Paste it with //paste");
+            log.info(player.getName() + " загружено " + f.getCanonicalPath());
+            player.print(filename + " загружено в буфер обмена. Вставить //paste");
         } catch (IOException e) {
-            player.printError("Schematic could not read or it does not exist: " + e.getMessage());
-            log.log(Level.WARNING, "Failed to load a saved clipboard", e);
+            player.printError("Ошибка при загрузке: " + e.getMessage());
+            log.log(Level.WARNING, "Схематический файл невозможно прочитать или его не существует", e);
         } finally {
             try {
                 closer.close();
@@ -132,8 +132,8 @@ public class SchematicCommands {
 
     @Command(
             aliases = { "save" },
-            usage = "[<format>] <filename>",
-            desc = "Save a schematic into your clipboard",
+            usage = "[<форма>] <имя_файла>",
+            desc = "Сохранить буфер обмена в схематический файл",
             min = 1, max = 2
     )
     @Deprecated
@@ -146,7 +146,7 @@ public class SchematicCommands {
 
         ClipboardFormat format = ClipboardFormat.findByAlias(formatName);
         if (format == null) {
-            player.printError("Unknown schematic format: " + formatName);
+            player.printError("Неизвестный формат схематического файла: " + formatName);
             return;
         }
 
@@ -171,7 +171,7 @@ public class SchematicCommands {
             File parent = f.getParentFile();
             if (parent != null && !parent.exists()) {
                 if (!parent.mkdirs()) {
-                    throw new CommandException("Could not create folder for schematics!");
+                    throw new CommandException("Не удалось создать папку для схематических файлов!");
                 }
             }
 
@@ -179,11 +179,11 @@ public class SchematicCommands {
             BufferedOutputStream bos = closer.register(new BufferedOutputStream(fos));
             ClipboardWriter writer = closer.register(format.getWriter(bos));
             writer.write(target, holder.getWorldData());
-            log.info(player.getName() + " saved " + f.getCanonicalPath());
-            player.print(filename + " saved.");
+            log.info(player.getName() + " сохранена " + f.getCanonicalPath());
+            player.print(filename + " сохранена.");
         } catch (IOException e) {
-            player.printError("Schematic could not written: " + e.getMessage());
-            log.log(Level.WARNING, "Failed to write a saved clipboard", e);
+            player.printError("Ошибка при сохранении: " + e.getMessage());
+            log.log(Level.WARNING, "Не удалось записать схематический файл", e);
         } finally {
             try {
                 closer.close();
@@ -194,9 +194,9 @@ public class SchematicCommands {
 
     @Command(
             aliases = { "delete", "d" },
-            usage = "<filename>",
-            desc = "Delete a saved schematic",
-            help = "Delete a schematic from the schematic list",
+            usage = "<имя_файла>",
+            desc = "Удалить сохраненный схематический файл",
+            help = "Удалить схематику из списка",
             min = 1,
             max = 1
     )
@@ -210,26 +210,26 @@ public class SchematicCommands {
         File f = worldEdit.getSafeSaveFile(player, dir, filename, "schematic", "schematic");
 
         if (!f.exists()) {
-            player.printError("Schematic " + filename + " does not exist!");
+            player.printError("Схематический файл " + filename + " не найден!");
             return;
         }
 
         if (!f.delete()) {
-            player.printError("Deletion of " + filename + " failed! Maybe it is read-only.");
+            player.printError("Невозможно удалить " + filename + "!");
             return;
         }
 
-        player.print(filename + " has been deleted.");
+        player.print(filename + " был удален.");
     }
 
     @Command(
             aliases = {"formats", "listformats", "f"},
-            desc = "List available formats",
+            desc = "Список доступных форматов схематики",
             max = 0
     )
     @CommandPermissions("worldedit.schematic.formats")
     public void formats(Actor actor) throws WorldEditException {
-        actor.print("Available clipboard formats (Name: Lookup names)");
+        actor.print("Список доступных форматов схематических файлов (Название файла: Форматы)");
         StringBuilder builder;
         boolean first = true;
         for (ClipboardFormat format : ClipboardFormat.values()) {
@@ -249,14 +249,14 @@ public class SchematicCommands {
 
     @Command(
             aliases = {"list", "all", "ls"},
-            desc = "List saved schematics",
+            desc = "Список всех доступных схематических фалов",
             min = 0,
             max = 1,
             flags = "dnp",
-            help = "List all schematics in the schematics directory\n" +
-                    " -d sorts by date, oldest first\n" +
-                    " -n sorts by date, newest first\n" +
-                    " -p <page> prints the requested page\n"
+            help = "Список всех доступных схематических фалов в директории\n" +
+                    " -d сортировать по дате, первыми будут старые\n" +
+                    " -n сортировать по дате, снача новые\n" +
+                    " -p <страница> печатает запрошенную страницу\n"
     )
     @CommandPermissions("worldedit.schematic.list")
     public void list(Actor actor, CommandContext args, @Switch('p') @Optional("1") int page) throws WorldEditException {
@@ -264,7 +264,7 @@ public class SchematicCommands {
         List<File> fileList = allFiles(dir);
 
         if (fileList == null || fileList.isEmpty()) {
-            actor.printError("No schematics found.");
+            actor.printError("Схематический файл не найден.");
             return;
         }
 
@@ -273,11 +273,11 @@ public class SchematicCommands {
 
         int pageCount = files.length / SCHEMATICS_PER_PAGE + 1;
         if (page < 1) {
-            actor.printError("Page must be at least 1");
+            actor.printError("Страница должна быть по крайней мере 1");
             return;
         }
         if (page > pageCount) {
-            actor.printError("Page must be less than " + (pageCount + 1));
+            actor.printError("Страница должна быть меньше " + (pageCount + 1));
             return;
         }
 
@@ -306,7 +306,7 @@ public class SchematicCommands {
         List<String> schematics = listFiles(worldEdit.getConfiguration().saveDir, files);
         int offset = (page - 1) * SCHEMATICS_PER_PAGE;
 
-        actor.print("Available schematics (Filename: Format) [" + page + "/" + pageCount + "]:");
+        actor.print("Доступные схематические файлы (Название файла: Формат) [" + page + "/" + pageCount + "]:");
         StringBuilder build = new StringBuilder();
         int limit = Math.min(offset + SCHEMATICS_PER_PAGE, schematics.size());
         for (int i = offset; i < limit;) {
@@ -345,7 +345,7 @@ public class SchematicCommands {
             ClipboardFormat format = ClipboardFormat.findByFile(file);
             boolean inRoot = file.getParentFile().getName().equals(prefix);
             build.append(inRoot ? file.getName() : file.getPath().split(Pattern.quote(prefix + File.separator))[1])
-                    .append(": ").append(format == null ? "Unknown" : format.name());
+                    .append(": ").append(format == null ? "Неизвестно" : format.name());
             result.add(build.toString());
         }
         return result;

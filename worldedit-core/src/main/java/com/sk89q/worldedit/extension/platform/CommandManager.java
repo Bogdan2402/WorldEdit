@@ -71,7 +71,7 @@ public final class CommandManager {
     public static final Pattern COMMAND_CLEAN_PATTERN = Pattern.compile("^[/]+");
     private static final Logger log = Logger.getLogger(CommandManager.class.getCanonicalName());
     private static final Logger commandLog = Logger.getLogger(CommandManager.class.getCanonicalName() + ".CommandLog");
-    private static final Pattern numberFormatExceptionPattern = Pattern.compile("^For input string: \"(.*)\"$");
+    private static final Pattern numberFormatExceptionPattern = Pattern.compile("^Для входной строки: \"(.*)\"$");
 
     private final WorldEdit worldEdit;
     private final PlatformManager platformManager;
@@ -123,36 +123,36 @@ public final class CommandManager {
                         .registerMethods(new ToolUtilCommands(worldEdit))
                         .registerMethods(new ToolCommands(worldEdit))
                         .registerMethods(new UtilityCommands(worldEdit))
-                        .register(adapt(new SelectionCommand(new ApplyCommand(new ReplaceParser(), "Set all blocks within selection"), "worldedit.region.set")), "/set")
+                        .register(adapt(new SelectionCommand(new ApplyCommand(new ReplaceParser(), "Установить все блоки в пределах выделения"), "worldedit.region.set")), "/set")
                         .group("worldedit", "we")
-                            .describeAs("WorldEdit commands")
+                            .describeAs("Команды WorldEdit")
                             .registerMethods(new WorldEditCommands(worldEdit))
                             .parent()
                         .group("schematic", "schem", "/schematic", "/schem")
-                            .describeAs("Schematic commands for saving/loading areas")
+                            .describeAs("Команды схематики для сохранения/загрузки областей")
                             .registerMethods(new SchematicCommands(worldEdit))
                             .parent()
                         .group("snapshot", "snap")
-                            .describeAs("Schematic commands for saving/loading areas")
+                            .describeAs("Команды схематики для сохранения/загрузки областей")
                             .registerMethods(new SnapshotCommands(worldEdit))
                             .parent()
                         .group("brush", "br")
-                            .describeAs("Brushing commands")
+                            .describeAs("Очистить команды")
                             .registerMethods(new BrushCommands(worldEdit))
                             .register(adapt(new ShapedBrushCommand(new DeformCommand(), "worldedit.brush.deform")), "deform")
-                            .register(adapt(new ShapedBrushCommand(new ApplyCommand(new ReplaceParser(), "Set all blocks within region"), "worldedit.brush.set")), "set")
+                            .register(adapt(new ShapedBrushCommand(new ApplyCommand(new ReplaceParser(), "Установить все блоки в пределах региона"), "worldedit.brush.set")), "set")
                             .register(adapt(new ShapedBrushCommand(new PaintCommand(), "worldedit.brush.paint")), "paint")
                             .register(adapt(new ShapedBrushCommand(new ApplyCommand(), "worldedit.brush.apply")), "apply")
                             .register(adapt(new ShapedBrushCommand(new PaintCommand(new TreeGeneratorParser("treeType")), "worldedit.brush.forest")), "forest")
-                            .register(adapt(new ShapedBrushCommand(ProvidedValue.create(new Deform("y-=1", Mode.RAW_COORD), "Raise one block"), "worldedit.brush.raise")), "raise")
-                            .register(adapt(new ShapedBrushCommand(ProvidedValue.create(new Deform("y+=1", Mode.RAW_COORD), "Lower one block"), "worldedit.brush.lower")), "lower")
+                            .register(adapt(new ShapedBrushCommand(ProvidedValue.create(new Deform("y-=1", Mode.RAW_COORD), "Поднять один блок"), "worldedit.brush.raise")), "raise")
+                            .register(adapt(new ShapedBrushCommand(ProvidedValue.create(new Deform("y+=1", Mode.RAW_COORD), "Опустить один блок"), "worldedit.brush.lower")), "lower")
                         .parent()
                         .group("superpickaxe", "pickaxe", "sp")
-                            .describeAs("Super-pickaxe commands")
+                            .describeAs("Команды супер кирки")
                             .registerMethods(new SuperPickaxeCommands(worldEdit))
                             .parent()
                         .group("tool")
-                            .describeAs("Bind functions to held items")
+                            .describeAs("Привязка функции к предметам")
                             .registerMethods(new ToolCommands(worldEdit))
                             .parent()
                         .graph()
@@ -164,7 +164,7 @@ public final class CommandManager {
     }
 
     void register(Platform platform) {
-        log.log(Level.FINE, "Registering commands with " + platform.getClass().getCanonicalName());
+        log.log(Level.FINE, "Регистрация команд для" + platform.getClass().getCanonicalName());
 
         LocalConfiguration config = platform.getConfiguration();
         boolean logging = config.logCommands;
@@ -178,12 +178,12 @@ public final class CommandManager {
             File file = new File(config.getWorkingDirectory(), path);
             commandLog.setLevel(Level.ALL);
 
-            log.log(Level.INFO, "Logging WorldEdit commands to " + file.getAbsolutePath());
+            log.log(Level.INFO, "Логгирование команд WorldEdit для " + file.getAbsolutePath());
 
             try {
                 dynamicHandler.setHandler(new FileHandler(file.getAbsolutePath(), true));
             } catch (IOException e) {
-                log.log(Level.WARNING, "Could not use command log file " + path + ": " + e.getMessage());
+                log.log(Level.WARNING, "Невозможно использовать команду журнала файла " + path + ": " + e.getMessage());
             }
         }
 
@@ -258,7 +258,7 @@ public final class CommandManager {
                 throw t;
             }
         } catch (CommandPermissionsException e) {
-            actor.printError("You are not permitted to do that. Are you in the right mode?");
+            actor.printError("У вас нет разрешения сделать это.");
         } catch (InvalidUsageException e) {
             if (e.isFullHelpSuggested()) {
                 actor.printRaw(ColorCodeBuilder.asColorCodes(new CommandUsageBox(e.getCommand(), e.getCommandUsed("/", ""), locals)));
@@ -268,21 +268,21 @@ public final class CommandManager {
                 }
             } else {
                 String message = e.getMessage();
-                actor.printError(message != null ? message : "The command was not used properly (no more help available).");
-                actor.printError("Usage: " + e.getSimpleUsageString("/"));
+                actor.printError(message != null ? message : "Команда не была использована должным образом.");
+                actor.printError("Использование: " + e.getSimpleUsageString("/"));
             }
         } catch (WrappedCommandException e) {
             Throwable t = e.getCause();
             actor.printError("Please report this error: [See console]");
             actor.printRaw(t.getClass().getName() + ": " + t.getMessage());
-            log.log(Level.SEVERE, "An unexpected error while handling a WorldEdit command", t);
+            log.log(Level.SEVERE, "Непредвиденная ошибка при обработке команды WorldEdit", t);
         } catch (CommandException e) {
             String message = e.getMessage();
             if (message != null) {
                 actor.printError(e.getMessage());
             } else {
-                actor.printError("An unknown error has occurred! Please see console.");
-                log.log(Level.SEVERE, "An unknown error occurred", e);
+                actor.printError("Произошла неизвестная ошибка! Пожалуйста, смотрите консоль.");
+                log.log(Level.SEVERE, "Произошла неизвестная ошибка", e);
             }
         } finally {
             EditSession editSession = locals.get(EditSession.class);
@@ -296,11 +296,11 @@ public final class CommandManager {
                     int changed = editSession.getBlockChangeCount();
                     if (time > 0) {
                         double throughput = changed / (time / 1000.0);
-                        actor.printDebug((time / 1000.0) + "s elapsed (history: "
-                                + changed + " changed; "
-                                + Math.round(throughput) + " blocks/sec).");
+                        actor.printDebug((time / 1000.0) + " прошло (история: "
+                                + changed + " изменено; "
+                                + Math.round(throughput) + " блоков/sec).");
                     } else {
-                        actor.printDebug((time / 1000.0) + "s elapsed.");
+                        actor.printDebug((time / 1000.0) + " прошло.");
                     }
                 }
 

@@ -52,7 +52,7 @@ public class ChunkCommands {
     @Command(
         aliases = { "chunkinfo" },
         usage = "",
-        desc = "Get information about the chunk that you are inside",
+        desc = "Показать информацию по чанку в котором вы находитесь",
         min = 0,
         max = 0
     )
@@ -67,16 +67,16 @@ public class ChunkCommands {
         String filename = "c." + Integer.toString(chunkX, 36)
                 + "." + Integer.toString(chunkZ, 36) + ".dat";
 
-        player.print("Chunk: " + chunkX + ", " + chunkZ);
-        player.print("Old format: " + folder1 + "/" + folder2 + "/" + filename);
-        player.print("McRegion: region/" + McRegionChunkStore.getFilename(
+        player.print("Чанк: " + chunkX + ", " + chunkZ);
+        player.print("Старый формат: " + folder1 + "/" + folder2 + "/" + filename);
+        player.print("McRegion: регион/" + McRegionChunkStore.getFilename(
                 new Vector2D(chunkX, chunkZ)));
     }
 
     @Command(
         aliases = { "listchunks" },
         usage = "",
-        desc = "List chunks that your selection includes",
+        desc = "Показать чанки выделеной территории",
         min = 0,
         max = 0
     )
@@ -92,21 +92,21 @@ public class ChunkCommands {
     @Command(
         aliases = { "delchunks" },
         usage = "",
-        desc = "Delete chunks that your selection includes",
+        desc = "Удалить чанки выделеной территории",
         min = 0,
         max = 0
     )
     @CommandPermissions("worldedit.delchunks")
     @Logging(REGION)
     public void deleteChunks(Player player, LocalSession session, EditSession editSession, CommandContext args) throws WorldEditException {
-        player.print("Note that this command does not yet support the mcregion format.");
+        player.print("Обратите внимание, что эта команда не поддерживает формат регионов mcregion.");
         LocalConfiguration config = worldEdit.getConfiguration();
 
         Set<Vector2D> chunks = session.getSelection(player.getWorld()).getChunks();
         FileOutputStream out = null;
 
         if (config.shellSaveType == null) {
-            player.printError("Shell script type must be configured: 'bat' or 'bash' expected.");
+            player.printError("Скрипт должен быть настроен: формат 'bat' или 'bash'.");
         } else if (config.shellSaveType.equalsIgnoreCase("bat")) {
             try {
                 out = new FileOutputStream("worldedit-delchunks.bat");
@@ -130,7 +130,7 @@ public class ChunkCommands {
                 writer.close();
                 player.print("worldedit-delchunks.bat written. Run it when no one is near the region.");
             } catch (IOException e) {
-                player.printError("Error occurred: " + e.getMessage());
+                player.printError("Произошла ошибка: " + e.getMessage());
             } finally {
                 if (out != null) {
                     try {
@@ -162,7 +162,7 @@ public class ChunkCommands {
                 player.print("worldedit-delchunks.sh written. Run it when no one is near the region.");
                 player.print("You will have to chmod it to be executable.");
             } catch (IOException e) {
-                player.printError("Error occurred: " + e.getMessage());
+                player.printError("Произошла ошибка: " + e.getMessage());
             } finally {
                 if (out != null) {
                     try {
@@ -172,7 +172,7 @@ public class ChunkCommands {
                 }
             }
         } else {
-            player.printError("Shell script type must be configured: 'bat' or 'bash' expected.");
+            player.printError("Скрипт должен быть настроен: формат 'bat' или 'bash'.");
         }
     }
 

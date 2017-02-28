@@ -80,7 +80,7 @@ public class ShapedBrushCommand extends SimpleCommand<Object> {
             WorldEdit.getInstance().getPlatformManager().getCommandManager().getExceptionConverter().convert(e);
         }
 
-        player.print("Set brush to " + factory);
+        player.print("Кисть установлена на " + factory);
 
         return true;
     }
@@ -94,7 +94,7 @@ public class ShapedBrushCommand extends SimpleCommand<Object> {
     public boolean testPermission0(CommandLocals locals) {
         Actor sender = locals.get(Actor.class);
         if (sender == null) {
-            throw new RuntimeException("Uh oh! No 'Actor' specified so that we can check permissions");
+            throw new RuntimeException("Ой-ой! Не указан 'Актер', так что мы можем проверить разрешения");
         } else {
             return sender.hasPermission(permission);
         }

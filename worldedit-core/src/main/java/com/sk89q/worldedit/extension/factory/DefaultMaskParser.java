@@ -108,10 +108,10 @@ class DefaultMaskParser extends InputParser<Mask> {
                     try {
                         return new RegionMask(context.requireSession().getSelection(context.requireWorld()).clone());
                     } catch (IncompleteRegionException e) {
-                        throw new InputParseException("Please make a selection first.");
+                        throw new InputParseException("Пожалуйста, сначала создайте выделение.");
                     }
                 } else {
-                    throw new NoMatchException("Unrecognized mask '" + component + "'");
+                    throw new NoMatchException("Неизвестная маска '" + component + "'");
                 }
 
             case '>':
@@ -133,7 +133,7 @@ class DefaultMaskParser extends InputParser<Mask> {
                 for (String biomeName : biomesList) {
                     BaseBiome biome = Biomes.findBiomeByName(knownBiomes, biomeName, biomeRegistry);
                     if (biome == null) {
-                        throw new InputParseException("Unknown biome '" + biomeName + "'");
+                        throw new InputParseException("Неизвестный биом '" + biomeName + "'");
                     }
                     biomes.add(biome);
                 }
@@ -152,7 +152,7 @@ class DefaultMaskParser extends InputParser<Mask> {
                     exp.setEnvironment(env);
                     return new ExpressionMask(exp);
                 } catch (ExpressionException e) {
-                    throw new InputParseException("Invalid expression: " + e.getMessage());
+                    throw new InputParseException("Неправильное выражение: " + e.getMessage());
                 }
 
             case '!':

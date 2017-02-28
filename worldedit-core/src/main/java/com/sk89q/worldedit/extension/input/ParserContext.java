@@ -144,7 +144,7 @@ public class ParserContext {
     public Extent requireExtent() throws InputParseException {
         Extent extent = getExtent();
         if (extent == null) {
-            throw new InputParseException("No Extent is known");
+            throw new InputParseException("Ни одна степень не известна");
         }
         return extent;
     }
@@ -158,7 +158,7 @@ public class ParserContext {
     public LocalSession requireSession() throws InputParseException {
         LocalSession session = getSession();
         if (session == null) {
-            throw new InputParseException("No LocalSession is known");
+            throw new InputParseException("Ни один LocalSession не известный");
         }
         return session;
     }
@@ -172,7 +172,7 @@ public class ParserContext {
     public World requireWorld() throws InputParseException {
         World world = getWorld();
         if (world == null) {
-            throw new InputParseException("No world is known");
+            throw new InputParseException("Ни один мир не известный");
         }
         return world;
     }
@@ -186,7 +186,7 @@ public class ParserContext {
     public Actor requireActor() throws InputParseException {
         Actor actor = getActor();
         if (actor == null) {
-            throw new InputParseException("No actor is known");
+            throw new InputParseException("Ни один актер не известный");
         }
         return actor;
     }

@@ -80,7 +80,7 @@ class PlayerProxy extends AbstractPlayerActor {
 
     @Override
     public BaseEntity getState() {
-        throw new UnsupportedOperationException("Can't getState() on a player");
+        throw new UnsupportedOperationException("Не могу GetState () на игрока");
     }
 
     @Override

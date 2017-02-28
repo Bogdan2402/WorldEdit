@@ -72,7 +72,7 @@ public class FloraGenerator implements RegionFunction {
      */
     public void setBiomeAware(boolean biomeAware) {
         if (biomeAware) {
-            throw new IllegalArgumentException("Cannot enable biome-aware mode; not yet implemented");
+            throw new IllegalArgumentException("Невозможно включить режим биома; еще не реализовано");
         }
     }
 

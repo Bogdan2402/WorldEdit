@@ -50,7 +50,7 @@ public class bPermissionsResolver implements PermissionsResolver {
 
     @Override
     public String getDetectionMessage() {
-        return "bPermissions detected! Using bPermissions for permissions";
+        return "bPermissions обнаружен! Использую bPermissions для разрешений";
     }
 
     @Override

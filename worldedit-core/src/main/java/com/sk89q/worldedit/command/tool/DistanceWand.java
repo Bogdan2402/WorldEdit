@@ -82,7 +82,7 @@ public class DistanceWand extends BrushTool implements DoubleActionTraceTool {
         }
 
         if (target == null) {
-            player.printError("No block in sight!");
+            player.printError("Нет блоков в поле зрения!");
             return null;
         }
 

@@ -61,7 +61,7 @@ public abstract class AbstractFactory<E> {
             }
         }
 
-        throw new NoMatchException("No match for '" + input + "'");
+        throw new NoMatchException("Не соответствует '" + input + "'");
     }
 
 }

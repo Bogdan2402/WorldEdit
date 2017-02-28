@@ -68,7 +68,7 @@ public class RegionVisitor implements Operation {
 
     @Override
     public void addStatusMessages(List<String> messages) {
-        messages.add(getAffected() + " blocks affected");
+        messages.add(getAffected() + " блок(ов) затронуто");
     }
 
 }

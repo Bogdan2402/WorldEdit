@@ -40,20 +40,20 @@ public class ToolCommands {
     @Command(
         aliases = { "none" },
         usage = "",
-        desc = "Unbind a bound tool from your current item",
+        desc = "Отменить привязку к текущему инструменту",
         min = 0,
         max = 0
     )
     public void none(Player player, LocalSession session, EditSession editSession, CommandContext args) throws WorldEditException {
 
         session.setTool(player.getItemInHand(), null);
-        player.print("Tool unbound from your current item.");
+        player.print("Инструмент больше не связан с текущим предметом.");
     }
 
     @Command(
         aliases = { "info" },
         usage = "",
-        desc = "Block information tool",
+        desc = "Инструмент информации о блоке",
         min = 0,
         max = 0
     )
@@ -61,14 +61,14 @@ public class ToolCommands {
     public void info(Player player, LocalSession session, EditSession editSession, CommandContext args) throws WorldEditException {
 
         session.setTool(player.getItemInHand(), new QueryTool());
-        player.print("Info tool bound to "
+        player.print("Информационный инструмент связан с "
                 + ItemType.toHeldName(player.getItemInHand()) + ".");
     }
 
     @Command(
         aliases = { "tree" },
-        usage = "[type]",
-        desc = "Tree generator tool",
+        usage = "[тип]",
+        desc = "Инструмент генерации деревьев",
         min = 0,
         max = 1
     )
@@ -81,19 +81,19 @@ public class ToolCommands {
                 : TreeGenerator.TreeType.TREE;
 
         if (type == null) {
-            player.printError("Tree type '" + args.getString(0) + "' is unknown.");
+            player.printError("Тип дерева '" + args.getString(0) + "' неизвестен.");
             return;
         }
 
         session.setTool(player.getItemInHand(), new TreePlanter(new TreeGenerator(type)));
-        player.print("Tree tool bound to "
+        player.print("Инструмент генерации деревьев связан с "
                 + ItemType.toHeldName(player.getItemInHand()) + ".");
     }
 
     @Command(
         aliases = { "repl" },
-        usage = "<block>",
-        desc = "Block replacer tool",
+        usage = "<блок>",
+        desc = "Инструмент блокозаменитель",
         min = 1,
         max = 1
     )
@@ -102,14 +102,14 @@ public class ToolCommands {
 
         BaseBlock targetBlock = we.getBlock(player, args.getString(0));
         session.setTool(player.getItemInHand(), new BlockReplacer(targetBlock));
-        player.print("Block replacer tool bound to "
+        player.print("Инструмент блокозаменитель связан с "
                 + ItemType.toHeldName(player.getItemInHand()) + ".");
     }
 
     @Command(
         aliases = { "cycler" },
         usage = "",
-        desc = "Block data cycler tool",
+        desc = "Инструмент изменения метадаты блока (изменение типа деревьев и т.п.",
         min = 0,
         max = 0
     )
@@ -117,14 +117,14 @@ public class ToolCommands {
     public void cycler(Player player, LocalSession session, EditSession editSession, CommandContext args) throws WorldEditException {
 
         session.setTool(player.getItemInHand(), new BlockDataCyler());
-        player.print("Block data cycler tool bound to "
+        player.print("Инструмент изменения метадаты блока связан с "
                 + ItemType.toHeldName(player.getItemInHand()) + ".");
     }
 
     @Command(
         aliases = { "floodfill", "flood" },
-        usage = "<pattern> <range>",
-        desc = "Flood fill tool",
+        usage = "<шаблон> <диапазон>",
+        desc = "Инструмент заливки блоков (изменение однотипных соприкасающихся блоков)",
         min = 2,
         max = 2
     )
@@ -135,20 +135,20 @@ public class ToolCommands {
         int range = args.getInteger(1);
 
         if (range > config.maxSuperPickaxeSize) {
-            player.printError("Maximum range: " + config.maxSuperPickaxeSize);
+            player.printError("Максимальный размер: " + config.maxSuperPickaxeSize);
             return;
         }
 
         Pattern pattern = we.getBlockPattern(player, args.getString(0));
         session.setTool(player.getItemInHand(), new FloodFillTool(range, pattern));
-        player.print("Block flood fill tool bound to "
+        player.print("Инструмент заливки блоков связан с "
                 + ItemType.toHeldName(player.getItemInHand()) + ".");
     }
 
     @Command(
             aliases = { "deltree" },
             usage = "",
-            desc = "Floating tree remover tool",
+            desc = "Инструмент удаления летающих деревьев",
             min = 0,
             max = 0
     )
@@ -156,14 +156,14 @@ public class ToolCommands {
     public void deltree(Player player, LocalSession session, EditSession editSession, CommandContext args) throws WorldEditException {
 
     session.setTool(player.getItemInHand(), new FloatingTreeRemover());
-    player.print("Floating tree remover tool bound to "
+    player.print("Инструмент удаления летающих деревьев связан с "
             + ItemType.toHeldName(player.getItemInHand()) + ".");
     }
 
     @Command(
             aliases = { "farwand" },
             usage = "",
-            desc = "Wand at a distance tool",
+            desc = "Инструмент выделения на расстоянии",
             min = 0,
             max = 0
     )
@@ -171,13 +171,13 @@ public class ToolCommands {
     public void farwand(Player player, LocalSession session, EditSession editSession, CommandContext args) throws WorldEditException {
 
         session.setTool(player.getItemInHand(), new DistanceWand());
-        player.print("Far wand tool bound to " + ItemType.toHeldName(player.getItemInHand()) + ".");
+        player.print("Инструмент выделения на расстоянии связан с " + ItemType.toHeldName(player.getItemInHand()) + ".");
     }
 
     @Command(
             aliases = { "lrbuild", "/lrbuild" },
-            usage = "<leftclick block> <rightclick block>",
-            desc = "Long-range building tool",
+            usage = "<левый клик по блоку> <правый клин по блоку>",
+            desc = "Инструмент разрушения и строительства на расстоянии",
             min = 2,
             max = 2
     )
@@ -187,8 +187,8 @@ public class ToolCommands {
         BaseBlock secondary = we.getBlock(player, args.getString(0));
         BaseBlock primary = we.getBlock(player, args.getString(1));
         session.setTool(player.getItemInHand(), new LongRangeBuildTool(primary, secondary));
-        player.print("Long-range building tool bound to " + ItemType.toHeldName(player.getItemInHand()) + ".");
-        player.print("Left-click set to " + ItemType.toName(secondary.getType()) + "; right-click set to "
+        player.print("Инструмент разрушения и строительства на расстоянии связан с " + ItemType.toHeldName(player.getItemInHand()) + ".");
+        player.print("ЛКМ установить на " + ItemType.toName(secondary.getType()) + "; ПКМ установить на "
                 + ItemType.toName(primary.getType()) + ".");
     }
 }

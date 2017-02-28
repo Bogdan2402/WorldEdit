@@ -41,11 +41,11 @@ public class CuboidSelection extends RegionSelection {
 
         // Validate input
         if (pt1 == null) {
-            throw new IllegalArgumentException("Null point 1 not permitted");
+            throw new IllegalArgumentException("Отсутствие первой(1) точки выделение не допускается");
         }
 
         if (pt2 == null) {
-            throw new IllegalArgumentException("Null point 2 not permitted");
+            throw new IllegalArgumentException("Отсутствие второй(2) точки выделения не допускается");
         }
 
         // Create new selector

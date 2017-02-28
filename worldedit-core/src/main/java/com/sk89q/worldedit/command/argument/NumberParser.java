@@ -52,10 +52,10 @@ public class NumberParser implements CommandExecutor<Number> {
             try {
                 return Double.parseDouble(next);
             } catch (NumberFormatException ignored) {
-                throw new CommandException("The value for <" + name + "> should be a number. '" + next + "' is not a number.");
+                throw new CommandException("Значение <" + name + "> должно быть числом. '" + next + "' не является числом.");
             }
         } catch (MissingArgumentException e) {
-            throw new CommandException("Missing value for <" + name + "> (try a number).");
+            throw new CommandException("Недостающее значение <" + name + "> (повторите число).");
         }
     }
 

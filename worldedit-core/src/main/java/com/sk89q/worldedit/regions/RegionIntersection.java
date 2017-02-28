@@ -72,7 +72,7 @@ public class RegionIntersection extends AbstractRegion {
     public RegionIntersection(LocalWorld world, List<Region> regions) {
         super(world);
         checkNotNull(regions);
-        checkArgument(!regions.isEmpty(), "empty region list is not supported");
+        checkArgument(!regions.isEmpty(), "пустой список регионов не поддерживается");
         for (Region region : regions) {
             this.regions.add(region);
         }
@@ -87,7 +87,7 @@ public class RegionIntersection extends AbstractRegion {
     public RegionIntersection(LocalWorld world, Region... regions) {
         super(world);
         checkNotNull(regions);
-        checkArgument(regions.length > 0, "empty region list is not supported");
+        checkArgument(regions.length > 0, "пустой список регионов не поддерживается");
         Collections.addAll(this.regions, regions);
     }
 
@@ -112,13 +112,13 @@ public class RegionIntersection extends AbstractRegion {
     @Override
     public void expand(Vector... changes) throws RegionOperationException {
         checkNotNull(changes);
-        throw new RegionOperationException("Cannot expand a region intersection");
+        throw new RegionOperationException("Не удается развернуть область пересечения");
     }
 
     @Override
     public void contract(Vector... changes) throws RegionOperationException {
         checkNotNull(changes);
-        throw new RegionOperationException("Cannot contract a region intersection");
+        throw new RegionOperationException("Не удается развернуть область пересечения");
     }
 
     @Override

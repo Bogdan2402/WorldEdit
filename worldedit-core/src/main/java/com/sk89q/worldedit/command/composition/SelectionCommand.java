@@ -86,9 +86,9 @@ public class SelectionCommand extends SimpleCommand<Operation> {
                 List<String> messages = Lists.newArrayList();
                 operation.addStatusMessages(messages);
                 if (messages.isEmpty()) {
-                    actor.print("Operation completed.");
+                    actor.print("Операция выполнена.");
                 } else {
-                    actor.print("Operation completed (" + Joiner.on(", ").join(messages) + ").");
+                    actor.print("Операция выполнена (" + Joiner.on(", ").join(messages) + ").");
                 }
 
                 return operation;
@@ -97,7 +97,7 @@ public class SelectionCommand extends SimpleCommand<Operation> {
                 return null;
             }
         } else {
-            throw new CommandException("This command can only be used by players.");
+            throw new CommandException("Эта команда может использоваться только игроками.");
         }
     }
 

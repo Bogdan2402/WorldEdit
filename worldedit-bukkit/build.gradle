@@ -12,6 +12,10 @@ dependencies {
     testCompile 'org.mockito:mockito-core:1.9.0-rc1'
 }
 
+compileJava {
+  options.encoding = "UTF-8"
+}
+
 processResources {
     from (sourceSets.main.resources.srcDirs) {
         expand 'internalVersion': project.internalVersion

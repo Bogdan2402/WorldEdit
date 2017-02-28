@@ -185,8 +185,8 @@ public class ConvexPolyhedralRegionSelector extends com.sk89q.worldedit.regions.
     public List<String> getInformationLines() {
         List<String> ret = new ArrayList<String>();
 
-        ret.add("Vertices: "+region.getVertices().size());
-        ret.add("Triangles: "+region.getTriangles().size());
+        ret.add("Вершины: "+region.getVertices().size());
+        ret.add("Треугольники: "+region.getTriangles().size());
 
         return ret;
     }
@@ -200,7 +200,7 @@ public class ConvexPolyhedralRegionSelector extends com.sk89q.worldedit.regions.
 
         session.describeCUI(player);
 
-        player.print("Started new selection with vertex "+pos+".");
+        player.print("Начал новое выделение с вершины "+pos+".");
     }
 
     @Override
@@ -211,7 +211,7 @@ public class ConvexPolyhedralRegionSelector extends com.sk89q.worldedit.regions.
 
         session.describeCUI(player);
 
-        player.print("Added vertex " + pos + " to the selection.");
+        player.print("Добавлена ​​вершина " + pos + " к выделению.");
     }
 
     @Override

@@ -99,7 +99,7 @@ public class PluginPermissionsResolver implements PermissionsResolver {
 
     @Override
     public String getDetectionMessage() {
-        return "Using plugin '" + this.plugin.getDescription().getName() + "' for permissions.";
+        return "Использую плагин '" + this.plugin.getDescription().getName() + "' для разрешений.";
     }
 
 }

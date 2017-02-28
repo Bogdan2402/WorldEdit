@@ -132,12 +132,12 @@ public class ForgetfulExtentBuffer extends AbstractDelegateExtent implements Pat
 
             @Override
             public void expand(Vector... changes) throws RegionOperationException {
-                throw new UnsupportedOperationException("Cannot change the size of this region");
+                throw new UnsupportedOperationException("Невозможно изменить размер этого региона");
             }
 
             @Override
             public void contract(Vector... changes) throws RegionOperationException {
-                throw new UnsupportedOperationException("Cannot change the size of this region");
+                throw new UnsupportedOperationException("Невозможно изменить размер этого региона");
             }
 
             @Override

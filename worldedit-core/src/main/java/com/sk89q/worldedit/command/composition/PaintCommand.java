@@ -53,7 +53,7 @@ public class PaintCommand extends SimpleCommand<Paint> {
 
     @Override
     public String getDescription() {
-        return "Applies a function to surfaces";
+        return "Применить функцию к поверхностям";
     }
 
     @Override

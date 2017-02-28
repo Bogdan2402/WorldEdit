@@ -15,6 +15,10 @@ dependencies {
     testCompile 'org.mockito:mockito-core:1.9.0-rc1'
 }
 
+compileJava {
+  options.encoding = "UTF-8"
+}
+
 sourceSets {
     main {
         java {

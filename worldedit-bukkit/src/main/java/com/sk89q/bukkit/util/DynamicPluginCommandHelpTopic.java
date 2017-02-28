@@ -67,11 +67,11 @@ public class DynamicPluginCommandHelpTopic extends HelpTopic {
 
             // Put the usage in the format: Usage string (newline) Aliases (newline) Help text
             String[] split = fullTextTemp == null ? new String[2] : fullTextTemp.split("\n", 2);
-            fullText.append(ChatColor.BOLD).append(ChatColor.GOLD).append("Usage: ").append(ChatColor.WHITE);
+            fullText.append(ChatColor.BOLD).append(ChatColor.GOLD).append("Использование: ").append(ChatColor.WHITE);
             fullText.append(split[0]).append("\n");
 
             if (!cmd.getAliases().isEmpty()) {
-                fullText.append(ChatColor.BOLD).append(ChatColor.GOLD).append("Aliases: ").append(ChatColor.WHITE);
+                fullText.append(ChatColor.BOLD).append(ChatColor.GOLD).append("Алиасы: ").append(ChatColor.WHITE);
                 boolean first = true;
                 for (String alias : cmd.getAliases()) {
                     if (!first) {

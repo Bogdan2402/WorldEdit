@@ -45,14 +45,14 @@ public class DefaultItemParser extends InputParser<BaseItem> {
                 try {
                     meta = Short.parseShort(tokens[1]);
                 } catch (NumberFormatException ignored) {
-                    throw new InputParseException("Expected '" + tokens[1] + "' to be a metadata value but it's not a number");
+                    throw new InputParseException("Ожидается '" + tokens[1] + "' чтобы быть значеним метаданных, но это не является числом");
                 }
             }
 
             item = context.requireWorld().getWorldData().getItemRegistry().createFromId(id);
         } catch (NumberFormatException e) {
             if (input.length() < 2) {
-                throw new InputParseException("'" + input + "' isn't a known item name format");
+                throw new InputParseException("'" + input + "' не известный формат имени элемента");
             }
 
             String name = tokens[0] + ":" + tokens[1];
@@ -62,7 +62,7 @@ public class DefaultItemParser extends InputParser<BaseItem> {
                 try {
                     meta = Short.parseShort(tokens[2]);
                 } catch (NumberFormatException ignored) {
-                    throw new InputParseException("Expected '" + tokens[2] + "' to be a metadata value but it's not a number");
+                    throw new InputParseException("Ожидается '" + tokens[2] + "' чтобы быть значение метаданных, но это не является числом");
                 }
             }
 
@@ -70,7 +70,7 @@ public class DefaultItemParser extends InputParser<BaseItem> {
         }
 
         if (item == null) {
-            throw new InputParseException("'" + input + "' did not match any item");
+            throw new InputParseException("'" + input + "' не соответствует ни одному предмету");
         } else {
             item.setData(meta);
             return item;

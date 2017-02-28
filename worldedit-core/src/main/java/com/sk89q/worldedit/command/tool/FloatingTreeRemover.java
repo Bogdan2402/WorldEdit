@@ -66,7 +66,7 @@ public class FloatingTreeRemover implements BlockTool {
             break;
 
         default:
-            player.printError("That's not a tree.");
+            player.printError("Это не дерево.");
             return true;
         }
 
@@ -75,7 +75,7 @@ public class FloatingTreeRemover implements BlockTool {
         try {
             final Set<Vector> blockSet = bfs(world, clicked.toVector());
             if (blockSet == null) {
-                player.printError("That's not a floating tree.");
+                player.printError("Это не летающее дерево.");
                 return true;
             }
 
@@ -93,7 +93,7 @@ public class FloatingTreeRemover implements BlockTool {
                 }
             }
         } catch (MaxChangedBlocksException e) {
-            player.printError("Max blocks change limit reached.");
+            player.printError("Максимальное значение лимита изменения блоков достинут.");
         } finally {
             session.remember(editSession);
         }

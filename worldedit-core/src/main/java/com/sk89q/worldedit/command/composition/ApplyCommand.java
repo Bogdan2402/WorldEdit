@@ -38,7 +38,7 @@ public class ApplyCommand extends SimpleCommand<Contextual<? extends Operation>>
     private final String description;
 
     public ApplyCommand() {
-        this(new RegionFunctionParser(), "Applies a function to every block");
+        this(new RegionFunctionParser(), "Применить функцию к каждому блоку");
     }
 
     public ApplyCommand(CommandExecutor<Contextual<? extends RegionFunction>> functionParser, String description) {

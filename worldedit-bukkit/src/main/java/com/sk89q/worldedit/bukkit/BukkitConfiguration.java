@@ -55,10 +55,10 @@ public class BukkitConfiguration extends YAMLConfiguration {
         File toDir = new File(getWorkingDirectory(), file);
         if (fromDir.exists() & !toDir.exists()) {
             if (fromDir.renameTo(toDir)) {
-                plugin.getLogger().info("Migrated " + name + " folder '" + file +
-                        "' from server root to plugin data folder.");
+                plugin.getLogger().info("Миграция " + name + " папки '" + file +
+                        "' от корневого сервера в папку данных плагина.");
             } else {
-                plugin.getLogger().warning("Error while migrating " + name + " folder!");
+                plugin.getLogger().warning("Ошибка во время миграции " + name + " папки!");
             }
         }
     }

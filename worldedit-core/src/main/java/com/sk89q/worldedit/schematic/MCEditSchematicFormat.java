@@ -69,7 +69,7 @@ public class MCEditSchematicFormat extends SchematicFormat {
         NamedTag rootTag = nbtStream.readNamedTag();
         nbtStream.close();
         if (!rootTag.getName().equals("Schematic")) {
-            throw new DataException("Tag \"Schematic\" does not exist or is not first");
+            throw new DataException("Тег \"Schematic\"  не существует или не является первым");
         }
 
         CompoundTag schematicTag = (CompoundTag) rootTag.getTag();
@@ -77,7 +77,7 @@ public class MCEditSchematicFormat extends SchematicFormat {
         // Check
         Map<String, Tag> schematic = schematicTag.getValue();
         if (!schematic.containsKey("Blocks")) {
-            throw new DataException("Schematic file is missing a \"Blocks\" tag");
+            throw new DataException("В схематическом файле отсуствует тег \"Blocks\"");
         }
 
         // Get information
@@ -106,7 +106,7 @@ public class MCEditSchematicFormat extends SchematicFormat {
         // Check type of Schematic
         String materials = getChildTag(schematic, "Materials", StringTag.class).getValue();
         if (!materials.equals("Alpha")) {
-            throw new DataException("Schematic file is not an Alpha schematic");
+            throw new DataException("Схематический файл не является Альфа схемой");
         }
 
         // Get blocks
@@ -207,13 +207,13 @@ public class MCEditSchematicFormat extends SchematicFormat {
         int length = clipboard.getLength();
 
         if (width > MAX_SIZE) {
-            throw new DataException("Width of region too large for a .schematic");
+            throw new DataException("Ширина области слишком большая для .schematic");
         }
         if (height > MAX_SIZE) {
-            throw new DataException("Height of region too large for a .schematic");
+            throw new DataException("Высота области слишком большая для .schematic");
         }
         if (length > MAX_SIZE) {
-            throw new DataException("Length of region too large for a .schematic");
+            throw new DataException("Длина области слишком большая для .schematic");
         }
 
         HashMap<String, Tag> schematic = new HashMap<String, Tag>();
@@ -327,12 +327,12 @@ public class MCEditSchematicFormat extends SchematicFormat {
                                                  Class<T> expected) throws DataException {
 
         if (!items.containsKey(key)) {
-            throw new DataException("Schematic file is missing a \"" + key + "\" tag");
+            throw new DataException("В схематическом файле отсуствует тег \"" + key + "\"");
         }
         Tag tag = items.get(key);
         if (!expected.isInstance(tag)) {
             throw new DataException(
-                    key + " tag is not of tag type " + expected.getName());
+                    key + " тег не является тегом типа " + expected.getName());
         }
         return expected.cast(tag);
     }

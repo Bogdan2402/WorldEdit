@@ -78,7 +78,7 @@ public class EntityVisitor implements Operation {
 
     @Override
     public void addStatusMessages(List<String> messages) {
-        messages.add(getAffected() + " entities affected");
+        messages.add(getAffected() + " энтити затронуто");
     }
 
 }

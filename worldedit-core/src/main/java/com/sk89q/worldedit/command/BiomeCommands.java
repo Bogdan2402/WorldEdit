@@ -73,8 +73,8 @@ public class BiomeCommands {
 
     @Command(
         aliases = { "biomelist", "biomels" },
-        usage = "[page]",
-        desc = "Gets all biomes available.",
+        usage = "[страница]",
+        desc = "Список всех доступных биомов.",
         max = 1
     )
     @CommandPermissions("worldedit.biome.list")
@@ -93,7 +93,7 @@ public class BiomeCommands {
         BiomeRegistry biomeRegistry = player.getWorld().getWorldData().getBiomeRegistry();
         List<BaseBiome> biomes = biomeRegistry.getBiomes();
         int totalPages = biomes.size() / 19 + 1;
-        player.print("Available Biomes (page " + page + "/" + totalPages + ") :");
+        player.print("Допустимые биомы: (страница " + page + "/" + totalPages + ") :");
         for (BaseBiome biome : biomes) {
             if (offset > 0) {
                 offset--;
@@ -105,7 +105,7 @@ public class BiomeCommands {
                         break;
                     }
                 } else {
-                    player.print(" <unknown #" + biome.getId() + ">");
+                    player.print(" <неизвестно #" + biome.getId() + ">");
                 }
             }
         }
@@ -114,12 +114,12 @@ public class BiomeCommands {
     @Command(
         aliases = { "biomeinfo" },
         flags = "pt",
-        desc = "Get the biome of the targeted block.",
+        desc = "Получить информацию об биоме на который вы смотрите.",
         help =
-            "Get the biome of the block.\n" +
-            "By default use all the blocks contained in your selection.\n" +
-            "-t use the block you are looking at.\n" +
-            "-p use the block you are currently in",
+            "Получить блок биома.\n" +
+            "По умолчанию используются все блоки, содержащиеся в вашем выделении.\n" +
+            "-t блок на который вы смотрите.\n" +
+            "-p блок на котором вы стоите",
         max = 0
     )
     @CommandPermissions("worldedit.biome.info")
@@ -131,19 +131,19 @@ public class BiomeCommands {
         if (args.hasFlag('t')) {
             Vector blockPosition = player.getBlockTrace(300);
             if (blockPosition == null) {
-                player.printError("No block in sight!");
+                player.printError("Нет блоков в поле зрения!");
                 return;
             }
 
             BaseBiome biome = player.getWorld().getBiome(blockPosition.toVector2D());
             biomes.add(biome);
 
-            qualifier = "at line of sight point";
+            qualifier = "на линии видимости точки";
         } else if (args.hasFlag('p')) {
             BaseBiome biome = player.getWorld().getBiome(player.getPosition().toVector2D());
             biomes.add(biome);
 
-            qualifier = "at your position";
+            qualifier = "на вашем местоположении";
         } else {
             World world = player.getWorld();
             Region region = session.getSelection(world);
@@ -158,29 +158,29 @@ public class BiomeCommands {
                 }
             }
 
-            qualifier = "in your selection";
+            qualifier = "здесь";
         }
 
-        player.print(biomes.size() != 1 ? "Biomes " + qualifier + ":" : "Biome " + qualifier + ":");
+        player.print(biomes.size() != 1 ? "Биомы " + qualifier + ":" : "Биом " + qualifier + ":");
         for (BaseBiome biome : biomes) {
             BiomeData data = biomeRegistry.getData(biome);
             if (data != null) {
                 player.print(" " + data.getName());
             } else {
-                player.print(" <unknown #" + biome.getId() + ">");
+                player.print(" <неизвестно #" + biome.getId() + ">");
             }
         }
     }
 
     @Command(
             aliases = { "/setbiome" },
-            usage = "<biome>",
+            usage = "<биом>",
             flags = "p",
-            desc = "Sets the biome of the player's current block or region.",
+            desc = "Изменить тип биома, в котором вы находитесь на <biome>.",
             help =
-                    "Set the biome of the region.\n" +
-                    "By default use all the blocks contained in your selection.\n" +
-                    "-p use the block you are currently in"
+                    "Изменить биом в регионе.\n" +
+                    "По умолчанию все блоки в вашем регионе.\n" +
+                    "-p изменить тип биома для блока на котором вы стоите"
     )
     @Logging(REGION)
     @CommandPermissions("worldedit.biome.set")
@@ -203,7 +203,7 @@ public class BiomeCommands {
         FlatRegionVisitor visitor = new FlatRegionVisitor(Regions.asFlatRegion(region), replace);
         Operations.completeLegacy(visitor);
 
-        player.print("Biomes were changed in " + visitor.getAffected() + " columns. You may have to rejoin your game (or close and reopen your world) to see a change.");
+        player.print("Биом изменен на " + visitor.getAffected() + " в вашем местоположении. Вы должны перезайти, чтобы увидеть изменения.");
     }
 
 }

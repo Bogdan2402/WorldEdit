@@ -167,7 +167,7 @@ public class Polygonal2DRegionSelector extends com.sk89q.worldedit.regions.Polyg
 
     @Override
     public void explainPrimarySelection(Actor player, LocalSession session, Vector pos) {
-        player.print("Starting a new polygon at " + pos + ".");
+        player.print("Запуск нового полигона в " + pos + ".");
 
         session.dispatchCUIEvent(player, new SelectionShapeEvent(getTypeID()));
         session.dispatchCUIEvent(player, new SelectionPoint2DEvent(0, pos, getArea()));
@@ -176,7 +176,7 @@ public class Polygonal2DRegionSelector extends com.sk89q.worldedit.regions.Polyg
 
     @Override
     public void explainSecondarySelection(Actor player, LocalSession session, Vector pos) {
-        player.print("Added point #" + region.size() + " at " + pos + ".");
+        player.print("Добавлена точка #" + region.size() + " в " + pos + ".");
 
         session.dispatchCUIEvent(player, new SelectionPoint2DEvent(region.size() - 1, pos, getArea()));
         session.dispatchCUIEvent(player, new SelectionMinMaxEvent(region.getMinimumY(), region.getMaximumY()));
@@ -235,7 +235,7 @@ public class Polygonal2DRegionSelector extends com.sk89q.worldedit.regions.Polyg
 
     @Override
     public List<String> getInformationLines() {
-        return Collections.singletonList("# points: " + region.size());
+        return Collections.singletonList("# точки: " + region.size());
     }
 
     @Override

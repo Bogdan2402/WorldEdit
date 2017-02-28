@@ -51,8 +51,8 @@ class BukkitCommandInspector implements CommandInspector {
         if (mapping != null) {
             return mapping.getDescription().getDescription();
         } else {
-            logger.warning("BukkitCommandInspector doesn't know how about the command '" + command + "'");
-            return "Help text not available";
+            logger.warning("BukkitCommandInspector не знает насчет команды '" + command + "'");
+            return "Текст справки не доступен";
         }
     }
 
@@ -61,10 +61,10 @@ class BukkitCommandInspector implements CommandInspector {
         CommandMapping mapping = dispatcher.get(command.getName());
         if (mapping != null) {
             Description description = mapping.getDescription();
-            return "Usage: " + description.getUsage() + (description.getHelp() != null ? "\n" + description.getHelp() : "");
+            return "Использование: " + description.getUsage() + (description.getHelp() != null ? "\n" + description.getHelp() : "");
         } else {
-            logger.warning("BukkitCommandInspector doesn't know how about the command '" + command + "'");
-            return "Help text not available";
+            logger.warning("BukkitCommandInspector не знает насчет команды '" + command + "'");
+            return "Текст справки не доступен";
         }
     }
 
@@ -76,7 +76,7 @@ class BukkitCommandInspector implements CommandInspector {
             locals.put(Actor.class, plugin.wrapCommandSender(sender));
             return mapping.getCallable().testPermission(locals);
         } else {
-            logger.warning("BukkitCommandInspector doesn't know how about the command '" + command + "'");
+            logger.warning("BukkitCommandInspector не знает насчет команды '" + command + "'");
             return false;
         }
     }

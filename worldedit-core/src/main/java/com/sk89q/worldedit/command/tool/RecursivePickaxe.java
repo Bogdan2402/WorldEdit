@@ -69,7 +69,7 @@ public class RecursivePickaxe implements BlockTool {
             recurse(server, editSession, world, clicked.toVector().toBlockVector(),
                     clicked.toVector(), range, initialType, new HashSet<BlockVector>());
         } catch (MaxChangedBlocksException e) {
-            player.printError("Max blocks change limit reached.");
+            player.printError("Максимальное значение лимита изменения блоков достигнут.");
         } finally {
             editSession.flushQueue();
             session.remember(editSession);
