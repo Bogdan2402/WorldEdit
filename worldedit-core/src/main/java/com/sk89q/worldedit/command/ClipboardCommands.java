@@ -84,6 +84,7 @@ public class ClipboardCommands {
         BlockArrayClipboard clipboard = new BlockArrayClipboard(region);
         clipboard.setOrigin(session.getPlacementPosition(player));
         ForwardExtentCopy copy = new ForwardExtentCopy(editSession, region, clipboard, region.getMinimumPoint());
+        copy.setCopyingEntities(copyEntities);
         if (mask != null) {
             copy.setSourceMask(mask);
         }
@@ -103,7 +104,6 @@ public class ClipboardCommands {
                 "  -e для вырезания также сущностей в нем\n" +
                 "  -m задает маску исходного, чтобы исключить блоки воздуха\n" +
                 "ВНИМАНИЕ: Вырезание и вставка сущностей не может быть отменена!",
-        min = 0,
         max = 1
     )
     @CommandPermissions("worldedit.clipboard.cut")
@@ -116,6 +116,8 @@ public class ClipboardCommands {
         clipboard.setOrigin(session.getPlacementPosition(player));
         ForwardExtentCopy copy = new ForwardExtentCopy(editSession, region, clipboard, region.getMinimumPoint());
         copy.setSourceFunction(new BlockReplace(editSession, leavePattern));
+        copy.setCopyingEntities(copyEntities);
+        copy.setRemovingEntities(true);
         if (mask != null) {
             copy.setSourceMask(mask);
         }
