@@ -113,7 +113,7 @@ class ParametricCallable implements CommandCallable {
 
                 // Don't know how to parse for this type of value
                 if (parameter.getBinding() == null) {
-                    throw new ParametricException("Don't know how to handle the parameter type '" + type + "' in\n" + method.toGenericString());
+                    throw new ParametricException("Не знаю, как обрабатывать тип параметра '" + type + "' в\n" + method.toGenericString());
                 }
             }
             
@@ -127,10 +127,10 @@ class ParametricCallable implements CommandCallable {
                 if (numOptional > 0 && parameter.isNonFlagConsumer()) {
                     if (parameter.getConsumedCount() < 0) {
                         throw new ParametricException(
-                                "Found an parameter using the binding " + 
+                                "Нашел параметр, используя привязку " + 
                                 parameter.getBinding().getClass().getCanonicalName() + 
-                                "\nthat does not know how many arguments it consumes, but " +
-                                "it follows an optional parameter\nMethod: " +
+                                "\nкоторый не знает, сколько аргументов он потребляет, но " +
+                                "он следует необязательному параметру\nМетод: " +
                                 method.toGenericString());
                     }
                 }
@@ -232,14 +232,14 @@ class ParametricCallable implements CommandCallable {
                 handler.postInvoke(handler, method, parameters, args, context);
             }
         } catch (MissingParameterException e) {
-            throw new InvalidUsageException("Too few parameters!", this);
+            throw new InvalidUsageException("Слишком мало параметров!", this);
         } catch (UnconsumedParameterException e) {
-            throw new InvalidUsageException("Too many parameters! Unused parameters: " + e.getUnconsumed(), this);
+            throw new InvalidUsageException("Слишком много параметров! Неиспользуемые параметры: " + e.getUnconsumed(), this);
         } catch (ParameterException e) {
             assert parameter != null;
             String name = parameter.getName();
 
-            throw new InvalidUsageException("For parameter '" + name + "': " + e.getMessage(), this);
+            throw new InvalidUsageException("Для параметра '" + name + "': " + e.getMessage(), this);
         } catch (InvocationTargetException e) {
             if (e.getCause() instanceof CommandException) {
                 throw (CommandException) e.getCause();
@@ -367,9 +367,9 @@ class ParametricCallable implements CommandCallable {
                 return parameter.getBinding().bind(parameter, new StringArgumentStack(context, defaultValue, false), false);
             } catch (MissingParameterException e) {
                 throw new ParametricException(
-                        "The default value of the parameter using the binding " + 
-                        parameter.getBinding().getClass() + " in the method\n" +
-                        method.toGenericString() + "\nis invalid");
+                        "Значение по умолчанию параметра с использованием привязки " + 
+                        parameter.getBinding().getClass() + " в методе\n" +
+                        method.toGenericString() + "\nявляется недействительным");
             }
         }
         
