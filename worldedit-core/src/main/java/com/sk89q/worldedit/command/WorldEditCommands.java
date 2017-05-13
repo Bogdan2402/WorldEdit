@@ -53,7 +53,7 @@ public class WorldEditCommands {
     )
     public void version(Actor actor) throws WorldEditException {
         actor.print("§eВерсия WorldEdit 6.1.7-SNAPSHOT;");
-        actor.print("§ahttp://vk.com/b_o_d_ik §7§l| §7Перевел §eDarkFort");
+        actor.print("§ahttp://vk.com/darkfortmc §7§l| §7Перевел §eDarkFort");
     }
 
     @Command(
