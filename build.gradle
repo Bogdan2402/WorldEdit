@@ -21,7 +21,7 @@ buildscript {
 
     configurations.all {
         resolutionStrategy {
-            force 'com.google.guava:guava:17.0'
+            force 'com.google.guava:guava:21.0'
         }
     }
 
@@ -34,7 +34,7 @@ buildscript {
 
 allprojects {
     group = 'com.sk89q.worldedit'
-    version = '6.1.7-SNAPSHOT'
+    version = '6.1.8-SNAPSHOT'
 }
 
 if (!project.hasProperty("artifactory_contextUrl")) ext.artifactory_contextUrl = "http://localhost"
