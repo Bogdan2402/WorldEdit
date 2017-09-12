@@ -400,7 +400,7 @@ public class WorldEdit {
             }
 
             if (f == null) {
-                throw new FileSelectionAbortedException("Нету выбранных файлов");
+                throw new FileSelectionAbortedException("Нет выбранных файлов");
             }
         } else {
             if (defaultExt != null && filename.lastIndexOf('.') == -1) {
