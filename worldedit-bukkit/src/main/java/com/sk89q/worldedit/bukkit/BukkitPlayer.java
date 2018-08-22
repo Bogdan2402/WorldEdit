@@ -22,7 +22,8 @@ package com.sk89q.worldedit.bukkit;
 import com.sk89q.util.StringUtil;
 import com.sk89q.worldedit.Vector;
 import com.sk89q.worldedit.WorldEditException;
-import com.sk89q.worldedit.blocks.BaseBlock;
+import com.sk89q.worldedit.bukkit.adapter.BukkitImplAdapter;
+import com.sk89q.worldedit.world.block.BaseBlock;
 import com.sk89q.worldedit.blocks.BaseItemStack;
 import com.sk89q.worldedit.entity.BaseEntity;
 import com.sk89q.worldedit.extension.platform.AbstractPlayerActor;
@@ -31,6 +32,8 @@ import com.sk89q.worldedit.internal.cui.CUIEvent;
 import com.sk89q.worldedit.session.SessionKey;
 import com.sk89q.worldedit.util.HandSide;
 import com.sk89q.worldedit.world.World;
+import com.sk89q.worldedit.world.block.BlockStateHolder;
+import com.sk89q.worldedit.world.block.BlockTypes;
 import com.sk89q.worldedit.world.gamemode.GameMode;
 import com.sk89q.worldedit.world.gamemode.GameModes;
 import org.bukkit.Bukkit;
@@ -70,7 +73,7 @@ public class BukkitPlayer extends AbstractPlayerActor {
         ItemStack itemStack = handSide == HandSide.MAIN_HAND
                 ? player.getInventory().getItemInMainHand()
                 : player.getInventory().getItemInOffHand();
-        return new BaseBlock(BukkitAdapter.asBlockState(itemStack));
+        return BukkitAdapter.asBlockState(itemStack).toBaseBlock();
     }
 
     @Override
@@ -239,4 +242,22 @@ public class BukkitPlayer extends AbstractPlayerActor {
 
     }
 
+    @Override
+    public void sendFakeBlock(Vector pos, BlockStateHolder block) {
+        Location loc = new Location(player.getWorld(), pos.getX(), pos.getY(), pos.getZ());
+        if (block == null) {
+            player.sendBlockChange(loc, player.getWorld().getBlockAt(loc).getBlockData());
+        } else {
+            player.sendBlockChange(loc, BukkitAdapter.adapt(block));
+            if (block instanceof BaseBlock && ((BaseBlock) block).hasNbtData()) {
+                BukkitImplAdapter adapter = WorldEditPlugin.getInstance().getBukkitImplAdapter();
+                if (adapter != null) {
+                    adapter.sendFakeNBT(player, pos, ((BaseBlock) block).getNbtData());
+                    if (block.getBlockType() == BlockTypes.STRUCTURE_BLOCK) {
+                        adapter.sendFakeOP(player);
+                    }
+                }
+            }
+        }
+    }
 }

@@ -17,18 +17,16 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.sk89q.worldedit.blocks;
+package com.sk89q.worldedit.world.block;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.sk89q.jnbt.CompoundTag;
 import com.sk89q.jnbt.StringTag;
 import com.sk89q.jnbt.Tag;
+import com.sk89q.worldedit.blocks.TileEntityBlock;
 import com.sk89q.worldedit.function.mask.Mask;
 import com.sk89q.worldedit.registry.state.Property;
-import com.sk89q.worldedit.world.block.BlockState;
-import com.sk89q.worldedit.world.block.BlockStateHolder;
-import com.sk89q.worldedit.world.block.BlockType;
-import com.sk89q.worldedit.world.block.BlockTypes;
-import com.sk89q.worldedit.world.registry.LegacyMapper;
 
 import java.util.Map;
 import java.util.Objects;
@@ -36,60 +34,38 @@ import java.util.Objects;
 import javax.annotation.Nullable;
 
 /**
- * Represents a mutable "snapshot" of a block.
+ * Represents a "snapshot" of a block with NBT Data.
  *
  * <p>An instance of this block contains all the information needed to
  * accurately reproduce the block, provided that the instance was
  * made correctly. In some implementations, it may not be possible to get a
  * snapshot of blocks correctly, so, for example, the NBT data for a block
  * may be missing.</p>
- *
- * <p>A peculiar detail of this class is that it accepts {@code -1} as a
- * valid data value. This is due to legacy reasons: WorldEdit uses -1
- * as a "wildcard" block value, even though a {@link Mask} would be
- * more appropriate.</p>
  */
 public class BaseBlock implements BlockStateHolder<BaseBlock>, TileEntityBlock {
 
     private BlockState blockState;
-    @Nullable CompoundTag nbtData;
+    @Nullable private CompoundTag nbtData;
 
     /**
      * Construct a block with a state.
      *
      * @param blockState The blockstate
      */
-    public BaseBlock(BlockState blockState) {
+    protected BaseBlock(BlockState blockState) {
         this.blockState = blockState;
-    }
-
-    /**
-     * Construct a block with the given type and default data.
-     *
-     * @param blockType The block type
-     */
-    public BaseBlock(BlockType blockType) {
-        this.blockState = blockType.getDefaultState();
     }
 
     /**
      * Construct a block with the given ID, data value and NBT data structure.
      *
      * @param state The block state
-     * @param nbtData NBT data, which may be null
+     * @param nbtData NBT data, which must be provided
      */
-    public BaseBlock(BlockState state, @Nullable CompoundTag nbtData) {
+    protected BaseBlock(BlockState state, CompoundTag nbtData) {
+        checkNotNull(nbtData);
         this.blockState = state;
         this.nbtData = nbtData;
-    }
-
-    /**
-     * Create a clone of another block.
-     *
-     * @param other the other block
-     */
-    public BaseBlock(BaseBlock other) {
-        this(other.toImmutableState(), other.getNbtData());
     }
 
     /**
@@ -109,7 +85,7 @@ public class BaseBlock implements BlockStateHolder<BaseBlock>, TileEntityBlock {
 
     @Override
     public <V> BaseBlock with(Property<V> property, V value) {
-        return new BaseBlock(this.blockState.with(property, value), getNbtData());
+        return this.blockState.with(property, value).toBaseBlock(getNbtData());
     }
 
     /**
@@ -182,6 +158,22 @@ public class BaseBlock implements BlockStateHolder<BaseBlock>, TileEntityBlock {
     @Override
     public BlockState toImmutableState() {
         return this.blockState;
+    }
+
+    @Override
+    public BaseBlock toBaseBlock() {
+        return this;
+    }
+
+    @Override
+    public BaseBlock toBaseBlock(CompoundTag compoundTag) {
+        if (compoundTag == null) {
+            return this.blockState.toBaseBlock();
+        } else if (compoundTag == this.nbtData) {
+            return this;
+        } else {
+            return new BaseBlock(this.blockState, compoundTag);
+        }
     }
 
     @Override

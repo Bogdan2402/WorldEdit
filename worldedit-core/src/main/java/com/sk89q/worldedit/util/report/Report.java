@@ -17,24 +17,10 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.sk89q.worldedit.forge;
+package com.sk89q.worldedit.util.report;
 
-import com.sk89q.worldedit.blocks.BaseBlock;
-import com.sk89q.worldedit.blocks.TileEntityBlock;
-import com.sk89q.worldedit.world.block.BlockState;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
+public interface Report {
 
-public class TileEntityBaseBlock extends BaseBlock implements TileEntityBlock {
-
-    public TileEntityBaseBlock(BlockState state, TileEntity tile) {
-        super(state, NBTConverter.fromNative(copyNbtData(tile)));
-    }
-
-    private static NBTTagCompound copyNbtData(TileEntity tile) {
-        NBTTagCompound tag = new NBTTagCompound();
-        tile.writeToNBT(tag);
-        return tag;
-    }
+    String getTitle();
 
 }

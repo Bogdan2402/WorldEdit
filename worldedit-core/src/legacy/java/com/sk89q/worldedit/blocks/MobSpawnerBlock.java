@@ -25,6 +25,7 @@ import com.sk89q.jnbt.NBTUtils;
 import com.sk89q.jnbt.ShortTag;
 import com.sk89q.jnbt.StringTag;
 import com.sk89q.jnbt.Tag;
+import com.sk89q.worldedit.world.block.BaseBlock;
 import com.sk89q.worldedit.world.block.BlockState;
 import com.sk89q.worldedit.world.storage.InvalidFormatException;
 
@@ -34,7 +35,7 @@ import java.util.Map;
 /**
  * A mob spawner block.
  */
-public class MobSpawnerBlock extends BaseBlock implements TileEntityBlock {
+public class MobSpawnerBlock extends BaseBlock {
 
     private String mobType;
     private short delay;

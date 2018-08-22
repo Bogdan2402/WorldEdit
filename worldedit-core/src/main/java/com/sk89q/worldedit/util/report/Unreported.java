@@ -17,29 +17,17 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.sk89q.worldedit.function.mask;
+package com.sk89q.worldedit.util.report;
 
-import com.sk89q.worldedit.Vector;
-import com.sk89q.worldedit.blocks.Blocks;
-import com.sk89q.worldedit.extent.Extent;
-import com.sk89q.worldedit.world.block.BlockStateHolder;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-import java.util.Collection;
-
-public class FuzzyBlockMask extends BlockMask {
-
-    public FuzzyBlockMask(Extent extent, Collection<BlockStateHolder> blocks) {
-        super(extent, blocks);
-    }
-
-    public FuzzyBlockMask(Extent extent, BlockStateHolder... block) {
-        super(extent, block);
-    }
-
-    @Override
-    public boolean test(Vector vector) {
-        Extent extent = getExtent();
-        Collection<BlockStateHolder> blocks = getBlocks();
-        return Blocks.containsFuzzy(blocks, extent.getFullBlock(vector));
-    }
+/**
+ * Annotates properties that should not be exposed in the report.
+ */
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.FIELD)
+public @interface Unreported {
 }

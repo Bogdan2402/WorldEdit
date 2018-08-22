@@ -64,7 +64,7 @@ public class BukkitPlayerBlockBag extends BlockBag {
 
     @Override
     public void fetchBlock(BlockState blockState) throws BlockBagException {
-        if (blockState.getBlockType() == BlockTypes.AIR) {
+        if (blockState.getBlockType().getMaterial().isAir()) {
             throw new IllegalArgumentException("Не удалось получить блок воздуха");
         }
 
@@ -108,8 +108,13 @@ public class BukkitPlayerBlockBag extends BlockBag {
 
     @Override
     public void storeBlock(BlockState blockState, int amount) throws BlockBagException {
+<<<<<<< HEAD
         if (blockState.getBlockType() == BlockTypes.AIR) {
             throw new IllegalArgumentException("Нельзя хранить блок воздуха");
+=======
+        if (blockState.getBlockType().getMaterial().isAir()) {
+            throw new IllegalArgumentException("Can't store air block");
+>>>>>>> 69ab1781c6b1070669173288abf0b5af9eb31925
         }
         if (!blockState.getBlockType().hasItemType()) {
             throw new IllegalArgumentException("This block cannot be stored");
