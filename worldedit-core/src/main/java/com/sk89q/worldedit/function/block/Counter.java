@@ -16,3 +16,34 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
+package com.sk89q.worldedit.function.block;
+
+import com.sk89q.worldedit.WorldEditException;
+import com.sk89q.worldedit.function.RegionFunction;
+import com.sk89q.worldedit.math.BlockVector3;
+
+/**
+ * Keeps a count of the number of times that {@link #apply(BlockVector3)} is
+ * called.
+ */
+public class Counter implements RegionFunction {
+
+    private int count;
+
+    /**
+     * Returns the number of blocks that have been counted.
+     *
+     * @return the number of blocks
+     */
+    public int getCount() {
+        return count;
+    }
+
+    @Override
+    public boolean apply(BlockVector3 position) throws WorldEditException {
+        count++;
+        return false;
+    }
+
+}

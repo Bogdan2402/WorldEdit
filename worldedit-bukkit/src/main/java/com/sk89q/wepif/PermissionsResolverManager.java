@@ -94,6 +94,7 @@ public class PermissionsResolverManager implements PermissionsResolver {
             bPermissionsResolver.class,
             GroupManagerResolver.class,
             NijiPermissionsResolver.class,
+            VaultResolver.class,
             DinnerPermsResolver.class,
             FlatFilePermissionsResolver.class
     };
@@ -282,7 +283,8 @@ public class PermissionsResolverManager implements PermissionsResolver {
             if (plugin instanceof PermissionsProvider) {
                 setPluginPermissionsResolver(plugin);
             } else if ("permissions".equalsIgnoreCase(name) || "permissionsex".equalsIgnoreCase(name)
-                    || "bpermissions".equalsIgnoreCase(name) || "groupmanager".equalsIgnoreCase(name)) {
+                    || "bpermissions".equalsIgnoreCase(name) || "groupmanager".equalsIgnoreCase(name)
+                    || "vault".equalsIgnoreCase(name)) {
                 load();
             }
         }
@@ -293,7 +295,8 @@ public class PermissionsResolverManager implements PermissionsResolver {
 
             if (event.getPlugin() instanceof PermissionsProvider
                     || "permissions".equalsIgnoreCase(name) || "permissionsex".equalsIgnoreCase(name)
-                    || "bpermissions".equalsIgnoreCase(name) || "groupmanager".equalsIgnoreCase(name)) {
+                    || "bpermissions".equalsIgnoreCase(name) || "groupmanager".equalsIgnoreCase(name)
+                    || "vault".equalsIgnoreCase(name)) {
                 load();
             }
         }

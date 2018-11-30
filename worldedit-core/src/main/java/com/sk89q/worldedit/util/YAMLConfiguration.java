@@ -54,6 +54,7 @@ public class YAMLConfiguration extends LocalConfiguration {
         }
 
         profile = config.getBoolean("debug", profile);
+        traceUnflushedSessions = config.getBoolean("debugging.trace-unflushed-sessions", traceUnflushedSessions);
         wandItem = convertLegacyItem(config.getString("wand-item", wandItem));
 
         defaultChangeLimit = Math.max(-1, config.getInt(
@@ -105,6 +106,8 @@ public class YAMLConfiguration extends LocalConfiguration {
         scriptTimeout = config.getInt("scripting.timeout", scriptTimeout);
         scriptsDir = config.getString("scripting.dir", scriptsDir);
 
+        calculationTimeout = config.getInt("calculation.timeout", calculationTimeout);
+
         saveDir = config.getString("saving.dir", saveDir);
 
         allowSymlinks = config.getBoolean("files.allow-symbolic-links", false);
@@ -120,7 +123,7 @@ public class YAMLConfiguration extends LocalConfiguration {
         }
 
         String type = config.getString("shell-save-type", "").trim();
-        shellSaveType = type.equals("") ? null : type;
+        shellSaveType = type.isEmpty() ? null : type;
 
     }
 

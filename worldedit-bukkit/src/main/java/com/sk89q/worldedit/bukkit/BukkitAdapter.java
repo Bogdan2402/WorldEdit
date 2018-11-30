@@ -23,13 +23,14 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.google.common.base.Function;
 import com.sk89q.worldedit.NotABlockException;
-import com.sk89q.worldedit.Vector;
 import com.sk89q.worldedit.WorldEdit;
 import com.sk89q.worldedit.WorldEditException;
 import com.sk89q.worldedit.blocks.BaseItemStack;
 import com.sk89q.worldedit.entity.Entity;
 import com.sk89q.worldedit.extension.input.InputParseException;
 import com.sk89q.worldedit.extension.input.ParserContext;
+import com.sk89q.worldedit.math.BlockVector3;
+import com.sk89q.worldedit.math.Vector3;
 import com.sk89q.worldedit.util.Location;
 import com.sk89q.worldedit.world.World;
 import com.sk89q.worldedit.world.block.BlockState;
@@ -42,6 +43,7 @@ import com.sk89q.worldedit.world.gamemode.GameMode;
 import com.sk89q.worldedit.world.gamemode.GameModes;
 import com.sk89q.worldedit.world.item.ItemType;
 import com.sk89q.worldedit.world.item.ItemTypes;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.data.BlockData;
@@ -159,7 +161,7 @@ public class BukkitAdapter {
      */
     public static Location adapt(org.bukkit.Location location) {
         checkNotNull(location);
-        Vector position = asVector(location);
+        Vector3 position = asVector(location);
         return new com.sk89q.worldedit.util.Location(
                 adapt(location.getWorld()),
                 position,
@@ -175,7 +177,7 @@ public class BukkitAdapter {
      */
     public static org.bukkit.Location adapt(Location location) {
         checkNotNull(location);
-        Vector position = location.toVector();
+        Vector3 position = location.toVector();
         return new org.bukkit.Location(
                 adapt((World) location.getExtent()),
                 position.getX(), position.getY(), position.getZ(),
@@ -190,7 +192,22 @@ public class BukkitAdapter {
      * @param position the WorldEdit position
      * @return a Bukkit location
      */
-    public static org.bukkit.Location adapt(org.bukkit.World world, Vector position) {
+    public static org.bukkit.Location adapt(org.bukkit.World world, Vector3 position) {
+        checkNotNull(world);
+        checkNotNull(position);
+        return new org.bukkit.Location(
+                world,
+                position.getX(), position.getY(), position.getZ());
+    }
+
+    /**
+     * Create a Bukkit location from a WorldEdit position with a Bukkit world.
+     *
+     * @param world the Bukkit world
+     * @param position the WorldEdit position
+     * @return a Bukkit location
+     */
+    public static org.bukkit.Location adapt(org.bukkit.World world, BlockVector3 position) {
         checkNotNull(world);
         checkNotNull(position);
         return new org.bukkit.Location(
@@ -221,9 +238,20 @@ public class BukkitAdapter {
      * @param location The Bukkit location
      * @return a WorldEdit vector
      */
-    public static Vector asVector(org.bukkit.Location location) {
+    public static Vector3 asVector(org.bukkit.Location location) {
         checkNotNull(location);
-        return new Vector(location.getX(), location.getY(), location.getZ());
+        return Vector3.at(location.getX(), location.getY(), location.getZ());
+    }
+
+    /**
+     * Create a WorldEdit BlockVector from a Bukkit location.
+     *
+     * @param location The Bukkit location
+     * @return a WorldEdit vector
+     */
+    public static BlockVector3 asBlockVector(org.bukkit.Location location) {
+        checkNotNull(location);
+        return BlockVector3.at(location.getX(), location.getY(), location.getZ());
     }
 
     /**
@@ -283,7 +311,7 @@ public class BukkitAdapter {
      * @return WorldEdit EntityType
      */
     public static EntityType adapt(org.bukkit.entity.EntityType entityType) {
-        return EntityTypes.get(entityType.getName().toLowerCase());
+        return EntityTypes.get(entityType.name().toLowerCase());
     }
 
     public static org.bukkit.entity.EntityType adapt(EntityType entityType) {
@@ -345,6 +373,8 @@ public class BukkitAdapter {
         });
     }
 
+    private static Map<String, BlockData> blockDataCache = new HashMap<>();
+
     /**
      * Create a Bukkit BlockData from a WorldEdit BlockStateHolder
      *
@@ -353,7 +383,13 @@ public class BukkitAdapter {
      */
     public static BlockData adapt(BlockStateHolder block) {
         checkNotNull(block);
-        return Bukkit.createBlockData(block.getAsString());
+        return blockDataCache.computeIfAbsent(block.getAsString(), new Function<String, BlockData>() {
+            @Nullable
+            @Override
+            public BlockData apply(@Nullable String input) {
+                return Bukkit.createBlockData(block.getAsString());
+            }
+        }).clone();
     }
 
     /**

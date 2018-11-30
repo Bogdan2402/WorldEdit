@@ -40,6 +40,7 @@ import com.sk89q.worldedit.internal.cui.CUIEvent;
 import com.sk89q.worldedit.internal.cui.CUIRegion;
 import com.sk89q.worldedit.internal.cui.SelectionShapeEvent;
 import com.sk89q.worldedit.internal.cui.ServerCUIHandler;
+import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.regions.Region;
 import com.sk89q.worldedit.regions.RegionSelector;
 import com.sk89q.worldedit.regions.selector.CuboidRegionSelector;
@@ -91,7 +92,7 @@ public class LocalSession {
     private transient boolean fastMode = false;
     private transient Mask mask;
     private transient TimeZone timezone = TimeZone.getDefault();
-    private transient Vector cuiTemporaryBlock;
+    private transient BlockVector3 cuiTemporaryBlock;
 
     // Saved properties
     private String lastScript;
@@ -226,7 +227,7 @@ public class LocalSession {
             EditSession editSession = history.get(historyPointer);
             EditSession newEditSession = WorldEdit.getInstance().getEditSessionFactory()
                     .getEditSession(editSession.getWorld(), -1, newBlockBag, player);
-            newEditSession.enableQueue();
+            newEditSession.enableStandardMode();
             newEditSession.setFastMode(fastMode);
             editSession.undo(newEditSession);
             return editSession;
@@ -249,7 +250,7 @@ public class LocalSession {
             EditSession editSession = history.get(historyPointer);
             EditSession newEditSession = WorldEdit.getInstance().getEditSessionFactory()
                     .getEditSession(editSession.getWorld(), -1, newBlockBag, player);
-            newEditSession.enableQueue();
+            newEditSession.enableStandardMode();
             newEditSession.setFastMode(fastMode);
             editSession.redo(newEditSession);
             ++historyPointer;
@@ -450,10 +451,10 @@ public class LocalSession {
      * @return the position to use
      * @throws IncompleteRegionException thrown if a region is not fully selected
      */
-    public Vector getPlacementPosition(Player player) throws IncompleteRegionException {
+    public BlockVector3 getPlacementPosition(Player player) throws IncompleteRegionException {
         checkNotNull(player);
         if (!placeAtPos1) {
-            return player.getBlockIn().toVector();
+            return player.getBlockIn().toVector().toBlockPoint();
         }
 
         return selector.getPrimaryPosition();
@@ -526,7 +527,7 @@ public class LocalSession {
      * Get the tool assigned to the item.
      *
      * @param item the item type
-     * @return the tool, which may be {@link null}
+     * @return the tool, which may be {@code null}
      */
     @Nullable
     public Tool getTool(ItemType item) {
@@ -661,7 +662,7 @@ public class LocalSession {
         if (block != null) {
             // If it's null, we don't need to do anything. The old was already removed.
             Map<String, Tag> tags = block.getNbtData().getValue();
-            cuiTemporaryBlock = new Vector(
+            cuiTemporaryBlock = BlockVector3.at(
                     ((IntTag) tags.get("x")).getValue(),
                     ((IntTag) tags.get("y")).getValue(),
                     ((IntTag) tags.get("z")).getValue()

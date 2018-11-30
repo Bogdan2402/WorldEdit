@@ -27,9 +27,9 @@ import com.sk89q.worldedit.entity.Player;
 import com.sk89q.worldedit.extension.platform.Actor;
 import com.sk89q.worldedit.extension.platform.Platform;
 import com.sk89q.worldedit.function.pattern.Pattern;
+import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.util.Location;
 import com.sk89q.worldedit.world.block.BlockStateHolder;
-import com.sk89q.worldedit.world.block.BlockTypes;
 
 /**
  * A tool that can place (or remove) blocks at a distance.
@@ -54,13 +54,14 @@ public class LongRangeBuildTool extends BrushTool implements DoubleActionTraceTo
     public boolean actSecondary(Platform server, LocalConfiguration config, Player player, LocalSession session) {
         Location pos = getTargetFace(player);
         if (pos == null) return false;
-        EditSession eS = session.createEditSession(player);
-        try {
-            BlockStateHolder applied = secondary.apply(pos.toVector());
+        try (EditSession eS = session.createEditSession(player)) {
+            eS.disableBuffering();
+            BlockVector3 blockPoint = pos.toVector().toBlockPoint();
+            BlockStateHolder applied = secondary.apply(blockPoint);
             if (applied.getBlockType().getMaterial().isAir()) {
-                eS.setBlock(pos.toVector(), secondary);
+                eS.setBlock(blockPoint, secondary);
             } else {
-                eS.setBlock(pos.getDirection(), secondary);
+                eS.setBlock(pos.getDirection().toBlockPoint(), secondary);
             }
             return true;
         } catch (MaxChangedBlocksException e) {
@@ -74,13 +75,14 @@ public class LongRangeBuildTool extends BrushTool implements DoubleActionTraceTo
     public boolean actPrimary(Platform server, LocalConfiguration config, Player player, LocalSession session) {
         Location pos = getTargetFace(player);
         if (pos == null) return false;
-        EditSession eS = session.createEditSession(player);
-        try {
-            BlockStateHolder applied = primary.apply(pos.toVector());
+        try (EditSession eS = session.createEditSession(player)) {
+            eS.disableBuffering();
+            BlockVector3 blockPoint = pos.toVector().toBlockPoint();
+            BlockStateHolder applied = primary.apply(blockPoint);
             if (applied.getBlockType().getMaterial().isAir()) {
-                eS.setBlock(pos.toVector(), primary);
+                eS.setBlock(blockPoint, primary);
             } else {
-                eS.setBlock(pos.getDirection(), primary);
+                eS.setBlock(pos.getDirection().toBlockPoint(), primary);
             }
             return true;
         } catch (MaxChangedBlocksException e) {

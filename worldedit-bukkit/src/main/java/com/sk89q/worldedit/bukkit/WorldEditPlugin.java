@@ -37,6 +37,7 @@ import com.sk89q.worldedit.extension.platform.Actor;
 import com.sk89q.worldedit.extension.platform.Capability;
 import com.sk89q.worldedit.extension.platform.Platform;
 import com.sk89q.worldedit.extent.inventory.BlockBag;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -82,11 +83,10 @@ public class WorldEditPlugin extends JavaPlugin implements TabCompleter {
 
         WorldEdit worldEdit = WorldEdit.getInstance();
 
-        loadAdapter(); // Need an adapter to work with special blocks with NBT data
-
         // Setup platform
         server = new BukkitServerInterface(this, getServer());
         worldEdit.getPlatformManager().register(server);
+        loadAdapter(); // Need an adapter to work with special blocks with NBT data
         worldEdit.loadMappings();
 
         loadConfig(); // Load configuration
@@ -103,6 +103,9 @@ public class WorldEditPlugin extends JavaPlugin implements TabCompleter {
         // Forge WorldEdit and there's (probably) not going to be any other
         // platforms to be worried about... at the current time of writing
         WorldEdit.getInstance().getEventBus().post(new PlatformReadyEvent());
+
+        // Enable metrics
+        new Metrics(this);
     }
 
     private void loadConfig() {
@@ -266,7 +269,7 @@ public class WorldEditPlugin extends JavaPlugin implements TabCompleter {
 
         EditSession editSession = WorldEdit.getInstance().getEditSessionFactory()
                 .getEditSession(wePlayer.getWorld(), session.getBlockChangeLimit(), blockBag, wePlayer);
-        editSession.enableQueue();
+        editSession.enableStandardMode();
 
         return editSession;
     }
@@ -282,7 +285,7 @@ public class WorldEditPlugin extends JavaPlugin implements TabCompleter {
         LocalSession session = WorldEdit.getInstance().getSessionManager().get(wePlayer);
 
         session.remember(editSession);
-        editSession.flushQueue();
+        editSession.flushSession();
 
         WorldEdit.getInstance().flushBlockBag(wePlayer, editSession);
     }

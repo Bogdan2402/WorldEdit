@@ -38,8 +38,11 @@ public class BukkitBlockRegistry extends BundledBlockRegistry {
     @Nullable
     @Override
     public BlockMaterial getMaterial(BlockType blockType) {
-        return materialMap.computeIfAbsent(BukkitAdapter.adapt(blockType),
-                material -> new BukkitBlockMaterial(BukkitBlockRegistry.super.getMaterial(blockType), material));
+        Material mat = BukkitAdapter.adapt(blockType);
+        if (mat == null) {
+            return null;
+        }
+        return materialMap.computeIfAbsent(mat, material -> new BukkitBlockMaterial(BukkitBlockRegistry.super.getMaterial(blockType), material));
     }
 
     @Nullable
@@ -62,7 +65,14 @@ public class BukkitBlockRegistry extends BundledBlockRegistry {
 
         @Override
         public boolean isAir() {
-            return material == Material.AIR || material == Material.CAVE_AIR || material == Material.VOID_AIR;
+            switch (material) {
+                case AIR:
+                case CAVE_AIR:
+                case VOID_AIR:
+                    return true;
+                default:
+                    return false;
+            }
         }
 
         @Override

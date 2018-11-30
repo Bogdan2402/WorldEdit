@@ -23,13 +23,13 @@ import com.sk89q.worldedit.EditSession;
 import com.sk89q.worldedit.LocalConfiguration;
 import com.sk89q.worldedit.LocalSession;
 import com.sk89q.worldedit.MaxChangedBlocksException;
-import com.sk89q.worldedit.Vector;
 import com.sk89q.worldedit.entity.Player;
 import com.sk89q.worldedit.extension.platform.Actor;
 import com.sk89q.worldedit.extension.platform.Platform;
 import com.sk89q.worldedit.extent.inventory.BlockBag;
 import com.sk89q.worldedit.function.pattern.BlockPattern;
 import com.sk89q.worldedit.function.pattern.Pattern;
+import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.world.block.BlockStateHolder;
 
 /**
@@ -52,17 +52,19 @@ public class BlockReplacer implements DoubleActionBlockTool {
     public boolean actPrimary(Platform server, LocalConfiguration config, Player player, LocalSession session, com.sk89q.worldedit.util.Location clicked) {
         BlockBag bag = session.getBlockBag(player);
 
-        EditSession editSession = session.createEditSession(player);
-
-        try {
-            Vector position = clicked.toVector();
-            editSession.setBlock(position, pattern.apply(position));
-        } catch (MaxChangedBlocksException ignored) {
+        try (EditSession editSession = session.createEditSession(player)) {
+            try {
+                editSession.disableBuffering();
+                BlockVector3 position = clicked.toVector().toBlockPoint();
+                editSession.setBlock(position, pattern.apply(position));
+            } catch (MaxChangedBlocksException ignored) {
+            } finally {
+                session.remember(editSession);
+            }
         } finally {
             if (bag != null) {
                 bag.flushChanges();
             }
-            session.remember(editSession);
         }
 
         return true;
@@ -71,8 +73,7 @@ public class BlockReplacer implements DoubleActionBlockTool {
 
     @Override
     public boolean actSecondary(Platform server, LocalConfiguration config, Player player, LocalSession session, com.sk89q.worldedit.util.Location clicked) {
-        EditSession editSession = session.createEditSession(player);
-        BlockStateHolder targetBlock = editSession.getBlock(clicked.toVector());
+        BlockStateHolder targetBlock = player.getWorld().getBlock(clicked.toVector().toBlockPoint());
 
         if (targetBlock != null) {
             pattern = new BlockPattern(targetBlock);

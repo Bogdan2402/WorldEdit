@@ -20,7 +20,6 @@
 package com.sk89q.worldedit.extension.factory;
 
 import com.sk89q.worldedit.IncompleteRegionException;
-import com.sk89q.worldedit.Vector;
 import com.sk89q.worldedit.WorldEdit;
 import com.sk89q.worldedit.extension.input.InputParseException;
 import com.sk89q.worldedit.extension.input.NoMatchException;
@@ -28,6 +27,7 @@ import com.sk89q.worldedit.extension.input.ParserContext;
 import com.sk89q.worldedit.extension.platform.Capability;
 import com.sk89q.worldedit.extent.Extent;
 import com.sk89q.worldedit.function.mask.BiomeMask2D;
+import com.sk89q.worldedit.function.mask.BlockCategoryMask;
 import com.sk89q.worldedit.function.mask.BlockMask;
 import com.sk89q.worldedit.function.mask.ExistingBlockMask;
 import com.sk89q.worldedit.function.mask.ExpressionMask;
@@ -41,12 +41,16 @@ import com.sk89q.worldedit.function.mask.SolidBlockMask;
 import com.sk89q.worldedit.internal.expression.Expression;
 import com.sk89q.worldedit.internal.expression.ExpressionException;
 import com.sk89q.worldedit.internal.registry.InputParser;
+import com.sk89q.worldedit.math.BlockVector3;
+import com.sk89q.worldedit.math.Vector3;
 import com.sk89q.worldedit.math.noise.RandomNoise;
 import com.sk89q.worldedit.regions.shape.WorldEditExpressionEnvironment;
 import com.sk89q.worldedit.session.request.Request;
 import com.sk89q.worldedit.session.request.RequestSelection;
 import com.sk89q.worldedit.world.biome.BaseBiome;
 import com.sk89q.worldedit.world.biome.Biomes;
+import com.sk89q.worldedit.world.block.BlockCategories;
+import com.sk89q.worldedit.world.block.BlockCategory;
 import com.sk89q.worldedit.world.registry.BiomeRegistry;
 
 import java.util.ArrayList;
@@ -111,8 +115,16 @@ class DefaultMaskParser extends InputParser<Mask> {
                     } catch (IncompleteRegionException e) {
                         throw new InputParseException("Please make a selection first.");
                     }
+                } else if (component.startsWith("##")) {
+                    // This means it's a tag mask.
+                    BlockCategory category = BlockCategories.get(component.substring(2).toLowerCase());
+                    if (category == null) {
+                        throw new NoMatchException("Unrecognised tag '" + component.substring(2) + '\'');
+                    } else {
+                        return new BlockCategoryMask(extent, category);
+                    }
                 } else {
-                    throw new NoMatchException("Unrecognized mask '" + component + "'");
+                    throw new NoMatchException("Unrecognized mask '" + component + '\'');
                 }
 
             case '>':
@@ -123,7 +135,7 @@ class DefaultMaskParser extends InputParser<Mask> {
                 } else {
                     submask = new ExistingBlockMask(extent);
                 }
-                OffsetMask offsetMask = new OffsetMask(submask, new Vector(0, firstChar == '>' ? -1 : 1, 0));
+                OffsetMask offsetMask = new OffsetMask(submask, BlockVector3.at(0, firstChar == '>' ? -1 : 1, 0));
                 return new MaskIntersection(offsetMask, Masks.negate(submask));
 
             case '$':
@@ -135,7 +147,7 @@ class DefaultMaskParser extends InputParser<Mask> {
                 for (String biomeName : biomesList) {
                     BaseBiome biome = Biomes.findBiomeByName(knownBiomes, biomeName, biomeRegistry);
                     if (biome == null) {
-                        throw new InputParseException("Unknown biome '" + biomeName + "'");
+                        throw new InputParseException("Unknown biome '" + biomeName + '\'');
                     }
                     biomes.add(biome);
                 }
@@ -150,7 +162,7 @@ class DefaultMaskParser extends InputParser<Mask> {
                 try {
                     Expression exp = Expression.compile(component.substring(1), "x", "y", "z");
                     WorldEditExpressionEnvironment env = new WorldEditExpressionEnvironment(
-                            Request.request().getEditSession(), Vector.ONE, Vector.ZERO);
+                            Request.request().getEditSession(), Vector3.ONE, Vector3.ZERO);
                     exp.setEnvironment(env);
                     return new ExpressionMask(exp);
                 } catch (ExpressionException e) {

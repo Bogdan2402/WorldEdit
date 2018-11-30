@@ -19,7 +19,11 @@
 
 package com.sk89q.worldedit.util;
 
-import com.sk89q.worldedit.Vector;
+import com.sk89q.worldedit.math.BlockVector3;
+import com.sk89q.worldedit.math.Vector3;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.Nullable;
 
@@ -28,32 +32,32 @@ import javax.annotation.Nullable;
  */
 public enum Direction {
 
-    NORTH(new Vector(0, 0, -1), Flag.CARDINAL),
-    EAST(new Vector(1, 0, 0), Flag.CARDINAL),
-    SOUTH(new Vector(0, 0, 1), Flag.CARDINAL),
-    WEST(new Vector(-1, 0, 0), Flag.CARDINAL),
+    NORTH(Vector3.at(0, 0, -1), Flag.CARDINAL),
+    EAST(Vector3.at(1, 0, 0), Flag.CARDINAL),
+    SOUTH(Vector3.at(0, 0, 1), Flag.CARDINAL),
+    WEST(Vector3.at(-1, 0, 0), Flag.CARDINAL),
 
-    UP(new Vector(0, 1, 0), Flag.UPRIGHT),
-    DOWN(new Vector(0, -1, 0), Flag.UPRIGHT),
+    UP(Vector3.at(0, 1, 0), Flag.UPRIGHT),
+    DOWN(Vector3.at(0, -1, 0), Flag.UPRIGHT),
 
-    NORTHEAST(new Vector(1, 0, -1), Flag.ORDINAL),
-    NORTHWEST(new Vector(-1, 0, -1), Flag.ORDINAL),
-    SOUTHEAST(new Vector(1, 0, 1), Flag.ORDINAL),
-    SOUTHWEST(new Vector(-1, 0, 1), Flag.ORDINAL),
+    NORTHEAST(Vector3.at(1, 0, -1), Flag.ORDINAL),
+    NORTHWEST(Vector3.at(-1, 0, -1), Flag.ORDINAL),
+    SOUTHEAST(Vector3.at(1, 0, 1), Flag.ORDINAL),
+    SOUTHWEST(Vector3.at(-1, 0, 1), Flag.ORDINAL),
 
-    WEST_NORTHWEST(new Vector(-Math.cos(Math.PI / 8), 0, -Math.sin(Math.PI / 8)), Flag.SECONDARY_ORDINAL),
-    WEST_SOUTHWEST(new Vector(-Math.cos(Math.PI / 8), 0, Math.sin(Math.PI / 8)), Flag.SECONDARY_ORDINAL),
-    NORTH_NORTHWEST(new Vector(-Math.sin(Math.PI / 8), 0, -Math.cos(Math.PI / 8)), Flag.SECONDARY_ORDINAL),
-    NORTH_NORTHEAST(new Vector(Math.sin(Math.PI / 8), 0, -Math.cos(Math.PI / 8)), Flag.SECONDARY_ORDINAL),
-    EAST_NORTHEAST(new Vector(Math.cos(Math.PI / 8), 0, -Math.sin(Math.PI / 8)), Flag.SECONDARY_ORDINAL),
-    EAST_SOUTHEAST(new Vector(Math.cos(Math.PI / 8), 0, Math.sin(Math.PI / 8)), Flag.SECONDARY_ORDINAL),
-    SOUTH_SOUTHEAST(new Vector(Math.sin(Math.PI / 8), 0, Math.cos(Math.PI / 8)), Flag.SECONDARY_ORDINAL),
-    SOUTH_SOUTHWEST(new Vector(-Math.sin(Math.PI / 8), 0, Math.cos(Math.PI / 8)), Flag.SECONDARY_ORDINAL);
+    WEST_NORTHWEST(Vector3.at(-Math.cos(Math.PI / 8), 0, -Math.sin(Math.PI / 8)), Flag.SECONDARY_ORDINAL),
+    WEST_SOUTHWEST(Vector3.at(-Math.cos(Math.PI / 8), 0, Math.sin(Math.PI / 8)), Flag.SECONDARY_ORDINAL),
+    NORTH_NORTHWEST(Vector3.at(-Math.sin(Math.PI / 8), 0, -Math.cos(Math.PI / 8)), Flag.SECONDARY_ORDINAL),
+    NORTH_NORTHEAST(Vector3.at(Math.sin(Math.PI / 8), 0, -Math.cos(Math.PI / 8)), Flag.SECONDARY_ORDINAL),
+    EAST_NORTHEAST(Vector3.at(Math.cos(Math.PI / 8), 0, -Math.sin(Math.PI / 8)), Flag.SECONDARY_ORDINAL),
+    EAST_SOUTHEAST(Vector3.at(Math.cos(Math.PI / 8), 0, Math.sin(Math.PI / 8)), Flag.SECONDARY_ORDINAL),
+    SOUTH_SOUTHEAST(Vector3.at(Math.sin(Math.PI / 8), 0, Math.cos(Math.PI / 8)), Flag.SECONDARY_ORDINAL),
+    SOUTH_SOUTHWEST(Vector3.at(-Math.sin(Math.PI / 8), 0, Math.cos(Math.PI / 8)), Flag.SECONDARY_ORDINAL);
 
-    private final Vector direction;
+    private final Vector3 direction;
     private final int flags;
 
-    Direction(Vector vector, int flags) {
+    Direction(Vector3 vector, int flags) {
         this.direction = vector.normalize();
         this.flags = flags;
     }
@@ -105,8 +109,17 @@ public enum Direction {
      *
      * @return the vector
      */
-    public Vector toVector() {
+    public Vector3 toVector() {
         return direction;
+    }
+
+    /**
+     * Get the vector.
+     *
+     * @return the vector
+     */
+    public BlockVector3 toBlockVector() {
+        return direction.toBlockPoint();
     }
 
     /**
@@ -117,9 +130,9 @@ public enum Direction {
      * @return the closest direction, or null if no direction can be returned
      */
     @Nullable
-    public static Direction findClosest(Vector vector, int flags) {
+    public static Direction findClosest(Vector3 vector, int flags) {
         if ((flags & Flag.UPRIGHT) == 0) {
-            vector = vector.setY(0);
+            vector = vector.withY(0);
         }
         vector = vector.normalize();
 
@@ -141,7 +154,24 @@ public enum Direction {
     }
 
     /**
-     * Flags to use with {@link #findClosest(Vector, int)}.
+     * Gets all directions with the given flags.
+     *
+     * @param flags The flags
+     * @return The directions that fit the flags
+     */
+    public static List<Direction> valuesOf(int flags) {
+        List<Direction> directions = new ArrayList<>();
+        for (Direction direction : values()) {
+            if ((~flags & direction.flags) == 0) {
+                directions.add(direction);
+            }
+        }
+
+        return directions;
+    }
+
+    /**
+     * Flags to use with {@link #findClosest(Vector3, int)}.
      */
     public static final class Flag {
         public static int CARDINAL = 0x1;
